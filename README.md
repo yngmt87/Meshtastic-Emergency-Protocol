@@ -60,7 +60,7 @@
 ### 0-1. 全体像を先に見る
 
 最初に覚えるべきことは単純である。現場局は短く事実を送り、通信統制は優先順位を決め、連携担当は外部機関向けに平文化し、記録担当は案件IDと訂正履歴を守る。誰が何を担うかを混同しないことが、混乱を減らす第一歩である。
-![""]("[images/mep01.png](https://github.com/yngmt87/Meshtastic-Emergency-Protocol/blob/main/images/mep01.png)")
+![""](https://github.com/yngmt87/Meshtastic-Emergency-Protocol/blob/main/images/mep01.png)
 **図A　このプロトコルの全体像**
 
 ### 0-2. 発災直後に何を優先するか
