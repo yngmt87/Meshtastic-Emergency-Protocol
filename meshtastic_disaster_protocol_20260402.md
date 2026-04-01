@@ -21,7 +21,7 @@ Meshtastic は公衆向け一斉警報の代替ではない。
 
 外部機関へ引き継ぐ際は必ず平文化する。
 
-## 目次
+# 目次
 
 ## 0. 最初に読むページ
 ## 1. 本書の位置づけ
@@ -60,7 +60,7 @@ Meshtastic は公衆向け一斉警報の代替ではない。
 
 災害時に失敗しやすいのは、情報を増やしすぎることである。発災直後は、すべてを流すのではなく、救命に直結する情報だけを優先しなければならない。どの段階で何を流せるかを、フェーズで理解する。
 
-<img src="./media/image2.png" style="width:7.24028in;height:2.29653in" alt="mep_02" />
+<img src="./media/image2.png">
 
 図B　フェーズごとの優先順位
 
@@ -70,7 +70,7 @@ Meshtastic は公衆向け一斉警報の代替ではない。
 
 本プロトコルの短報は、見た目は難しく見えても、実際には「優先度」「案件ID」「SEQ」「状態」「動作」「本文」「確度」「報告時刻」の並びでできている。ここで重要なのは、案件IDの時刻は事案識別用、末尾の時刻は各報告の時刻であり、同じ意味ではないという点である。
 
-<img src="./media/image3.png" style="width:7.24028in;height:4.07222in" alt="mep_03" />
+<img src="./media/image3.png">
 
 図C　標準構文の読み方（SEQ対応）
 
@@ -80,7 +80,7 @@ Meshtastic は公衆向け一斉警報の代替ではない。
 
 確度評価を最初から細かく判定しようとすると、初学者は迷いやすい。そこで本プロトコルでは、まず CFM / PRB / UNC の三段階で整理し、その後に必要であれば A1〜E5 へ落とし込む。重要なのは、未確認情報を確認済情報と混ぜないことである。
 
-<img src="./media/image4.png" style="width:7.24028in;height:3.31458in" alt="mep_04" />
+<img src="./media/image4.png">
 
 図D　確度評価の決め方
 
@@ -104,7 +104,7 @@ Meshtastic は公衆向け一斉警報の代替ではない。
 | 個人情報＝必要最小限・目的限定・記録必須。              |
 | ネット設定＝CLIENT 系・位置共有抑制・public MQTT 禁止。 |
 
-2\. 公的根拠と日本法規適合の整理
+#% 2\. 公的根拠と日本法規適合の整理
 
 ### 2-1. 920MHz 帯と ARIB STD-T108
 
@@ -1585,7 +1585,7 @@ HF/VHF/UHFのような多層通信を、Meshtastic／携帯／衛星／防災行
 
 内部の短報が、統制・連携を経て外部機関向けの平文へ変換され、応答が案件番号で閉域網へ戻る流れを示す。
 
-<img src="./media/image5.png" style="width:6.84028in;height:2.80486in" alt="mep_05" />
+<img src="./media/image5.png">
 
 図1　情報の橋渡しフロー
 
@@ -1595,7 +1595,7 @@ HF/VHF/UHFのような多層通信を、Meshtastic／携帯／衛星／防災行
 
 案件は NEW から開始し、ACK・WIP・ARRV・CLO の基本経路をたどる。保留、訂正、否定、虚偽情報対処は、案件IDを維持しながら履歴として残す。
 
-<img src="./media/image6.png" style="width:6.84028in;height:2.98333in" alt="mep_06" />
+<img src="./media/image6.png">
 
 図2　案件ライフサイクル
 
@@ -1605,7 +1605,7 @@ HF/VHF/UHFのような多層通信を、Meshtastic／携帯／衛星／防災行
 
 現場局・高所中継・拠点局・外部機関の役割分担と、物理配置の考え方を示す。中継は必要最小限とし、拠点局が外部連携と監査を担う。
 
-<img src="./media/image7.png" style="width:6.84028in;height:3.30278in" alt="mep_07" />
+<img src="./media/image7.png">
 
 図3　推奨トポロジーと役割分担
 
