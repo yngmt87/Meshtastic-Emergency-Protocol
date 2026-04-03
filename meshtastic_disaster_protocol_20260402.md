@@ -961,11 +961,11 @@ Meshtastic の 定型文モジュールは、事前定義メッセージを devi
 
 | プリセット | 文字列（そのまま設定可能） | 概算バイト |
 | :---: | ----- | :---: |
-| Pack-A 初動 | \[\[SOS\]\] NEED MED|\[\[EMG\]\] FIRE MOV|\[\[ALR\]\] EVAC NOW|\[\[SIT\]\] ROD BLK|\[\[ADM\]\] RC ALL | 92 |
-| Pack-B 物資 | \[\[EMG\]\] WAT NEED|\[\[EMG\]\] FOO NEED|\[\[EMG\]\] PWR NEED|\[\[SIT\]\] ISO|\[\[ADM\]\] LOG QSL | 91 |
-| Pack-C 医療 | \[\[SOS\]\] 1RED|\[\[EMG\]\] HOSP SAT|\[\[EMG\]\] O2 NEED|\[\[SIT\]\] 3YLW|\[\[ADM\]\] MED QSL | 92 |
+| Pack-A 初動 | \[\[SOS\]\] NEED MED</br>\[\[EMG\]\] FIRE MOV</br>\[\[ALR\]\] EVAC NOW</br>\[\[SIT\]\] ROD BLK</br>\[\[ADM\]\] RC ALL | 92 |
+| Pack-B 物資 | \[\[EMG\]\] WAT NEED</br>\[\[EMG\]\] FOO NEED</br>\[\[EMG\]\] PWR NEED</br>\[\[SIT\]\] ISO</br>\[\[ADM\]\] LOG QSL | 91 |
+| Pack-C 医療 | \[\[SOS\]\] 1RED</br>\[\[EMG\]\] HOSP SAT</br>\[\[EMG\]\] O2 NEED</br>\[\[SIT\]\] 3YLW</br>\[\[ADM\]\] MED QSL | 92 |
 | Pack-D RFL | \[\[ADM\]\] MISS NEW|\[\[ADM\]\] SAFE CONF|\[\[ADM\]\] RFL CH3|\[\[SIT\]\] EVQ FULL|\[\[ADM\]\] QSL | 92 |
-| Pack-E 武力攻撃 | \[\[ALR\]\] MSL ALERT|\[\[ADM\]\] SHEL UG NOW|\[\[EMG\]\] BLAST FIRE|\[\[SIT\]\] UXO FOUND|\[\[ADM\]\] CURF HOLD | 100 |
+| Pack-E 武力攻撃 | \[\[ALR\]\] MSL ALERT</br>\[\[ADM\]\] SHEL UG NOW</br>\[\[EMG\]\] BLAST FIRE</br>\[\[SIT\]\] UXO FOUND</br>\[\[ADM\]\] CURF HOLD | 100 |
 
 | 定型文実装ルール |
 | ----- |
