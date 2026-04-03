@@ -1280,7 +1280,7 @@ Minimum indicators for evaluating not only traffic volume but also the quality o
 Shows the flow in which internal short reports are converted through control and liaison into plain language for outside organizations, and responses return to the closed network with a case number.
 
 <img src="/img/mep_english_05.png"> 
-**Figure 1. Information Handoff Flow**  
+**Figure 1. Information Handoff Flow**</br>
 Internal code → control/liaison → external plain-language conversion → return of response
 
 ### 19-2. Case Lifecycle
@@ -1288,7 +1288,7 @@ Internal code → control/liaison → external plain-language conversion → ret
 A case starts as NEW and follows the basic path of ACK, WIP, ARRV, and CLO. Holds, corrections, negations, and false-information handling remain in the history while preserving the case ID.
 
 <img src="/img/mep_english_06.png"> 
-**Figure 2. Case Lifecycle**  
+**Figure 2. Case Lifecycle**</br>
 The basic route of a case and the branches for hold, correction, negation, and false-information handling
 
 ### 19-3. Recommended Topology and Role Allocation
@@ -1296,5 +1296,5 @@ The basic route of a case and the branches for hold, correction, negation, and f
 Shows the role allocation and physical placement concepts for field nodes, elevated relays, base stations, and external organizations. Relays are kept to the minimum necessary, and base stations handle external liaison and audit.
 
 <img src="/img/mep_english_07.png">  
-**Figure 3. Recommended Topology and Role Allocation**  
+**Figure 3. Recommended Topology and Role Allocation**</br>
 Relationships among field stations, base stations, gateway stations, and outside organizations, and the concept of physical placement
