@@ -1,1296 +1,1302 @@
 
+# Meshtastic Disaster Operations Protocol
 
-Meshtastic 災害時運用プロトコル
-
-| 項目 | 内容 |
+| Item | Content |
 | :---: | ----- |
-| 版 | Version 3.8 |
-| 作成日 | 2026/03/30 |
-| 用途 | 災害時の Meshtastic 私設メッシュを、自治体・消防・医療・避難所との橋渡しまで含めて運用するためのプロトコル |
-| 対象読者 | 災害時にMeshtasticを通常情報インフラの補助的通信手段として想定している者 |
-| 本文の立場 | 法令・公的資料に基づく「事実」と、本プロトコルが採用する「運用提案」を分けて記載する |
-| 作成者 | YNGMT |
+| Edition | Version 3.8 |
+| Date Created | 2026/03/30 |
+| Purpose | A protocol for operating a private Meshtastic mesh during disasters, including coordination and handoff to municipalities, fire services, medical institutions, and shelters |
+| Intended Readers | People who intend to use Meshtastic during disasters as a supplementary communications method alongside ordinary information infrastructure |
+| Position of This Text | This document distinguishes between “facts” based on laws and official materials and the “operational proposals” adopted by this protocol |
+| Author | YNGMT |
 
-【本プロトコルの前提】  
-Meshtastic は公衆向け一斉警報の代替ではない。  
-現場・地域・拠点間の補助通信、案件管理、限定的な状況共有、橋渡しのための閉域運用を対象とする。  
-日本国内運用では、機器ごとの技適・工事設計認証・周波数設計・自治体の地域防災計画整合は、現場責任者が最終確認する。  
-本文中の符号は、訓練済みネットでは優先使用し、未習熟者・来援者・緊急時は平文送信を許容する。  
-外部機関へ引き継ぐ際は必ず平文化する。  
-目次
+**Assumptions of This Protocol**  
+Meshtastic is not a substitute for public mass-alert systems.  
+It is intended for closed-network use for supplementary communications among field sites, regions, and bases, for case management, limited situational sharing, and handoff.  
+For operations in Japan, the on-site responsible person must make the final confirmation regarding each device’s technical conformity certification, construction design certification, frequency planning, and consistency with local government regional disaster-prevention plans.  
+The codes used in this document should be prioritized on trained networks; however, plain-language transmission is permitted for untrained users, external responders, and emergencies.  
+When handing information off to outside organizations, it must always be converted into plain language.  
 
-0\. 最初に読むページ  
-1\. 本書の位置づけ  
-2\. 公的根拠と日本法規適合の整理  
-3\. 運用哲学と指揮統制  
-4\. ネットワーク設計と機材設定標準  
-5\. メッセージ文法・案件管理・訂正規則  
-6\. 自治体・消防・医療・避難所への橋渡し  
-7\. 行方不明・安否・個人情報の取扱い  
-8\. 事前準備・訓練・監査  
-9\. 災害別運用章  
-10\. 武力攻撃・紛争・暴動・ミサイル・核兵器攻撃時運用  
-11\. 台帳・短報管理ソフトウェア（作成中）  
-12\. 定型文（Canned Message）実装案  
-13\. 東日本大震災と無線運用の教訓  
-14\. 参考文献  
-15\. 付帯資料：コードブック（カテゴリー別）  
-16\. 付帯資料：訓練ドリル例  
-17\. 付帯資料：発信前チェックカード  
-18\. 付帯資料：運用評価指標  
-19\. 付帯資料：概念図  
-0\. 最初に読むページ
+## Table of Contents
 
-0-1. 全体像を先に見る
+0. First Pages to Read  
+1. Position of This Document  
+2. Public Basis and Compliance with Japanese Regulations  
+3. Operational Philosophy and Command & Control  
+4. Network Design and Standard Equipment Settings  
+5. Message Grammar, Case Management, and Correction Rules  
+6. Handoff to Municipalities, Fire Services, Medical Institutions, and Shelters  
+7. Handling of Missing Persons, Safety Confirmation, and Personal Information  
+8. Preparedness, Training, and Audit  
+9. Disaster-Specific Operations  
+10. Operations During Armed Attack, Conflict, Riot, Missile Attack, and Nuclear Attack  
+11. Case Ledger / Message Management Software (in progress)  
+12. Proposed Canned Message Implementation  
+13. Lessons from the Great East Japan Earthquake and Radio Operations  
+14. References  
+15. Supplementary Material: Codebook (by Category)  
+16. Supplementary Material: Example Training Drills  
+17. Supplementary Material: Pre-Transmission Check Card  
+18. Supplementary Material: Operational Evaluation Indicators  
+19. Supplementary Material: Conceptual Diagrams  
 
-最初に覚えるべきことは単純である。現場局は短く事実を送り、通信統制は優先順位を決め、連携担当は外部機関向けに平文化し、記録担当は案件IDと訂正履歴を守る。誰が何を担うかを混同しないことが、混乱を減らす第一歩である。  
-![mep\_01][image1]  
-図A　このプロトコルの全体像  
-だれが、なにを、どこへ流すのかを把握するための図
+## 0. First Pages to Read
 
-0-2. 発災直後に何を優先するか
+### 0-1. See the Big Picture First
 
-災害時に失敗しやすいのは、情報を増やしすぎることである。発災直後は、すべてを流すのではなく、救命に直結する情報だけを優先しなければならない。どの段階で何を流せるかを、フェーズで理解する。  
-![mep\_02][image2]  
-図B　フェーズごとの優先順位  
-発災直後から長期化まで、何を流すのかを確認する図
+The first thing to remember is simple. Field stations send short factual reports. Communications control sets priorities. Liaison personnel convert information into plain language for external organizations. Record staff maintain case IDs and correction history. The first step in reducing confusion is not to mix up who is responsible for what.  
+![mep_01][image1]  
+**Figure A. Overall View of This Protocol**  
+A diagram for understanding who sends what, and to where.
 
-0-3. 標準構文の読み方
+### 0-2. What to Prioritize Immediately After Disaster Onset
 
-本プロトコルの短報は、見た目は難しく見えても、実際には「優先度」「案件ID」「SEQ」「状態」「動作」「本文」「確度」「報告時刻」の並びでできている。ここで重要なのは、案件IDの時刻は事案識別用、末尾の時刻は各報告の時刻であり、同じ意味ではないという点である。  
-![mep\_03][image3]
+A common failure in disasters is trying to transmit too much information. Immediately after impact, do not send everything; prioritize only the information directly tied to saving lives. Understand by phase what can be transmitted at each stage.  
+![mep_02][image2]  
+**Figure B. Priorities by Phase**  
+A diagram showing what should be transmitted from immediate impact through prolonged operations.
 
-図C　標準構文の読み方（SEQ対応）  
-案件IDの時刻と、各報告の順番・報告時刻を分けて読むための図
+### 0-3. How to Read the Standard Syntax
 
-0-4. 確度評価はまず三段階で考える
+The short reports in this protocol may look difficult, but in practice they consist of the sequence: “priority,” “case ID,” “SEQ,” “status,” “action,” “body,” “confidence,” and “report time.” The key point is that the time inside the case ID is for identifying the incident, while the time at the end is the time of that specific report. They do not mean the same thing.  
+![mep_03][image3]
 
-確度評価を最初から細かく判定しようとすると、初学者は迷いやすい。そこで本プロトコルでは、まず CFM / PRB / UNC の三段階で整理し、その後に必要であれば A1〜E5 へ落とし込む。重要なのは、未確認情報を確認済情報と混ぜないことである。  
-![mep\_04][image4]  
-図D　確度評価の決め方  
-まずはCFM / PRB / UNC で判断
+**Figure C. How to Read the Standard Syntax (with SEQ)**  
+A diagram for reading the time in the case ID separately from the report order and report time of each update.
 
-本書の位置づけ
+### 0-4. Think About Confidence First in Three Levels
 
-【事実】  
-米国ICS/NIMSは、共通用語・平文・標準化されたメッセージ運用を重視している。一方、Meshtastic 公式は、位置共有・MQTT・ROUTER/REPEATER の乱用が帯域や秘匿性を悪化させ得ること、PRIMARY チャネルで位置共有が流れること、public MQTT で位置情報がインターネットに出得ることを明示している。\[R1\]\[R2\]\[R3\]\[R4\]
+If users try to judge confidence too finely from the beginning, beginners easily become uncertain. Therefore, this protocol first organizes confidence into three levels—CFM / PRB / UNC—and only later, if necessary, maps them to A1–E5. The crucial point is not to mix unconfirmed information with confirmed information.  
+![mep_04][image4]  
+**Figure D. How to Determine Confidence**  
+Start by judging with CFM / PRB / UNC.
 
-【本プロトコルでの採用】  
-したがって本プロトコルは、「内部では符号優先」「外部へは平文化必須」「公衆警報の代替はしない」「案件管理を徹底する」を四本柱とする。Meshtastic は、停電・輻輳・局所孤立下での補助通信に限定し、自治体・消防・医療・避難所との橋渡しは 連携担当が担う。
+## 1. Position of This Document
 
-| 本書の要約 |
+**[Fact]**  
+The U.S. ICS/NIMS framework emphasizes common terminology, plain language, and standardized message handling. Meanwhile, Meshtastic official documentation clearly states that excessive use of position sharing, MQTT, and ROUTER/REPEATER can worsen bandwidth usage and confidentiality; that position sharing is transmitted on the PRIMARY channel; and that public MQTT can expose position data to the internet. [R1][R2][R3][R4]
+
+**[Adopted in This Protocol]**  
+Accordingly, this protocol is built on four pillars: “prefer codes internally,” “plain-language conversion is mandatory for external handoff,” “do not replace public warning systems,” and “enforce case management.” Meshtastic is limited to supplementary communications under blackout, congestion, or local isolation. Handoff to municipalities, fire services, medical institutions, and shelters is handled by liaison personnel.
+
+| Summary of This Document |
 | :---: |
-| 内部＝短い符号で流す。 |
-| 外部＝平文で引き継ぐ。 |
-| 個人情報＝必要最小限・目的限定・記録必須。 |
-| ネット設定＝CLIENT 系・位置共有抑制・public MQTT 禁止。 |
+| Internal = transmit in short codes. |
+| External = hand off in plain language. |
+| Personal information = minimum necessary, purpose-limited, and always recorded. |
+| Network settings = CLIENT-family roles, restricted position sharing, public MQTT prohibited. |
 
-2\. 公的根拠と日本法規適合の整理
+## 2. Public Basis and Compliance with Japanese Regulations
 
-2-1. 920MHz 帯と ARIB STD-T108
+### 2-1. The 920 MHz Band and ARIB STD-T108
 
-【事実】  
-ARIB STD-T108 は、920MHz帯のテレメータ用・テレコントロール用・データ伝送用無線設備に関する標準規格であり、陸上移動局の 920.5MHz～923.5MHz、および特定小電力無線局の 915.9MHz～929.7MHz を対象としている。また同規格は、キャリアセンスを要しない特定小電力無線局も編として持つ。\[R5\]
+**[Fact]**  
+ARIB STD-T108 is the standard specification for radio equipment for telemetry, telecontrol, and data transmission in the 920 MHz band. It covers 920.5–923.5 MHz for land mobile stations and 915.9–929.7 MHz for specified low-power radio stations. The standard also includes a category of specified low-power stations that do not require carrier sense. [R5]
 
-【本プロトコルでの採用】  
-日本国内の Meshtastic 運用では、使用される無線モジュール・完成機器・アンテナ構成が日本国内の適合範囲にあるかを、個々の機材で確認したものだけを運用対象とする。汎用 LoRa ハードや海外向け完成品を、そのまま「日本で当然使える」とは扱わない。
+**[Adopted in This Protocol]**  
+For Meshtastic operations in Japan, only radio modules, finished devices, and antenna configurations individually confirmed to be within the applicable conformity scope in Japan are eligible for use. Generic LoRa hardware or overseas finished products are not treated as “obviously usable in Japan” without verification.
 
-2-2. 技適・工事設計認証
+### 2-2. Technical Conformity and Construction Design Certification
 
-【事実】  
-日本の特定無線設備には、技術基準適合証明や工事設計認証の制度があり、完成品1台ごとの技適と、設計・品質管理を対象とする認証では制度趣旨が異なる。多数台の同一機種では工事設計認証が一般的であり、機器には適合表示の確認が必要である。\[R6\]\[R7\]
+**[Fact]**  
+Japan has systems for technical conformity certification and construction design certification for specified radio equipment. Their institutional purpose differs between certification of each finished unit and certification focused on design and quality control. For large numbers of identical models, construction design certification is common, and conformity markings on equipment must be confirmed. [R6][R7]
 
-【本プロトコルでの採用】  
-運用台帳には、最低でも「機種名／認証番号／アンテナ構成／ファーム版／所有者／設置場所／点検日」を記録する。現場での改造・外部アンテナ換装・出力設定変更は、認証範囲外に出るおそれがあるため、別承認なく禁止とする。
+**[Adopted in This Protocol]**  
+At minimum, the operational ledger must record “model name / certification number / antenna configuration / firmware version / owner / installation location / inspection date.” On-site modification, external antenna replacement, or output setting changes are prohibited without separate approval because they may exceed the certified scope.
 
-2-3. 個人情報・災害時共有・行方不明者探索
+### 2-3. Personal Information, Disaster-Time Sharing, and Missing-Person Searches
 
-【事実】  
-個人情報保護委員会は、大規模災害等の緊急時に、人の生命・身体・財産の保護のため必要であり本人同意取得が困難な場合には、個人データの第三者提供が可能と整理している。また、避難行動要支援者名簿や個別避難計画については、災害時には必要な限度で本人同意なし提供が可能とQ\&Aで明示している。さらに、2025年改訂Q\&Aでは、行方不明者探索のための行政機関等間提供は、保有個人情報の内容・利用目的・必要性等を踏まえ、地方公共団体が適切に判断すると整理している。\[R8\]\[R9\]\[R10\]
+**[Fact]**  
+Japan’s Personal Information Protection Commission has stated that in emergencies such as major disasters, third-party provision of personal data is permissible when necessary to protect life, body, or property and when obtaining the subject’s consent is difficult. It has also clarified in its Q&A that rosters of persons requiring evacuation assistance and individualized evacuation plans may be provided without consent to the extent necessary during disasters. In addition, the 2025 revised Q&A states that provision among administrative bodies for missing-person searches should be appropriately judged by local governments in light of the content of the retained personal information, the purpose of use, and the necessity. [R8][R9][R10]
 
-【本プロトコルでの採用】  
-「共有できること」と「無制限に流してよいこと」は別である。Meshtastic 一般運用チャネルでは、氏名・生年月日・詳細住所・病名・要介護度・障害内容など、個人識別性の高い情報は原則禁止とし、必要時は private side-channel・紙台帳・現地対面連絡へ切り替える。
+**[Adopted in This Protocol]**  
+“What may be shared” and “what may be transmitted without limit” are different matters. On general Meshtastic operating channels, highly identifying information such as names, dates of birth, detailed addresses, diagnoses, care levels, or disability details is prohibited in principle. When necessary, switch to a private side-channel, paper ledgers, or face-to-face communication.
 
-2-4. 避難所・医療連携
+### 2-4. Shelter and Medical Coordination
 
-【事実】  
-内閣府は 2024年12月改定の避難所関連ガイドライン群を公表しており、避難所運営、生活環境、トイレ確保、在宅・車中泊避難者等支援を更新している。厚生労働省のDMAT活動要領改正では、都道府県が平時に運用計画・協定締結を行い、災害時に情報収集、連絡、調整、人員・物資支援を行うこと、DMAT指定医療機関が研修・訓練に努めることが示されている。\[R11\]\[R12\]
+**[Fact]**  
+In December 2024, Japan’s Cabinet Office published revised shelter-related guideline materials covering shelter operations, living environment, toilet availability, and support for home evacuees and vehicle evacuees. Revisions to the Ministry of Health, Labour and Welfare’s DMAT operational guidelines indicate that prefectures should prepare operational plans and agreements in peacetime and carry out information collection, communication, coordination, and personnel/material support during disasters, and that DMAT-designated medical institutions should work on training and drills. [R11][R12]
 
-【本プロトコルでの採用】  
-Meshtastic 網は、避難所連絡・医療搬送・資源融通の「代替行政回線」ではなく、「断続的にでもつなぐ補助線」と定義する。避難所・医療機関・自治体の既存体制を上書きせず、必要時の橋渡し・速報・案件番号共有・状況スナップショットの送出に使う。
+**[Adopted in This Protocol]**  
+The Meshtastic network is defined not as a “replacement administrative line” for shelter coordination, medical transport, or resource sharing, but as a “supplementary line that keeps things connected even intermittently.” It does not overwrite existing systems of shelters, medical institutions, or municipalities; it is used for handoff, flash reporting, case-number sharing, and situational snapshots when needed.
 
-3. 運用哲学と指揮統制
+## 3. Operational Philosophy and Command & Control
 
-3-1. 四本柱
+### 3-1. Four Pillars
 
-帯域保護：短い符号と必要最小限送信を原則とする。  
-案件管理：全案件に 案件ID を付し、未処理案件 を残す。  
-訂正可能性：誤報・伝聞・修正を COR で統制する。  
-橋渡し責任：外部へは平文・時刻・場所・件数を揃えて出す。
+**Bandwidth protection:** Short codes and minimum necessary transmission are the rule.  
+**Case management:** Every case gets a case ID, and unresolved cases remain tracked.  
+**Correctability:** False reports, hearsay, and revisions are controlled through COR.  
+**Responsibility for handoff:** When communicating externally, send plain language with time, location, and counts aligned.
 
-3-2. 役割
+### 3-2. Roles
 
-| 略号 | 役割名 | 責務 |
+| Abbrev. | Role Name | Responsibility |
 | :---: | :---: | ----- |
-| NETCTL | 通信統制 | フェーズ移行、沈黙命令、優先順位、チャネル保守 |
-| OPS | 現場運用 | 救助・医療・避難誘導・現場案件の進行管理 |
-| LOG | 後方支援 | 水・食料・電源・燃料・毛布・衛生資材・車両 |
-| 連携担当 | 橋渡し | 自治体、消防、警察、医療、避難所、社協、ボランティアと接続 |
-| SCRIBE | 記録 | 台帳、時系列、COR反映、引継ぎログの保全 |
-| RFL | 安否・行方不明 | 氏名情報、照会、家族連絡、個人情報統制 |
-| GATE | ゲートウェイ運用 | 案件集約、群運用、個別照会、監査、地図表示、外部補助回線の統制 |
+| NETCTL | Communications Control | Phase transition, silence orders, prioritization, channel maintenance |
+| OPS | Field Operations | Rescue, medical response, evacuation guidance, progress management of field cases |
+| LOG | Logistics / Rear Support | Water, food, power, fuel, blankets, hygiene supplies, vehicles |
+| Liaison | Handoff | Connects with municipalities, fire services, police, medical institutions, shelters, councils of social welfare, and volunteers |
+| SCRIBE | Recordkeeping | Ledger, chronology, COR reflection, preservation of handoff logs |
+| RFL | Restoring Family Links / Safety & Missing Persons | Name information, inquiries, family contact, personal information control |
+| GATE | Gateway Operations | Case aggregation, group operations, individual inquiries, audit, map display, control of external supplementary lines |
 
-3-3. フェーズ
+### 3-3. Phases
 
-| Phase | 主眼 | 送信規律 |
+| Phase | Main Focus | Transmission Discipline |
 | :---: | :---: | ----- |
-| 0 PREPARE | 平時 | 設定確認、名簿整備、訓練、定型文（Canned Message） 更新 |
-| 1 IMPACT | 発災直後 | \[\[SOS\]\] と \[\[EMG\]\] 優先。雑談・MISS名簿禁止 |
-| 2 LIFE-SAFETY | 救命中心 | 閉じ込め、火災、搬送、道路寸断、避難誘導を優先 |
-| 3 STABILIZE | 応急安定 | 物資、避難所、インフラ、限定的MISS解禁 |
-| 4 SUSTAIN | 長期化 | 定時報告、省電力運用、引継ぎ、外部協定運用 |
+| 0 PREPARE | Peacetime | Confirm settings, maintain rosters, train, update canned messages |
+| 1 IMPACT | Immediately after impact | Prioritize [[SOS]] and [[EMG]]. No chatter or MISS rosters |
+| 2 LIFE-SAFETY | Life-saving focus | Prioritize entrapment, fire, transport, road blockage, and evacuation guidance |
+| 3 STABILIZE | Emergency stabilization | Materials, shelters, infrastructure, limited MISS activation |
+| 4 SUSTAIN | Prolonged operations | Periodic reporting, power-saving operation, handoff, external agreement operations |
 
-| 送信停止規律 原則 |
+| Basic Rules for Transmission Restrictions |
 | ----- |
-| Phase 1 では、長文説明、議論、推測、雑談、行方不明者一覧、詳細住所の流布を禁止する。 |
-| Phase 2 でも、EYE（直接目撃）に基づかない救助要請は、原則として PRB / UNC として扱い、即時救助案件と混在させない。 |
-| Phase 3 以降に RFL を解禁するが、一般チャネルでは案件番号中心とし、個人識別情報は private channel または紙台帳に切り分ける。 |
+| In Phase 1, prohibit long explanations, discussion, speculation, casual chat, missing-person lists, and circulation of detailed addresses. |
+| Even in Phase 2, rescue requests not based on EYE (direct observation) are handled in principle as PRB / UNC and must not be mixed with immediate rescue cases. |
+| RFL can be activated from Phase 3 onward, but on general channels use case numbers as the focus, and separate personally identifying information into private channels or paper ledgers. |
 
-3-4. 確度の初期フィルター
+### 3-4. Initial Confidence Filter
 
-A1〜E5 の評価を付す前に、現場ではまず三段階の初期フィルターで整理する。短時間で迷わないための前処理である。  
-CFM：自分が直接見た、または公的機関発表で裏づけがある情報。  
-PRB：複数証言が一致する、または信頼できる関係者から得た可能性の高い情報。  
-UNC：単発の伝聞、SNS、裏づけのない噂。即断材料には使わない。  
-初報では CFM / PRB / UNC を付し、外部橋渡し時または台帳確定時に A1〜E5 へ変換してよい。
+Before applying an A1–E5 assessment, the field should first sort information with a three-level initial filter. This is pre-processing to avoid hesitation under time pressure.  
+**CFM:** Information directly seen by oneself, or backed by an official announcement.  
+**PRB:** Information with matching multiple testimonies, or highly plausible information from reliable related parties.  
+**UNC:** Single hearsay reports, social media, or unsupported rumors. Do not use as a basis for immediate decisions.  
+Initial reports may use CFM / PRB / UNC, and can later be converted to A1–E5 when handing off externally or when finalizing the ledger.
 
-4.ネットワーク設計と機材設定標準
+## 4. Network Design and Standard Equipment Settings
 
-4-1. Meshtastic 側の基本設定
+### 4-1. Basic Meshtastic Settings
 
-【事実】  
-Meshtastic 公式は、通常は CLIENT / CLIENT\_MUTE / CLIENT\_BASE を推奨し、ROUTER / REPEATER の安易な使用は衝突増・配達率低下・有効到達距離低下を招くとしている。PRIMARYチャネルでは位置共有が流れ、public MQTT は位置をインターネットへ公開し得る。MAX HOPS は通常 3 が推奨される。\[R1\]\[R2\]\[R3\]\[R4\]
+**[Fact]**  
+Meshtastic official guidance generally recommends CLIENT / CLIENT_MUTE / CLIENT_BASE, and warns that casual use of ROUTER / REPEATER increases collisions, lowers delivery rates, and reduces effective range. Position sharing is transmitted on the PRIMARY channel, public MQTT may expose location to the internet, and MAX HOPS of 3 is usually recommended. [R1][R2][R3][R4]
 
-| 項目 | 推奨値 | 備考 |
+| Item | Recommended Value | Notes |
 | :---: | :---: | ----- |
-| Role | 原則 CLIENT | 携行局が密集時は CLIENT\_MUTE、拠点局のみ CLIENT\_BASE 検討 |
-| MAX HOPS | 3 | 原則固定。辺縁ノードのみ例外検討 |
-| Position sharing | PRIMARY では OFF | 必要時のみ private secondary \+ coarse precision |
-| MQTT | OFF | public MQTT / map reporting 禁止 |
-| NodeInfo | 既定維持 | 不要に短縮しない |
-| Telemetry | 必要時のみ | 災害時は device/env/health の常時送出を抑制 |
-| Favorite / mute | 積極利用 |  noisy node を局所的に抑制する |
+| Role | CLIENT in principle | Consider CLIENT_MUTE in dense portable-node environments; only base stations should consider CLIENT_BASE |
+| MAX HOPS | 3 | Fixed in principle. Consider exceptions only for fringe nodes |
+| Position sharing | OFF on PRIMARY | Only when necessary, on a private secondary channel + coarse precision |
+| MQTT | OFF | public MQTT / map reporting prohibited |
+| NodeInfo | Keep default | Do not shorten unnecessarily |
+| Telemetry | Only when necessary | During disasters, suppress constant transmission of device/env/health telemetry |
+| Favorite / mute | Use actively | Locally suppress noisy nodes |
 
-4-2. チャネル設計標準
+### 4-2. Standard Channel Design
 
-【ノード名補助ルール】  
-被災地で活動中のノードは、GPS 機能を ON にしていない場合や、GPS 故障で現在位置が共有できない場合に備え、長文ノード名の先頭に拠点地プレフィックスを付す。例：仙台市拠点なら「SENDAI\_」または短縮形「SNDI\_」を用いる。
+**[Supplementary Rule for Node Names]**  
+Nodes operating in disaster areas should add a base-location prefix at the beginning of the long node name in case GPS is OFF or broken and current position cannot be shared. For example, a Sendai base would use “SENDAI_” or the short form “SNDI_”.
 
-【運用意図】  
-位置共有が欠けても、受信側が「どの地域の発信か」をすぐに推定できるようにするためである。広域メッシュでは、拠点地プレフィックスだけでも検索・転記・案件のふり分けが容易になる。
+**[Operational Intent]**  
+This lets receivers quickly infer from which region a transmission originated even when position sharing is unavailable. In a wide-area mesh, a base-location prefix alone already makes search, transcription, and case routing easier.
 
-| Channel | 用途 | 規律 |
+| Channel | Purpose | Discipline |
 | :---: | :---: | ----- |
-| Ch0 | Interop / Monitor | 広域監視・既知メッシュ把握。敏感情報禁止。位置共有OFF |
-| Ch1 | OPS-ENC | 現場救助・医療の主運用 |
-| Ch2 | LOG-ENC | 物資・輸送・電源・燃料 |
-| Ch3 | RFL-ENC | 安否・行方不明・照会。参加者限定 |
-| Ch4 | 連携担当-ENC | 自治体・避難所・拠点局間調整 |
-| Ch5 | ADMIN-ENC | 設定変更、試験、保守 |
-| Ch6 | FIELD-BACKUP | 予備 |
-| Ch7 | EVENT / LOCAL | 地域事情に応じた補助 |
+| Ch0 | Interop / Monitor | Wide-area monitoring and awareness of known meshes. No sensitive information. Position sharing OFF |
+| Ch1 | OPS-ENC | Main channel for field rescue and medical operations |
+| Ch2 | LOG-ENC | Materials, transport, power, fuel |
+| Ch3 | RFL-ENC | Safety confirmation, missing persons, inquiries. Limited participants |
+| Ch4 | Liaison-ENC | Coordination among municipalities, shelters, and base stations |
+| Ch5 | ADMIN-ENC | Configuration changes, tests, maintenance |
+| Ch6 | FIELD-BACKUP | Backup |
+| Ch7 | EVENT / LOCAL | Auxiliary use according to local circumstances |
 
-4-3. 設置場所の優先順位
+### 4-3. Priority of Installation Locations
 
-自治体対策本部と直結しやすい高所拠点  
-災害拠点病院・二次救急・DMAT 受援点  
-避難所本部・福祉避難所・物資集積所  
-河川・海岸・山間の監視が必要な要衝  
-道路啓開・中継・発電可能な民間協力拠点
+High points easily connected to municipal disaster headquarters  
+Disaster base hospitals, secondary emergency centers, DMAT reception points  
+Shelter headquarters, welfare shelters, material staging areas  
+Strategic points requiring monitoring of rivers, coasts, and mountainous areas  
+Private-sector cooperating bases capable of road opening, relay, and power generation
 
-4-4. 物理トポロジー（中継配置）
+### 4-4. Physical Topology (Relay Placement)
 
-中継専用ノードは多ければよいのではない。エリア内で見通しの取れる高所に、必要最小限を置き、電波ループと輻輳を防ぐ。  
-尾根、ビル屋上、見通しのよい高層階など、エリアの最高標高地点に原則1〜2台のみ配置する。  
-ROUTER / REPEATER の乱用は避け、常設拠点局と予備局の役割を分ける。  
-ソーラーパネル、外部電源、予備バッテリーを用意し、長時間停電でも維持できるようにする。  
-Smart ExtCtrl、GPS 更新頻度、Telemetry 送信間隔は最小限にして、無駄な送信と消費電力を抑える。
+More dedicated relay nodes is not always better. Place the minimum necessary number at high points with line of sight within the area to prevent radio loops and congestion.  
+As a rule, place only one or two units at the highest-elevation points in the area, such as ridgelines, rooftops, or upper floors with good visibility.  
+Avoid excessive use of ROUTER / REPEATER, and separate the roles of permanent base stations and reserve stations.  
+Prepare solar panels, external power, and backup batteries so that the network can be sustained even through prolonged outages.  
+Set Smart ExtCtrl, GPS update frequency, and telemetry intervals to the minimum necessary to suppress unnecessary transmissions and power consumption.
 
-4-5. キーボード非搭載・極小画面デバイスの運用
+### 4-5. Operation of Devices Without Keyboards or with Extremely Small Displays
 
-入力が困難な端末では、ボタン操作と定型文マクロで最低限の応答を返せるようにする。  
-短押し1回：QSL または ACK など最短応答を返す。  
-長押し：登録済み \[\[SOS\]\] 初報を送る。  
-二度押し：WIP または ARRV など進捗通知を送る。  
-端末ごとに操作表を貼付し、訓練時に誤送信なく操作できることを確認する。
+For devices on which text entry is difficult, ensure that minimum responses can be sent through button operations and canned-message macros.  
+Single short press: send the shortest response such as QSL or ACK.  
+Long press: send a pre-registered [[SOS]] initial report.  
+Double press: send a progress notification such as WIP or ARRV.  
+Attach an operation card to each terminal and confirm in training that it can be operated without accidental transmissions.
 
-5\. メッセージ文法・案件管理・訂正規則
+## 5. Message Grammar, Case Management, and Correction Rules
 
-5-1. 標準構文
+### 5-1. Standard Syntax
 
-本プロトコルでは、同一案件の更新順が分からなくなることを防ぐため、SEQ（シーケンス番号）を構文要素として用いる。SEQ は S01, S02, S03… のように付し、その案件の第何報かを示す。これにより、同じ案件IDの中で、どの報告が先でどの報告が後かを、受信者・転記者・外部連携担当の全員が同じ順序で追える。  
-また、構文末尾の時刻は冗長ではない。案件ID内の時刻は「案件を識別するための起票・発生時刻」であり、構文末尾の時刻は「その行の情報がいつ観測・送信されたか」を示す報告時刻である。したがって、14:30に起票された案件に対し、14:38の初報、14:51の進入路更新、15:10の完了報というように、同一案件の経過を追うためには、SEQ と報告時刻の両方が必要である。
+To prevent the update order of the same case from becoming unclear, this protocol uses SEQ (sequence number) as a syntax element. SEQ is written as S01, S02, S03, and so on, indicating which report number it is for that case. This allows receivers, transcribers, and external liaison staff to follow the order of reports within the same case ID in exactly the same way.  
+The time at the end of the syntax is not redundant. The time inside the case ID is the filing/occurrence time used to identify the case, whereas the time at the end is the report time indicating when the information in that line was observed or transmitted. Therefore, to track the course of the same case—for example, an incident filed at 14:30, an initial report at 14:38, an access-route update at 14:51, and a closure report at 15:10—both SEQ and the report time are necessary.
 
-| 構文例 | 意味 |
+| Syntax Example | Meaning |
 | ----- | ----- |
-| \[優先度\] \[案件ID\] \[SEQ\] \[状態\] \[動作\] : \[内容\] \[確度\] \[報告時刻\] | 優先度、案件番号、何報目か、進捗、動作、内容、確度、報告時刻を一行でそろえる基本形である。 |
-| 例：\[\[SOS\]\] MAI-Q-20260329-1430 S01 NEW REQ: COL TRP 2PAX 1RED 1YLW. B2 1438J | 舞鶴の地震案件の第1報。倒壊建物に2人が閉じ込められ、赤1名・黄1名を含む救助要請で、14:38時点の報告という意味である。 |
-| 例：\[\[SIT\]\] KOB-F-20260329-1510 S02 WIP RPT: ROD BLK BY FLD. C3 1515J | 神戸の水害案件の第2報。洪水により道路が閉塞している状況が継続しており、C3評価、15:15時点の更新報という意味である。 |
-| 例：\[\[ADM\]\] RFL-MAI-20260329-001 S03 NEW RPT: MISS M70 LAST SEC-B 1410J. C3 1519J | 舞鶴の行方不明・家族再連絡案件の第3報。70代男性がB区画で最後に確認され、C3評価で15:19に共有されたという意味である。 |
+| [Priority] [Case ID] [SEQ] [Status] [Action] : [Content] [Confidence] [Report Time] | The basic form that aligns priority, case number, report number, progress, action, content, confidence, and report time on one line. |
+| Example: [[SOS]] MAI-Q-20260329-1430 S01 NEW REQ: COL TRP 2PAX 1RED 1YLW. B2 1438J | First report of an earthquake case in Maizuru. Two people are trapped in a collapsed building, including one red and one yellow casualty, and this is a report as of 14:38. |
+| Example: [[SIT]] KOB-F-20260329-1510 S02 WIP RPT: ROD BLK BY FLD. C3 1515J | Second report of a flood case in Kobe. Roads remain blocked by flooding; assessment C3; updated at 15:15. |
+| Example: [[ADM]] RFL-MAI-20260329-001 S03 NEW RPT: MISS M70 LAST SEC-B 1410J. C3 1519J | Third report of a missing-person / family reconnection case in Maizuru. A male in his 70s was last confirmed in Sector B; assessment C3; shared at 15:19. |
 
-5-2. 状態と動作を分ける
+### 5-2. Separate Status from Action
 
-| 状態コード | 意味 | 使用タイミング |
+| Status Code | Meaning | When to Use |
 | :---: | :---: | ----- |
-| NEW | 新規案件 | 最初の登録 |
-| ACK | 受付済 | 受信・台帳反映済 |
-| WIP | 対応中 | 担当割当済・進行中 |
-| HLD | 保留 | 条件待ち・確認待ち |
-| COR | 訂正 | 前報修正 |
-| CLO | 完了 | 終了・解除・閉鎖 |
+| NEW | New case | First registration |
+| ACK | Received | Received and recorded in the ledger |
+| WIP | In progress | Assigned and actively being handled |
+| HLD | On hold | Waiting for conditions or confirmation |
+| COR | Correction | Correction of a previous report |
+| CLO | Closed | Completed / cleared / terminated |
 
-| 動作コード | 意味 | 使用タイミング |
+| Action Code | Meaning | When to Use |
 | :---: | :---: | ----- |
-| REQ | 要請 | 資源・出動・照会の要求 |
-| RPT | 報告 | 現況・変化・観測の報告 |
-| SEND | 送付中 | 物資・人員等が出発済 |
-| ARRV | 到着 | 現地到達 |
-| EVQ | 避難 | 避難実施・避難誘導 |
-| QSL | 了解 | 受信・了解・復唱完了 |
-| CAL | 通報・招請 | 外部機関への通報、出動要請、橋渡し要請 |
+| REQ | Request | Request for resources, dispatch, or inquiry |
+| RPT | Report | Report of current situation, change, or observation |
+| SEND | Sent / en route | Materials or personnel have departed |
+| ARRV | Arrived | Reached the site |
+| EVQ | Evacuate / evacuation | Evacuation carried out or guided |
+| QSL | Understood / acknowledged | Received, understood, read back completed |
+| CAL | Notify / request external agency | Notify an outside agency, request dispatch, or request liaison handoff |
 
-5-3. 案件ID
+### 5-3. Case ID
 
-本プロトコルでは、案件IDそのものは事案識別用として「AREA-CAT-YYYYMMDD-HHMM\[-BRANCH\]」とする。AREA は 3～5 文字、CAT は Q（地震）、T（津波）、P（豪雨・線状降水帯）、Y（台風・暴風・高潮）、F（洪水・河川氾濫）、L（土砂）、I（火災）、V（火山）、W（雪寒）、H（暑熱）、M（医療）、N（原子力・放射線）、C（化学）、B（生物）、U（インフラ）、G（物資）、S（治安・武力攻撃・紛争・暴動）K（山岳遭難）、O（海洋遭難）、R（RFL/安否）を用いる。BRANCH は同一分に独立した複数案件が立った場合にだけ使う枝番であり、同一案件の何報目かを表すものではない。何報目かは別要素の SEQ （シーケンス番号）で表す。
+In this protocol, the case ID itself is used for incident identification in the form “AREA-CAT-YYYYMMDD-HHMM[-BRANCH].” AREA is 3–5 characters. CAT uses Q (earthquake), T (tsunami), P (heavy rain / linear rainband), Y (typhoon / windstorm / storm surge), F (flood / river overflow), L (landslide), I (fire), V (volcano), W (snow/cold), H (heat), M (medical), N (nuclear/radiation), C (chemical), B (biological), U (infrastructure), G (supplies), S (security / armed attack / conflict / riot), K (mountain rescue), O (marine rescue), and R (RFL/safety confirmation). BRANCH is a branch number used only when multiple independent cases arise in the same minute; it does not indicate which report number it is for the same case. Report sequence is expressed separately by SEQ.
 
-5-4. 訂正と上書き
+### 5-4. Correction and Overwrite Rules
 
-誤送信・誤記は削除ではなく COR で打つ。  
-前報の案件IDを維持し、本文先頭に FIX または CANCEL を入れる。  
-SCRIBE は台帳上で旧報を残し、訂正版にリンクさせる。  
-「推定」を「確定」に変える場合は、必ず確度も更新する。
+Mistyped or incorrect transmissions are not deleted; they are corrected with COR.  
+Keep the same case ID as the previous report, and put FIX or CANCEL at the beginning of the body.  
+SCRIBE keeps the old report in the ledger and links it to the corrected version.  
+When changing information from “estimated” to “confirmed,” always update the confidence as well.
 
-5-5. 虚偽情報・デマ・詐欺対策
+### 5-5. Countering False Information, Rumors, and Fraud
 
-災害時は善意の伝聞が誤情報へ変わりやすい。放置すると救助資源の誤投入や不必要な避難が起きるため、論理的に打ち消す符号を用いる。  
-FAK：明らかな虚偽、悪意のあるデマ、誤認を広げる情報。  
-NEG：調査の結果、その事象は存在しなかったという打ち消し。  
-SCM：救援や支援を装った詐欺、不審勧誘、不正徴収。  
-例：\[\[ALR\]\] FAK-INFO : TSUNAMI RUMOR IS FALSE. CFM. ／ 津波の噂は虚偽であるという警戒通知。  
-例：\[\[SIT\]\] MAI-Q-20260329-1430 NEG : NO TRAPPED PAX. ALL EVQ. CFM. ／ 閉じ込めなし、全員避難済みという打ち消し。
+During disasters, well-intentioned hearsay easily turns into misinformation. If left unchecked, it can misdirect rescue resources or trigger unnecessary evacuations, so this protocol uses codes to negate such information logically.  
+**FAK:** Clearly false information, malicious rumors, or information that spreads misrecognition.  
+**NEG:** A negation indicating that the event in question did not exist upon investigation.  
+**SCM:** Fraud, suspicious solicitation, or illegitimate collection disguised as aid or support.  
+Example: `[[ALR]] FAK-INFO : TSUNAMI RUMOR IS FALSE. CFM.` / An alert stating that a tsunami rumor is false.  
+Example: `[[SIT]] MAI-Q-20260329-1430 NEG : NO TRAPPED PAX. ALL EVQ. CFM.` / A negation stating that no one is trapped and everyone has evacuated.
 
-5-6. 情報の有効期限（TTL）
+### 5-6. Time-to-Live (TTL) for Information
 
-更新のない案件は古い情報になる。Backlog の陳腐化を防ぐため、段階ごとに再確認期限を持たせる。  
-Phase 1：緊急案件は15〜30分以内に再確認または担当応答が必要。  
-Phase 2：発生から2時間以上更新がない NEW / WIP 案件は HLD または 要再確認 として再照会する。  
-Phase 3 以降：物資・避難所・インフラ案件は、定時報告単位で再確認時刻を入れる。  
-TTL を過ぎた案件は削除せず、時刻付きで更新待ち状態へ移す。
+Cases without updates become stale. To prevent backlog aging, set reconfirmation deadlines by stage.  
+**Phase 1:** Emergency cases must be reconfirmed or receive a responsible-unit response within 15–30 minutes.  
+**Phase 2:** NEW / WIP cases with no update for more than 2 hours after occurrence should be re-queried as HLD or “reconfirmation required.”  
+**Phase 3 onward:** For supply, shelter, and infrastructure cases, include the next reconfirmation time in each scheduled reporting unit.  
+Cases past TTL are not deleted; they are moved into a waiting-for-update state with a timestamp.
 
-5-7. NIL/ NEG/SAFE/CLOの使い分け
+### 5-7. Distinguishing NIL / NEG / SAFE / CLO
 
-本プロトコルでは、NIL、NEG、SAFE、CLO を混同しない。NIL は「この報告時点で追加して書くべき新情報がない」ことを示し、NEG は「起きたと疑われた事象が、確認の結果、存在しなかった」ことを示す。SAFE は「人、集団、避難所、施設など対象の安全確認ができた」ことを示し、CLO は「案件としての処理が完了し、台帳上も終了へ移せる」ことを示す。  
-したがって、NIL は空欄の代用ではなく、点呼、定時確認、追補なし報告で用いる。NEG は誤報・誤認・伝聞の打消しに用いる。SAFE は対象の状態を示すが、搬送、引継ぎ、再照会などが残る場合は CLO にしない。CLO は案件全体の終了を意味し、SAFE と同義ではない。  
-運用上は「NIL＝追加情報なし」「NEG＝確認の結果その事象なし」「SAFE＝安全確認済み」「CLO＝案件完了」と覚える。外部機関へ橋渡しする際も、この差を崩さず平文化する。
+This protocol does not confuse NIL, NEG, SAFE, and CLO. NIL means that at the time of the report there is no additional new information to write. NEG means that an event that was suspected to have occurred was found not to exist after confirmation. SAFE means that the safety of a person, group, shelter, facility, or other target has been confirmed. CLO means that processing of the case is complete and it can be moved to closed status in the ledger.  
+Therefore, NIL is not a substitute for leaving a field blank; it is used for roll calls, scheduled checks, and reports with no supplemental information. NEG is used to cancel false reports, misrecognition, or hearsay. SAFE shows the status of the subject, but if transport, handoff, or re-inquiry remain, do not mark it CLO. CLO means the entire case is complete and is not synonymous with SAFE.  
+Operationally, remember: “NIL = no additional information,” “NEG = the event did not exist upon confirmation,” “SAFE = safety confirmed,” and “CLO = case completed.” Preserve these distinctions when converting to plain language for external organizations.
 
-| 符号 | 意味 | 使う場面 | 例文 | 例文の意味 |
+| Code | Meaning | Use Case | Example | Meaning of Example |
 | :---: | :---: | ----- | :---: | ----- |
-| NIL | 追加情報なし・異常なし | 点呼、定時確認、追補なし報告 | SAFE ALL NIL | 安全確認はできており、この時点で追加異常情報がない意味。 |
-| NEG | 確認の結果、その事象なし | 誤報、誤認、伝聞の打消し | NEG NO FIRE | 確認の結果、火災は存在しなかった意味。 |
-| SAFE | 安全確認済み | 本人確認、避難所確認、施設無事確認 | SAFE EVQ-01 | 避難所1で対象の安全確認ができた意味。案件完了とは限らない。 |
-| CLO | 案件完了 | 救助完了、配布完了、復旧完了 | CLO NIL | 案件が完了し、追加対応が不要という意味。 |
+| NIL | No additional information / no abnormality | Roll call, periodic check, report with no supplement | SAFE ALL NIL | Safety has been confirmed and there is no additional abnormal information at this time. |
+| NEG | Upon confirmation, the event does not exist | Canceling false reports, misrecognition, hearsay | NEG NO FIRE | Upon confirmation, there was no fire. |
+| SAFE | Safety confirmed | Identity confirmation, shelter confirmation, facility safety confirmation | SAFE EVQ-01 | Safety has been confirmed at Shelter 1. This does not necessarily mean the case is closed. |
+| CLO | Case completed | Rescue completed, distribution completed, recovery completed | CLO NIL | The case is completed and no additional action is required. |
 
-6\. 自治体・消防・医療・避難所への橋渡し
+## 6. Handoff to Municipalities, Fire Services, Medical Institutions, and Shelters
 
-6-1. 外部に出すときの原則
+### 6-1. Principles for External Output
 
-【事実】  
-ICS/NIMS は、共通用語・平文・標準化された連絡様式を重視する。また ICS 213（General Message）、ICS 209（Incident Status Summary）などは、メッセージ・状況要約・資源要請を標準化している。\[R13\]\[R14\]
+**[Fact]**  
+ICS/NIMS emphasizes common terminology, plain language, and standardized contact formats. ICS 213 (General Message), ICS 209 (Incident Status Summary), and similar forms standardize messages, situation summaries, and resource requests. [R13][R14]
 
-【本プロトコルでの採用】  
-連携担当 は Meshtastic 内部コードを、そのまま外部へ渡してはならない。外部送信用テンプレートは「場所」「時刻」「何が起きているか」「人数」「危険の継続性」「必要な支援」「情報源評価」を平文で並べる。
+**[Adopted in This Protocol]**  
+Liaison personnel must not pass Meshtastic internal codes to external organizations directly. The external handoff template should place in plain language: “location,” “time,” “what is happening,” “number of people,” “whether danger is ongoing,” “required support,” and “source evaluation.”
 
-| 種別 | 例文 |
+| Type | Example |
 | :---: | ----- |
-| 内部 | \[\[EMG\]\] KOB-L-20260329-1510 NEW REQ: ROD BLK BY LND. C3 1515J |
-| 外部平文 | 2026/03/29 15:15、神戸エリア案件 KOB-L-20260329-1510。土砂により道路閉塞の疑い。現時点評価 C3。啓開可否確認と通行止め判断が必要。 |
-| 内部 | \[\[SOS\]\] MAI-Q-20260329-1430 NEW REQ: COL TRP 2PAX 1RED 1YLW. B2 1438J |
-| 外部平文 | 2026/03/29 14:38、舞鶴エリアで建物倒壊・2名閉じ込め。トリアージは赤1、黄1。B2評価。救助隊と医療搬送手段が必要。 |
+| Internal | `[[EMG]] KOB-L-20260329-1510 NEW REQ: ROD BLK BY LND. C3 1515J` |
+| External Plain Language | `2026/03/29 15:15, Kobe-area case KOB-L-20260329-1510. Suspected road blockage caused by landslide. Current assessment C3. Confirmation of whether road opening is possible and a road-closure decision are required.` |
+| Internal | `[[SOS]] MAI-Q-20260329-1430 NEW REQ: COL TRP 2PAX 1RED 1YLW. B2 1438J` |
+| External Plain Language | `2026/03/29 14:38, building collapse with two trapped persons in the Maizuru area. Triage is one red and one yellow. Assessment B2. A rescue team and medical transport capability are required.` |
 
-6-2. 受け手別の要点
+### 6-2. Minimum Information by Recipient
 
-| 橋渡し先 | 最低限そろえる情報 |
+| Handoff Destination | Minimum Information to Align |
 | :---: | ----- |
-| 自治体 | 避難所開設、道路状況、孤立集落、要支援者、物資不足、在宅・車中泊者 |
-| 消防 | 火災、閉じ込め、救助要請、危険物、進入不可、給水・消火栓状況 |
-| 医療 | 傷病者数、トリアージ色、搬送要否、受入先、薬剤・酸素・電源、感染症留意 |
-| 避難所 | 収容数、要配慮者、食料・水・衛生、発電、通信、トイレ、保健情報 |
-| 警察 | 治安、交通規制、不審物、不発弾様物件、行方不明捜索、規制線情報 |
-| 救急 | 重症度、搬送要否、受入先、現場到達経路、酸素・除細動・救急資機材 |
-| 海保 | 津波・高潮・漂流・海難・沿岸孤立・港湾被害・船舶要救助情報 |
-| 自衛隊 | 孤立集落、広域搬送、重機・舟艇・ヘリ支援、給水、輸送、道路啓開 |
-| 行政機関 | 避難情報、道路・河川・港湾、物資、福祉、保健、広報、ライフライン復旧 |
+| Municipality | Shelter opening status, road conditions, isolated communities, persons requiring support, shortages of supplies, home evacuees / vehicle evacuees |
+| Fire service | Fire, entrapment, rescue requests, hazardous materials, inaccessible routes, water supply / hydrant status |
+| Medical | Number of injured/sick, triage colors, need for transport, receiving destination, drugs / oxygen / power, infectious disease considerations |
+| Shelter | Occupancy, vulnerable persons, food / water / hygiene, power generation, communications, toilets, public health information |
+| Police | Public order, traffic restrictions, suspicious objects, possible unexploded ordnance, missing-person searches, cordon information |
+| EMS | Severity, need for transport, receiving destination, route to scene, oxygen / defibrillation / emergency equipment |
+| Coast Guard | Tsunami / storm surge / drifting / marine distress / coastal isolation / port damage / vessels requiring rescue |
+| Self-Defense Forces | Isolated communities, wide-area transport, heavy machinery / boats / helicopter support, water supply, transport, road opening |
+| Administrative agencies | Evacuation information, roads / rivers / ports, supplies, welfare, public health, public information, utility restoration |
 
-外部機関への通報や招請を Meshtastic 内部で要求する場合は、  
-「REQ CAL \[機関コード\]」を用いる。  
-機関コードは 「PJSDF（自衛隊）」、「PPOLICE（警察）」「PFIRE（消防）」「PEMS（救急）」「PCG（海上保安庁）」「PADMIN（その他行政機関）」とし、例として REQ CAL PPOLICE は警察への通報要請、REQ CAL PFIRE は消防への通報要請を意味する。
+When requesting notification or dispatch to an outside organization from inside Meshtastic, use  
+`REQ CAL [agency code]`.  
+Agency codes are `PJSDF (Self-Defense Forces)`, `PPOLICE (Police)`, `PFIRE (Fire service)`, `PEMS (Emergency medical services)`, `PCG (Japan Coast Guard)`, and `PADMIN (other administrative agencies)`. For example, `REQ CAL PPOLICE` means a request to notify police, and `REQ CAL PFIRE` means a request to notify the fire service.
 
-6-3. 橋渡し標準文
+### 6-3. Standard Handoff Wording
 
-内部符号を外部機関へ橋渡しする際は、平文化の体裁を固定し、受け手がそのまま判断できる文にする。原則として「時刻」「場所」「何が起きたか」「何人か」「何が必要か」「危険要素」を入れる。  
-平文化では、内部表記の SEQ をそのまま「S03」のように出さず、「第3報」「第4報」のように報告番号として日本語化して記す。外部機関へ引き継ぐ際は、案件IDと報告番号を明示し、同一案件の更新順が追えるようにする。
+When handing internal codes to external organizations, fix the plain-language format so the receiver can act on it immediately. As a rule, include “time,” “location,” “what happened,” “how many people,” “what is needed,” and “hazards.”  
+In plain-language conversion, do not output the internal SEQ as “S03”; instead, write it in natural language such as “third report” or “fourth report.” When handing off externally, clearly state both the case ID and the report number so that the update order of the same case can be followed.
 
-【自治体・行政向け標準】  
- YYYY/MM/DD hh:mm、\[場所\]で\[災害・被害\]。\[孤立・避難所・ライフライン・物資不足\]の状況。\[必要支援\]。\[代替路・危険区域・未確認事項\]。
+**Standard for Municipalities / Administrative Agencies**  
+`YYYY/MM/DD hh:mm, at [location], [disaster / damage]. Status of [isolation / shelters / lifelines / supply shortage]. [Needed support]. [Alternate routes / danger zones / unconfirmed matters].`
 
-【消防・救急・医療向け標準】  
- YYYY/MM/DD hh:mm、\[場所\]で\[火災・倒壊・傷病者数\]。\[赤黄緑黒の内訳\]。\[進入可否・搬送経路・受入照会の要否\]。\[必要資機材\]。
+**Standard for Fire / EMS / Medical**  
+`YYYY/MM/DD hh:mm, at [location], [fire / collapse / number of casualties]. [Breakdown of red, yellow, green, black]. [Whether access is possible / transport route / need for receiving-facility inquiry]. [Needed equipment].`
 
-【自衛隊・海保・広域支援向け標準】  
- YYYY/MM/DD hh:mm、\[地域\]で\[孤立・広域搬送・港湾/沿岸被害\]。\[人数・継続時間・天候\]。\[必要輸送手段\]。\[受入地点・危険情報\]。
+**Standard for Self-Defense Forces / Coast Guard / Wide-Area Support**  
+`YYYY/MM/DD hh:mm, in [region], [isolation / wide-area transport / port or coastal damage]. [Number of people / duration / weather]. [Required transport means]. [Reception point / hazard information].`
 
-7\. 行方不明・安否・個人情報の取扱い  
-【事実】  
-PPC は、災害時の第三者提供や避難行動要支援者名簿の提供について、生命・身体保護のため必要で同意取得が困難な場合の例外を認めているが、「必要な限度」「適切な判断」を条件としている。\[R8\]\[R9\]\[R10\]
+## 7. Handling of Missing Persons, Safety Confirmation, and Personal Information
 
-【本プロトコルでの採用】  
-一般チャネルに載せる 行方不明（MISS）情報は、(1)案件番号、(2)属性、(3)最終確認地点、(4)時刻、(5)行動方向、(6)緊急度、(7)確度、までとする。氏名・カナ・生年月日・医療情報・家族関係は 行方不明・家族再連絡（RFL） private channel またはオフライン台帳に退避させる。
+**[Fact]**  
+The PPC recognizes exceptions for third-party provision during disasters and for provision of rosters of persons requiring evacuation assistance when necessary to protect life or body and when obtaining consent is difficult, but conditions this on “the necessary extent” and “appropriate judgment.” [R8][R9][R10]
 
-| 区分 | 例 | 取扱い |
+**[Adopted in This Protocol]**  
+On general channels, missing-person (MISS) information is limited to: (1) case number, (2) attributes, (3) last confirmed point, (4) time, (5) direction of movement, (6) urgency, and (7) confidence. Names, kana spelling, dates of birth, medical information, and family relationships are moved to the RFL private channel or an offline ledger.
+
+| Category | Example | Handling |
 | :---: | ----- | ----- |
-| 許容 | M70 / F12 / INFANT / WHEEL / PREG / JP-LOW | 年齢帯・属性・脆弱性の概略 |
-| 条件付き | LAST SEC-B / LAST EVQ-01 / MOV N | 最終確認地点・方向 |
-| 禁止 | 氏名 / 住所 / 病名 / 介護度 / マイナンバー | 一般運用チャネルには流さない |
+| Allowed | M70 / F12 / INFANT / WHEEL / PREG / JP-LOW | Rough age band, attribute, vulnerability |
+| Conditional | LAST SEC-B / LAST EVQ-01 / MOV N | Last confirmed location and direction |
+| Prohibited | Name / address / diagnosis / care level / My Number | Do not transmit on general operating channels |
 
-| 行方不明・家族再連絡（RFL）の最低手順 |
+| Minimum Steps for RFL (Missing Persons / Family Reconnection) |
 | :---: |
-| RFL担当は、一般チャネルで案件番号だけを受け、詳細は private channel または対面で回収する。 |
-| 行政照会・病院照会・避難所照会を行った場合は、相手先、時刻、担当者、回答内容をログに残す。 |
-| 個人情報の出し先は最小化し、目的外転用を禁止する。 |
+| The RFL officer receives only the case number on the general channel; details are collected via private channel or face-to-face. |
+| If inquiries are made to government agencies, hospitals, or shelters, log the contacted organization, time, responsible person, and response content. |
+| Minimize destinations to which personal information is disclosed, and prohibit secondary use outside the original purpose. |
 
-8\. 事前準備・訓練・監査
+## 8. Preparedness, Training, and Audit
 
-8-1. 事前準備
+### 8-1. Preparedness
 
-ノード名の長文表示は、拠点地プレフィックスを含めて事前に統一する。例：SENDAI\_ / SNDI\_ / MAIZURU\_ / KOBE\_。GPS が使える場合は位置共有を優先するが、GPS 非搭載・故障・屋内遮蔽時でも、拠点地プレフィックスが最低限の地理情報として機能する。
+Long-form node names should be standardized in advance to include a base-location prefix. Examples: `SENDAI_`, `SNDI_`, `MAIZURU_`, `KOBE_`. If GPS is available, prioritize position sharing; however, even when GPS is absent, broken, or blocked indoors, the base-location prefix should function as minimum geographic information.
 
-| 項目 | 最低要件 |
+| Item | Minimum Requirement |
 | :---: | ----- |
-| 機材 | 機種・認証番号・ファーム版・予備電源・アンテナ構成を台帳化 |
-| 人員 | NETCTL / OPS / LOG / 連携担当 / SCRIBE / RFL の代替要員を設定 |
-| 帳票 | 現地版 ICS 205/209/213/214 相当の簡易様式を印刷配布 |
-| 連絡 | 自治体窓口、消防本部、災害拠点病院、避難所本部、社協の窓口一覧を準備 |
-| 訓練 | 発災初動、閉じ込め、避難所物資、行方不明者照会、橋渡し訓練 |
+| Equipment | Put model, certification number, firmware version, backup power, and antenna configuration into the ledger |
+| Personnel | Set backup personnel for NETCTL / OPS / LOG / Liaison / SCRIBE / RFL |
+| Forms | Print and distribute simplified local equivalents of ICS 205 / 209 / 213 / 214 |
+| Contacts | Prepare contact lists for municipalities, fire headquarters, disaster base hospitals, shelter headquarters, and councils of social welfare |
+| Training | Initial disaster response, entrapment, shelter supplies, missing-person inquiry, and handoff drills |
 
-8-2. 訓練ドリル
+### 8-2. Training Drills
 
-Drill 1：地震直後30分初動統制
+**Drill 1: Initial Control in the First 30 Minutes After an Earthquake**
 
-【状況設定】  
-発災後30分、Phase 1。余震が継続し、倒壊・火災・停電が混在する。複数ノードが同時送信可能で、通信輻輳が起きやすい。
+**Scenario**  
+Thirty minutes after impact, Phase 1. Aftershocks continue. Collapse, fire, and blackout are mixed together. Multiple nodes can transmit simultaneously, so congestion is likely.
 
-【実施課題】  
-\[\[SOS\]\] と \[\[EMG\]\] のみを使用し、雑談・長文・未確認情報・物資相談を停止する。案件IDを採番し、位置・人数・危険度・トリアージを最短で送信する。
+**Tasks**  
+Use only [[SOS]] and [[EMG]]. Stop chatter, long messages, unconfirmed information, and supply discussions. Assign case IDs and transmit location, number of people, danger level, and triage in the shortest possible form.
 
-【成功条件】  
-5分間、許可外送信がゼロである。全緊急案件に案件ID、位置、人数、危険度が付与され、ACK または WIP が欠落しない。
+**Success Conditions**  
+For five minutes, zero unauthorized transmissions. Every emergency case has a case ID, location, number of people, and danger level, and no ACK or WIP is missing.
 
-Drill 2：道路寸断＋避難所逼迫の橋渡し
+**Drill 2: Handoff for Road Blockage + Shelter Overload**
 
-【状況設定】  
-豪雨後、主要道路2本が不通となり、避難所は定員超過、水と衛生資材も不足している。現地は符号運用だが、自治体側は平文での受領を求める。
+**Scenario**  
+After heavy rain, two main roads are impassable, shelters are over capacity, and water and hygiene supplies are short. The field uses coded operations, but the municipality requires plain-language receipt.
 
-【実施課題】  
-LOG と 連携担当 が、道路状況、代替路、避難所収容余力、物資不足、緊急度を整理し、符号報告を自治体向け平文へ展開して橋渡しする。
+**Tasks**  
+LOG and Liaison organize road conditions, alternate routes, remaining shelter capacity, supply shortages, and urgency, then expand coded reports into plain-language text for the municipality.
 
-【成功条件】  
-10分以内に、必要項目の欠落がない200字以内の平文通報を作成し、誤訳なく自治体へ引き渡せる。
+**Success Conditions**  
+Within 10 minutes, produce a plain-language report of 200 characters or fewer with no missing required items and hand it off accurately to the municipality.
 
-Drill 3：行方不明照合と個人情報保護
+**Drill 3: Missing-Person Cross-Checking and Personal Information Protection**
 
-【状況設定】  
-避難所名簿、病院搬送名簿、家族照会の内容が一致しない。家族から氏名入りの問い合わせが連続し、一般チャネルへの書き込み圧力が生じる。
+**Scenario**  
+Shelter rosters, hospital transport rosters, and family inquiries do not match. Families are repeatedly making name-based inquiries, creating pressure to write details on the general channel.
 
-【実施課題】  
-一般チャネルでは案件番号、属性、最終確認地点のみを共有し、氏名・住所・連絡先は RFL と個別照会へ切り分ける。照合作業の更新履歴も残す。
+**Tasks**  
+On the general channel, share only the case number, attributes, and last confirmed point. Separate names, addresses, and contact details into RFL and individual inquiries. Keep a history of cross-check work.
 
-【成功条件】  
-一般チャネルへの個人情報送信がゼロである。照合対象、照合結果、保留案件が一意に追跡できる。
+**Success Conditions**  
+Zero transmission of personal information on the general channel. Cross-check targets, results, and pending cases can be uniquely tracked.
 
-Drill 4：拠点局故障と予備局切替
+**Drill 4: Base-Station Failure and Switching to a Reserve Station**
 
-【状況設定】  
-CLIENT\_BASE が停止し、拠点局の電源も不安定で、ゲートウェイ局の応答が消失している。予備局は待機状態で即時引継ぎが必要である。
+**Scenario**  
+The CLIENT_BASE stops, power at the base station is unstable, and the gateway station stops responding. A reserve station is on standby and immediate handover is required.
 
-【実施課題】  
-予備電源を投入し、予備局へ役割を切り替える。群、定時配信、監査記録、案件台帳を継承し、現地ノードへ切替完了を周知する。
+**Tasks**  
+Activate backup power, switch the role to the reserve station, inherit group settings, scheduled broadcasts, audit records, and case ledgers, and notify field nodes that the switch is complete.
 
-【成功条件】  
-15分以内に統制が再開し、案件台帳の欠落や二重統制が発生しない。現地ノード側で新拠点局が認識される。
+**Success Conditions**  
+Control resumes within 15 minutes, with no missing case-ledger entries and no dual control. Field nodes recognize the new base station.
 
-Drill 5：DMAT受援と医療搬送統制
+**Drill 5: DMAT Reception and Medical Transport Control**
 
-【状況設定】  
-病院機能が低下し、避難所と救護所から傷病者が多数発生している。DMAT の到着は見込まれるが、受入先と搬送順の整理が未完了である。
+**Scenario**  
+Hospital function is degraded, and many casualties are arising from shelters and aid stations. DMAT arrival is expected, but receiving destinations and transport order are not yet organized.
 
-【実施課題】  
-赤・黄・緑・黒で傷病者を集約し、搬送優先順位、受入照会、搬送経路、医薬品・酸素需要を整理して共有する。必要に応じて再トリアージも行う。
+**Tasks**  
+Aggregate casualties by red / yellow / green / black, organize transport priority, receiving-facility inquiries, transport routes, and drug/oxygen demand. Re-triage if necessary.
 
-【成功条件】  
-重症者が優先順位順に整理され、受入照会結果と搬送先が明示される。再トリアージの更新履歴が追跡できる。
+**Success Conditions**  
+Severe patients are organized by priority order; receiving-facility inquiry results and destinations are explicit; re-triage updates can be traced.
 
-8-3. 発信前チェック
+### 8-3. Pre-Transmission Check
 
-緊急時ほど、送信前の確認項目を固定した方が誤送信が減る。次の6点を確認してから送る。
+The more urgent the situation, the more effective it is to fix the pre-send check items. Confirm the following six points before transmitting.
 
-① だれに何が起きているか：人数、傷病、孤立、火災、閉じ込め等を具体化する。  
-② どこか：GPS、拠点地プレフィックス、施設名、区域名、最終確認地点の順で位置を補強する。  
-③ 何が必要か：救助、搬送、通報、物資、道路啓開、受入照会など支援内容を明示する。  
-④ どの確度か：A1〜E5 または簡易評価を付し、未確認情報は未確認と明記する。  
-⑤ 何を載せてはいけないか：不要な個人情報、攻撃誘発情報、未確認の死者数、雑談は載せない。  
-⑥ どこへ送るか：一般チャネル、群、個別照会、外部橋渡し先のいずれかを選び、過送信を防ぐ。
+1. **Who is affected and what is happening:** Be specific about number of people, injuries, isolation, fire, entrapment, and so on.  
+2. **Where:** Reinforce location in order of GPS, base-location prefix, facility name, area name, and last confirmed point.  
+3. **What is needed:** Clearly state rescue, transport, notification, supplies, road opening, receiving-facility inquiry, etc.  
+4. **What confidence level:** Attach A1–E5 or a simplified evaluation, and explicitly state if information is unconfirmed.  
+5. **What must not be included:** Do not include unnecessary personal information, information that may induce attack, unconfirmed death counts, or chatter.  
+6. **Where to send it:** Choose among a general channel, group, individual inquiry, or external handoff destination, and prevent over-transmission.
 
-9\. 災害別運用
+## 9. Disaster-Specific Operations
 
-9-1. 地震・余震・倒壊
+### 9-1. Earthquakes, Aftershocks, and Collapse
 
-【運用目的】  
-倒壊、閉じ込め、火災、余震下の再検索、病院機能低下、広域停電を最優先で扱う。JMAの津波可能性がある沿岸地震では津波章へ即移行する。\[R15\]
+**[Operational Purpose]**  
+Give top priority to collapse, entrapment, fire, re-search under aftershocks, hospital-function degradation, and wide-area blackouts. For coastal earthquakes with tsunami potential according to JMA, immediately shift to the tsunami chapter. [R15]
 
-【優先事項】  
-COL/TRP の即時登録 / RED/YLW/GRN/BLK の色別集約 / 病院・DMAT・搬送路の確認
+**Priority Matters**  
+Immediate registration of COL/TRP / aggregation by RED/YLW/GRN/BLK / confirmation of hospitals, DMAT, and transport routes
 
-【送信停止規律】  
-被害規模の雑談 / 確認前の死者数流布 / 余震下の無計画進入指示
+**Transmission Restrictions**  
+Chatter about damage scale / circulation of death counts before confirmation / unplanned re-entry instructions under aftershocks
 
-【連携先】  
-消防 / 自治体災対本部 / 災害拠点病院 / DMAT窓口
+**Liaison Destinations**  
+Fire services / municipal disaster headquarters / disaster base hospitals / DMAT contact points
 
-【推奨定型文】  
-\[\[SOS\]\] EQ COL TRP / \[\[EMG\]\] HOSP PARTIAL OUT / \[\[SIT\]\] ROAD PASSABLE?
+**Recommended Canned Messages**  
+`[[SOS]] EQ COL TRP / [[EMG]] HOSP PARTIAL OUT / [[SIT]] ROAD PASSABLE?`
 
-【構文例】  
-\[\[SOS\]\] MAI-Q-20260329-1430 NEW REQ: COL TRP 2PAX 1RED 1YLW. B2 1438J   
-意味：舞鶴の地震案件で、倒壊建物に2人が閉じ込められ、赤1名・黄1名を含む救助要請。
+**Syntax Example**  
+`[[SOS]] MAI-Q-20260329-1430 NEW REQ: COL TRP 2PAX 1RED 1YLW. B2 1438J`  
+Meaning: In the Maizuru earthquake case, two people are trapped in a collapsed building and rescue is needed for one red and one yellow casualty.
 
-【現場の見方】  
-地震では情報が増えやすいが、最初に必要なのは「何人」「どこ」「どれほど危険か」である。建物名や写真説明より、人数・トリアージ・経路障害を先に流す。
+**Field View**  
+Earthquakes generate large volumes of information, but the first things needed are “how many,” “where,” and “how dangerous.” Before building names or photo descriptions, send the number of people, triage, and route obstruction.
 
-9-2. 津波
+### 9-2. Tsunami
 
-【運用目的】  
-気象庁は、沿岸部や川沿いではただちに高台・避難ビルへ避難し、警報解除まで避難継続を求めている。津波は長時間反復し、局所的に高くなり得る。\[R15\]
+**[Operational Purpose]**  
+JMA requires immediate evacuation to high ground or evacuation buildings in coastal and river-side areas, and continued evacuation until warnings are lifted. Tsunami waves can repeat for long periods and become locally higher. [R15]
 
-【優先事項】  
-即時避難 / 海岸・河口・低地からの離脱 / 避難完了確認 / 孤立者の最終目撃地点記録
+**Priority Matters**  
+Immediate evacuation / leaving coasts, river mouths, and lowlands / confirmation of evacuation completion / recording last-seen points of isolated persons
 
-【送信停止規律】  
-海岸観測のための居残り / 「様子見」の推奨 / 解除前の帰還案内
+**Transmission Restrictions**  
+Remaining on the coast for observation / recommending “wait and see” / guidance to return before warning cancellation
 
-【連携先】  
-自治体 / 消防 / 海保・港湾管理 / 避難所本部
+**Liaison Destinations**  
+Municipalities / fire services / Coast Guard and port managers / shelter headquarters
 
-【推奨定型文】  
-\[\[ALR\]\] TSU EVAC NOW / \[\[SIT\]\] EVQ-01 FULL / \[\[EMG\]\] COAST ISO
+**Recommended Canned Messages**  
+`[[ALR]] TSU EVAC NOW / [[SIT]] EVQ-01 FULL / [[EMG]] COAST ISO`
 
-【構文例】  
-\[\[ALR\]\] KES-T-20260329-1450 NEW EVQ: TSU EVAC NOW SEC-A/B/C. A1 1451J   
-意味：気仙沼の津波案件で、A/B/C区域にただちに避難を促すA1評価の警報。
+**Syntax Example**  
+`[[ALR]] KES-T-20260329-1450 NEW EVQ: TSU EVAC NOW SEC-A/B/C. A1 1451J`  
+Meaning: In the Kesennuma tsunami case, issue an A1-rated alert to evacuate Sectors A/B/C immediately.
 
-【現場の見方】  
-津波では「避難完了」より「まだ残っている人がいるか」が重要である。解除前の帰還案内は行わず、避難継続の確認を優先する。
+**Field View**  
+In a tsunami, it matters more whether anyone is still left behind than whether evacuation is “complete.” Do not guide return before official cancellation; prioritize confirmation of continued evacuation.
 
-9-3. 豪雨・線状降水帯
+### 9-3. Heavy Rain and Linear Rainbands
 
-【運用目的】  
-線状降水帯による顕著な大雨は、危険度が急激に高まる局面を示す情報であり、危険な場所では直ちに適切な避難行動が必要となる。Meshtastic 側は、地下空間、低地、崖近接、道路冠水、孤立の発生を短時間で共有する補助線に徹する。\[R32\]
+**[Operational Purpose]**  
+A linear rainband indicates a phase in which danger rises rapidly, requiring immediate appropriate evacuation behavior in dangerous areas. Meshtastic should remain only a supplementary line for quickly sharing underground-space danger, lowlands, cliff-adjacent zones, road inundation, and signs of isolation. [R32]
 
-【優先事項】  
-高所確保 / 地下・アンダーパス回避 / 崖・沢からの離脱 / 雨量継続時間 / 孤立化の兆候
+**Priority Matters**  
+Securing high ground / avoiding underground spaces and underpasses / leaving cliffs and ravines / duration of ongoing rain / signs of becoming isolated
 
-【送信停止規律】  
-雨雲実況の長文化 / 川や用水路の見回り推奨 / 危険地域への再接近 / 未確認の徒歩突破案内
+**Transmission Restrictions**  
+Long narration of rain-cloud conditions / recommending patrols of rivers and irrigation channels / re-approach to dangerous zones / unconfirmed instructions to walk through hazards
 
-【連携先】  
-自治体 / 消防 / 避難所 / 河川管理者 / 道路管理者
+**Liaison Destinations**  
+Municipalities / fire services / shelters / river managers / road managers
 
-【推奨定型文】  
-\[\[ALR\]\] RAIN BAND / \[\[EMG\]\] UG NO / \[\[SIT\]\] STAY HIGH
+**Recommended Canned Messages**  
+`[[ALR]] RAIN BAND / [[EMG]] UG NO / [[SIT]] STAY HIGH`
 
-【構文例】  
-\[\[ALR\]\] FUK-P-20260329-1810 NEW RPT: RAIN BAND STAY HIGH UG NO. A2 1812J   
-意味：福岡の豪雨案件で、線状降水帯に伴う激しい雨が継続しており、地下空間を避けて高所確保を優先すべき。
+**Syntax Example**  
+`[[ALR]] FUK-P-20260329-1810 NEW RPT: RAIN BAND STAY HIGH UG NO. A2 1812J`  
+Meaning: In the Fukuoka heavy-rain case, intense rain associated with a linear rainband is continuing; avoid underground spaces and prioritize reaching high ground.
 
-【現場の見方】  
-豪雨では「いま降っているか」より「この先10〜30分で危険な場所から出られなくなるか」が重要である。地下、低地、崖下を避ける指示を最短で送る。
+**Field View**  
+In heavy rain, it matters less whether it is raining right now than whether people will be unable to leave dangerous places in the next 10–30 minutes. Send the shortest possible instruction to avoid underground spaces, lowlands, and the base of cliffs.
 
-9-4. 台風・暴風・高潮
+### 9-4. Typhoon, Windstorm, and Storm Surge
 
-【運用目的】  
-台風では、雨だけでなく暴風、高潮、停電、通信断、橋梁・港湾・沿岸低地の機能低下が同時に起こり得る。気象庁は、台風接近時には暴風が吹き始める前までに避難を完了すること、高潮では短時間で潮位が急上昇しうることを示している。\[R33\]\[R34\]
+**[Operational Purpose]**  
+During typhoons, not only rain but also strong winds, storm surge, blackout, communications outage, and the degraded function of bridges, ports, and coastal lowlands can occur simultaneously. JMA indicates that evacuation should be completed before violent winds begin, and that water level in storm surges can rise sharply in a short time. [R33][R34]
 
-【優先事項】  
-暴風前退避 / 高潮浸水想定区域 / 停電・断水 / 港湾・橋梁・沿岸道路 / 避難所収容力
+**Priority Matters**  
+Evacuation before severe winds / storm-surge inundation zones / blackout and water outage / ports, bridges, coastal roads / shelter capacity
 
-【送信停止規律】  
-接近後の無理な屋外移動推奨 / 海岸見物 / 未確認の橋梁通行可情報 / 風雨実況の長文化
+**Transmission Restrictions**  
+Recommending unnecessary outdoor movement after approach / sightseeing at the coast / unconfirmed bridge-passable information / long narration of wind/rain conditions
 
-【連携先】  
-自治体 / 消防 / 港湾管理 / 道路管理者 / 避難所
+**Liaison Destinations**  
+Municipalities / fire services / port managers / road managers / shelters
 
-【推奨定型文】  
-\[\[ALR\]\] TYPHOON EVQ / \[\[ALR\]\] SURGE EVQ / \[\[SIT\]\] WIND STRG
+**Recommended Canned Messages**  
+`[[ALR]] TYPHOON EVQ / [[ALR]] SURGE EVQ / [[SIT]] WIND STRG`
 
-【構文例】  
-\[\[ALR\]\] KOB-Y-20260329-0600 NEW RPT: TYPHOON SURGE EVQ SEC-A/B. A2 0605J   
-意味：神戸の台風案件で、高潮浸水が見込まれるA/B区域の避難を開始すべき。
+**Syntax Example**  
+`[[ALR]] KOB-Y-20260329-0600 NEW RPT: TYPHOON SURGE EVQ SEC-A/B. A2 0605J`  
+Meaning: In the Kobe typhoon case, evacuation should begin for Sectors A/B where storm-surge inundation is expected.
 
-【現場の見方】  
-台風では、雨量だけでなく風の強まり方と高潮の時刻が重要である。風が吹き始めてからの立退きは危険になるため、「いつまでに避難完了すべきか」を先に送る。
+**Field View**  
+For typhoons, not just rainfall but the rate at which winds intensify and the timing of storm surge matter. Once strong winds start, evacuation becomes dangerous, so send first “by when evacuation must be completed.”
 
-9-5. 洪水・河川氾濫
+### 9-5. Flood and River Overflow
 
-【運用目的】  
-気象庁の指定河川洪水予報や洪水警報は、水防活動・避難行動の参考として行政へ伝達される。Meshtastic 側は道路冠水・孤立・越水・停電・避難所収容圧を拾う補助線に徹する。\[R16\]
+**[Operational Purpose]**  
+JMA designated-river flood forecasts and flood warnings are conveyed to municipalities as references for flood-fighting and evacuation behavior. Meshtastic should focus on reporting road inundation, isolation, overtopping, blackout, and shelter pressure as a supplementary line. [R16]
 
-【優先事項】  
-道路可否 / 浸水深の概数 / 孤立世帯 / ポンプ・発電・飲料水
+**Priority Matters**  
+Road passability / rough water depth / isolated households / pumps, power generation, drinking water
 
-【送信停止規律】  
-単純な「大丈夫そう」 / 未確認通行可情報 / 深夜の長文実況
+**Transmission Restrictions**  
+Simple “looks okay” messages / unconfirmed passable-route information / long late-night narration
 
-【連携先】  
-自治体 / 消防 / 避難所 / 河川管理者
+**Liaison Destinations**  
+Municipalities / fire services / shelters / river managers
 
-【推奨定型文】  
-\[\[SIT\]\] FLD ROD BLK / \[\[EMG\]\] EVQ NEED BUS / \[\[ALR\]\] RIVER RISE
+**Recommended Canned Messages**  
+`[[SIT]] FLD ROD BLK / [[EMG]] EVQ NEED BUS / [[ALR]] RIVER RISE`
 
-【構文例】  
-\[\[SIT\]\] KOB-F-20260329-2305 NEW RPT: FLD DEPTH 30-50CM ROD BLK. B3 2310J   
-意味：神戸の水害案件で、水深30-50cmの冠水により道路閉塞が発生している状況報告。
+**Syntax Example**  
+`[[SIT]] KOB-F-20260329-2305 NEW RPT: FLD DEPTH 30-50CM ROD BLK. B3 2310J`  
+Meaning: In the Kobe flood case, there is 30–50 cm of flooding and roads are blocked.
 
-【現場の見方】  
-洪水では水深、道路閉塞、孤立、避難所収容圧の四点をそろえると、自治体側が動きやすい。通行可否は未確認のまま断定しない。
+**Field View**  
+In floods, if you align the four points of water depth, road blockage, isolation, and shelter pressure, municipalities can act more easily. Do not state passability as certain while still unconfirmed.
 
-9-6. 土砂災害
+### 9-6. Landslides
 
-【運用目的】  
-土砂災害警戒情報は、命に危険を及ぼす土砂災害がいつ発生してもおかしくない状況で、市町村長の避難指示判断や住民自主避難の判断を支援する情報であり、警戒レベル4相当とされる。\[R17\]
+**[Operational Purpose]**  
+A landslide alert indicates that life-threatening landslides may occur at any time and supports mayors’ evacuation decisions and residents’ self-evacuation decisions; it corresponds to Warning Level 4. [R17]
 
-【優先事項】  
-斜面近接区域からの退避 / 道路閉塞 / 孤立集落 / 夜間監視の抑制
+**Priority Matters**  
+Withdrawal from slope-adjacent areas / road blockage / isolated communities / suppression of night patrols
 
-【送信停止規律】  
-斜面直下での待機 / 雨中の不必要な再確認 / 未確認の徒歩突破指示
+**Transmission Restrictions**  
+Waiting below slopes / unnecessary re-checks in the rain / unconfirmed instructions to walk through
 
-【連携先】  
-自治体 / 消防 / 道路管理者 / 避難所
+**Liaison Destinations**  
+Municipalities / fire services / road managers / shelters
 
-【推奨定型文】  
-\[\[ALR\]\] LND EVAC / \[\[SIT\]\] ROD BLK BY LND / \[\[EMG\]\] ISO HAMLET
+**Recommended Canned Messages**  
+`[[ALR]] LND EVAC / [[SIT]] ROD BLK BY LND / [[EMG]] ISO HAMLET`
 
-【構文例】  
-\[\[EMG\]\] KOB-L-20260329-0310 NEW REQ: ROD BLK BY LND ISO 12HH. C3 0318J   
-意味：神戸の土砂災害案件で、土砂により道路が閉塞し、12世帯が孤立しているため支援が必要。
+**Syntax Example**  
+`[[EMG]] KOB-L-20260329-0310 NEW REQ: ROD BLK BY LND ISO 12HH. C3 0318J`  
+Meaning: In the Kobe landslide case, roads are blocked by landslide and 12 households are isolated, so support is required.
 
-【現場の見方】  
-土砂災害では現場再接近そのものが危険である。人数の再確認よりも、孤立規模と進入不能の共有を優先する。
+**Field View**  
+With landslides, re-approaching the scene itself is dangerous. Prioritize sharing the scale of isolation and lack of access over reconfirming the headcount.
 
-9-7. 都市火災・延焼・山林火災
+### 9-7. Urban Fire, Fire Spread, and Wildland Fire
 
-【運用目的】  
-火災では風向・延焼方向・進入不能・危険物・給水・避難誘導が重要となる。Meshtastic では火点実況よりも、進路・遮断・退避先・支援要求を短く流す。
+**[Operational Purpose]**  
+For fires, wind direction, direction of spread, inaccessible routes, hazardous materials, water supply, and evacuation guidance are important. On Meshtastic, rather than long fire-scene narration, send route, blockage, retreat destination, and support requests concisely.
 
-【優先事項】  
-火点区画 / 延焼方向 / 要退避区域 / 消火水利・道路
+**Priority Matters**  
+Fire compartment / direction of spread / evacuation zone / firefighting water sources and roads
 
-【送信停止規律】  
-写真実況の長文化 / 危険物未確認での断定 / 興味本位の現場集中
+**Transmission Restrictions**  
+Long photo-based narration / certainty about hazardous materials without confirmation / curiosity-driven concentration at the scene
 
-【連携先】  
-消防 / 自治体 / 避難所 / 病院
+**Liaison Destinations**  
+Fire services / municipalities / shelters / hospitals
 
-【推奨定型文】  
-\[\[EMG\]\] FIRE MOV E / \[\[ALR\]\] EVAC ZONE-C / \[\[SIT\]\] HYD OK?
+**Recommended Canned Messages**  
+`[[EMG]] FIRE MOV E / [[ALR]] EVAC ZONE-C / [[SIT]] HYD OK?`
 
-【構文例】  
-\[\[EMG\]\] OSA-I-20260329-1940 NEW RPT: FIRE MOV E WIND STRG EVQ Z-C. B2 1944J  
-意味：大阪の火災案件で、強風下で火勢が東へ伸び、Z-C地区の避難誘導が必要という意味である。
+**Syntax Example**  
+`[[EMG]] OSA-I-20260329-1940 NEW RPT: FIRE MOV E WIND STRG EVQ Z-C. B2 1944J`  
+Meaning: In the Osaka fire case, strong winds are pushing the fire eastward and evacuation guidance is needed for Zone C.
 
-【現場の見方】  
-火災では火点実況を細かく流すより、延焼方向、避難区域、進入不能路、必要資器材を短く伝えるほうが実務的である。
+**Field View**  
+In fire operations, it is more practical to convey the direction of spread, evacuation zones, blocked routes, and needed equipment than to narrate the fire scene in detail.
 
-9-8. 火山
+### 9-8. Volcano
 
-【運用目的】  
-気象庁の噴火警戒レベルは、警戒が必要な範囲と、とるべき防災対応を5段階で示す指標である。Meshtastic 側は降灰・道路・視程・呼吸器症状・避難経路を補助的に扱う。\[R18\]
+**[Operational Purpose]**  
+JMA’s eruption alert level is an indicator showing the area requiring caution and the disaster-prevention response to be taken in five stages. Meshtastic handles ashfall, roads, visibility, respiratory symptoms, and evacuation routes as auxiliary information. [R18]
 
-【優先事項】  
-降灰・視程 / 火口方向接近禁止 / 避難経路 / マスク・水・車両保護
+**Priority Matters**  
+Ashfall and visibility / no approach toward the crater / evacuation routes / masks, water, vehicle protection
 
-【送信停止規律】  
-レベル判断の独自解釈 / 火口接近の推奨 / SNS的実況
+**Transmission Restrictions**  
+Independent interpretation of alert levels / recommending approach to craters / social-media-style live commentary
 
-【連携先】  
-自治体 / 消防 / 医療 / 避難所
+**Liaison Destinations**  
+Municipalities / fire services / medical institutions / shelters
 
-【推奨定型文】  
-\[\[ALR\]\] VOL LV UP / \[\[SIT\]\] ASH HVY / \[\[EMG\]\] EVQ ROUTE X
+**Recommended Canned Messages**  
+`[[ALR]] VOL LV UP / [[SIT]] ASH HVY / [[EMG]] EVQ ROUTE X`
 
-【構文例】  
-\[\[ALR\]\] KAG-V-20260329-0810 NEW RPT: ASH HVY VIS LOW EVQ RT-B. B2 0814J   
-意味：鹿児島の火山案件で、降灰が重く視程が低下し、避難経路Bの確認が必要という意味である。
+**Syntax Example**  
+`[[ALR]] KAG-V-20260329-0810 NEW RPT: ASH HVY VIS LOW EVQ RT-B. B2 0814J`  
+Meaning: In the Kagoshima volcano case, ashfall is heavy and visibility is reduced, requiring confirmation of Evacuation Route B.
 
-【現場の見方】  
-火山では降灰量と視程低下が交通・呼吸器・避難経路に直結する。噴火そのものの実況より、生活・移動への影響を優先する。
+**Field View**  
+With volcanoes, ashfall volume and reduced visibility directly affect traffic, respiratory health, and evacuation routes. Prioritize the effects on daily life and movement over narrating the eruption itself.
 
-9-9. 豪雪・寒波
+### 9-9. Heavy Snow and Cold Waves
 
-【運用目的】  
-雪害では孤立、停電、燃料、透析・在宅酸素・暖房・除雪導線を優先する。車中泊や在宅避難も念頭に置く。
+**[Operational Purpose]**  
+In snow disasters, prioritize isolation, blackout, fuel, dialysis, home oxygen, heating, and snow-clearing routes. Keep vehicle evacuation and sheltering at home in mind.
 
-【優先事項】  
-除雪可否 / 燃料 / 暖房 / 医療依存者 / 孤立
+**Priority Matters**  
+Snow-clearing feasibility / fuel / heating / medically dependent persons / isolation
 
-【送信停止規律】  
-積雪実況の冗長化 / 未確認通行可 / 暖房手段不明での待機指示
+**Transmission Restrictions**  
+Redundant snowfall narration / unconfirmed passable routes / stay-put instructions without knowing available heating means
 
-【連携先】  
-自治体 / 道路管理 / 医療 / 福祉避難所
+**Liaison Destinations**  
+Municipalities / road managers / medical institutions / welfare shelters
 
-【推奨定型文】\[\[SIT\]\] SNW ISO / \[\[EMG\]\] FUEL LOW / \[\[EMG\]\] O2 NEED PWR
+**Recommended Canned Messages**  
+`[[SIT]] SNW ISO / [[EMG]] FUEL LOW / [[EMG]] O2 NEED PWR`
 
-【構文例】  
-\[\[EMG\]\] NII-W-20260329-0630 NEW REQ: ISO 4HH FUEL LOW PWR OUT. B2 0638J   
-意味：新潟の雪寒案件で、4世帯が孤立し、燃料不足と停電が同時に起きているため支援が必要。
+**Syntax Example**  
+`[[EMG]] NII-W-20260329-0630 NEW REQ: ISO 4HH FUEL LOW PWR OUT. B2 0638J`  
+Meaning: In the Niigata snow/cold case, four households are isolated and both fuel shortage and blackout are occurring, so support is needed.
 
-【現場の見方】雪寒災害では静かに悪化する案件が多い。孤立、燃料、電力、透析・在宅酸素を別案件にせず、同時に把握する。
+**Field View**  
+Snow/cold disasters often worsen quietly. Understand isolation, fuel, electricity, dialysis, and home oxygen together rather than treating them as separate cases.
 
-9-10. 猛暑・停電・通信障害複合
+### 9-10. Combined Extreme Heat, Blackout, and Communications Failure
 
-【運用目的】  
-停電と暑熱が重なると、熱中症、給水、冷房、医療機器電源、通信断が同時進行する。「目立つ災害でなくても死者を出す」類型として別章化する。
+**[Operational Purpose]**  
+When blackout and heat overlap, heatstroke, water supply, cooling, medical-device power, and communications failure progress simultaneously. This is treated as its own chapter because it can cause fatalities even without a conspicuous disaster.
 
-【優先事項】  
-給水 / 発電 / 冷房拠点 / 在宅医療 / 通信回復
+**Priority Matters**  
+Water supply / power generation / cooling centers / home medical care / communications restoration
 
-【送信停止規律】  
-「命に別状なし」の軽視 / 自家発電の過信 / 病院受入未確認の搬送推奨
+**Transmission Restrictions**  
+Downplaying with “no immediate danger to life” / overconfidence in private generators / recommending transport without confirmed hospital acceptance
 
-【連携先】  
-自治体 / 医療 / 避難所 / 電力・通信事業者窓口
+**Liaison Destinations**  
+Municipalities / medical institutions / shelters / power and telecommunications provider contacts
 
-【推奨定型文】  
-\[\[EMG\]\] HEAT NEED COOL / \[\[SIT\]\] CELL OUT / \[\[EMG\]\] PWR FOR O2
+**Recommended Canned Messages**  
+`[[EMG]] HEAT NEED COOL / [[SIT]] CELL OUT / [[EMG]] PWR FOR O2`
 
-【構文例】  
-\[\[EMG\]\] TKY-H-20260329-1230 NEW REQ: HEAT 6PAX O2 1 PWR NEED. B2 1235J   
-意味：東京の暑熱複合案件で、6名の暑熱リスク者と在宅酸素1名があり、電源支援が必要。
+**Syntax Example**  
+`[[EMG]] TKY-H-20260329-1230 NEW REQ: HEAT 6PAX O2 1 PWR NEED. B2 1235J`  
+Meaning: In the Tokyo heat-combination case, there are six people at heat risk and one home-oxygen user, and power support is needed.
 
-【現場の見方】  
-猛暑停電では、冷房、給水、電源、通信のうち何が切れているかを明確に書く。症状の重さだけでなく、継続時間と支援手段の有無も重要である。
+**Field View**  
+In heat + blackout situations, clearly state which of cooling, water, power, and communications is unavailable. Not only symptom severity but also duration and the presence or absence of support means are important.
 
-9-11. 感染症流行・医療逼迫
+### 9-11. Infectious Disease Outbreak and Medical System Strain
 
-【運用目的】  
-Meshtastic は個人の診療情報伝送には向かない。施設稼働、PPE、不特定多数接触、搬送・受入調整の補助に限定する。
+**[Operational Purpose]**  
+Meshtastic is not suitable for transmitting individual clinical information. Its use is limited to supplementary sharing of facility status, PPE, exposure of unspecified large groups, and transport / reception coordination.
 
-【優先事項】  
-病床・外来逼迫 / PPE / ゾーニング / 搬送先照会
+**Priority Matters**  
+Bed/outpatient saturation / PPE / zoning / receiving-facility inquiry
 
-【送信停止規律】  
-患者個票の流布 / 個人病名の一般チャネル送信 / 未確認受入先の案内
+**Transmission Restrictions**  
+Circulation of individual patient records / sending individual diagnoses on general channels / guidance to unconfirmed receiving facilities
 
-【連携先】  
-保健所・自治体 / 病院 / 避難所 / 福祉施設
+**Liaison Destinations**  
+Public health centers and municipalities / hospitals / shelters / welfare facilities
 
-【推奨定型文】  
-\[\[SIT\]\] HOSP SAT / \[\[EMG\]\] PPE LOW / \[\[ADM\]\] FEVER SHELTER SEP
+**Recommended Canned Messages**  
+`[[SIT]] HOSP SAT / [[EMG]] PPE LOW / [[ADM]] FEVER SHELTER SEP`
 
-【構文例】  
-\[\[SIT\]\] KOB-M-20260329-0940 NEW RPT: HOSP SAT PPE LOW TRIAGE EXT. B2 0946J   
-意味：神戸の医療逼迫案件で、病院受入が飽和し、防護具も不足しており、院外トリアージ拡張が必要。
+**Syntax Example**  
+`[[SIT]] KOB-M-20260329-0940 NEW RPT: HOSP SAT PPE LOW TRIAGE EXT. B2 0946J`  
+Meaning: In the Kobe medical strain case, hospital reception is saturated, protective gear is short, and expanded external triage is needed.
 
-【現場の見方】  
-感染症流行や医療逼迫では、個人診療情報を送らず、施設機能、隔離、個人防護具、受入余力を短く共有する。
+**Field View**  
+In outbreaks or medical strain, do not send individual medical information; concisely share facility function, isolation, PPE, and reception capacity.
 
-9-12. 原子力災害（原子力施設事故等）
+### 9-12. Nuclear Disaster (Nuclear Facility Accident, etc.)
 
-【運用目的】  
-原子力災害では、放射線量の細かな議論より、屋内退避、密閉、換気停止、避難指示、施設名、方角をそろえて共有する。Meshtastic は防護行動の同期に使い、測定の専門判断を代替しない。\[R27\]\[R28\]
+**[Operational Purpose]**  
+In a nuclear disaster, instead of fine-grained debate about radiation dose, align and share shelter-in-place, sealing, stopping ventilation, evacuation instructions, facility name, and direction. Meshtastic is used to synchronize protective actions; it does not replace expert judgment on measurement. [R27][R28]
 
-【優先事項】  
-屋内退避 / 密閉 / 換気停止 / 指示区域 / 方角 / 施設名 / 交通規制
+**Priority Matters**  
+Shelter indoors / sealing / stopping ventilation / instructed zones / direction / facility name / traffic restrictions
 
-【送信停止規律】  
-線量の独自解釈 / 未確認避難経路の案内 / 不要不急の屋外移動推奨 / デマ的拡散
+**Transmission Restrictions**  
+Independent interpretation of dose values / guidance to unconfirmed evacuation routes / recommending unnecessary outdoor movement / rumor-style spread
 
-【連携先】  
-自治体 / 原子力防災担当 / 消防 / 病院 / 避難所
+**Liaison Destinations**  
+Municipalities / nuclear disaster officials / fire services / hospitals / shelters
 
-【推奨定型文】  
-\[\[ALR\]\] RAD SEAL NOW / \[\[EMG\]\] HVAC OFF / \[\[SIT\]\] EVQ INDOOR STAY
+**Recommended Canned Messages**  
+`[[ALR]] RAD SEAL NOW / [[EMG]] HVAC OFF / [[SIT]] EVQ INDOOR STAY`
 
-【構文例】  
-\[\[ALR\]\] FKS-N-20260329-0910 NEW RPT: RAD ALR SEAL. A2 0912J ／意味：福島の原子力案件で、原子力災害の疑いがあり、屋内退避と密閉を開始すべきという意味である。
+**Syntax Example**  
+`[[ALR]] FKS-N-20260329-0910 NEW RPT: RAD ALR SEAL. A2 0912J`  
+Meaning: In the Fukushima nuclear case, a nuclear emergency is suspected and shelter-in-place with sealing should begin.
 
-【現場の見方】  
-原子力災害では、専門用語の説明より先に、屋内に入る、閉める、換気を止める、指示を待つ、の四動作をそろえる。
+**Field View**  
+In nuclear disasters, before explaining technical terms, synchronize the four actions: go indoors, seal, stop ventilation, and wait for official instructions.
 
-9-13. 化学災害・化学兵器災害
+### 9-13. Chemical Disaster and Chemical Weapons Incident
 
-【運用目的】  
-化学災害では、原因物質の断定より、異臭、刺激症状、風向、屋内外、除染要否をそろえる。初期段階では「化学災害疑い」と表現し、防護行動を同期させる。\[R29\]\[R30\]
+**[Operational Purpose]**  
+In chemical incidents, rather than identifying the substance immediately, align odor, irritant symptoms, wind direction, indoor/outdoor status, and need for decontamination. In the initial phase, describe it as “suspected chemical incident” and synchronize protective behavior. [R29][R30]
 
-【優先事項】  
-異臭 / 目刺激・呼吸困難 / 風向 / 風上・直交方向離脱 / 口鼻防護 / 除染動線
+**Priority Matters**  
+Odor / eye irritation and breathing difficulty / wind direction / move upwind or crosswind / cover mouth and nose / decontamination route
 
-【送信停止規律】  
-薬品名の推測断定 / 汚染区域への再接近 / 未除染者の避難所導入 / 興味本位の現場接近
+**Transmission Restrictions**  
+Speculative identification of chemical name / re-approach to contaminated zones / bringing undecontaminated persons into shelters / curiosity-driven approach
 
-【連携先】  
-消防 / 自治体 / 救急 / 病院 / 警察
+**Liaison Destinations**  
+Fire services / municipalities / EMS / hospitals / police
 
-【推奨定型文】  
-\[\[ALR\]\] CHEM MASK ON / \[\[EMG\]\] DECON NEED / \[\[SIT\]\] ODR STRONG
+**Recommended Canned Messages**  
+`[[ALR]] CHEM MASK ON / [[EMG]] DECON NEED / [[SIT]] ODR STRONG`
 
-【構文例】  
-\[\[ALR\]\] OSA-C-20260329-1012 NEW RPT: CHEM ODR MASK. B2 1014J   
-意味：大阪の化学案件で、異臭を伴う化学災害が疑われ、口鼻防護を開始した。
+**Syntax Example**  
+`[[ALR]] OSA-C-20260329-1012 NEW RPT: CHEM ODR MASK. B2 1014J`  
+Meaning: In the Osaka chemical case, a chemical incident with unusual odor is suspected and mouth/nose protection has been started.
 
-【現場の見方】  
-化学災害では、原因究明よりもまず、そこにいてよいか、風上へ離れるべきか、除染が必要かを短く判断できる形にする。
+**Field View**  
+In chemical incidents, the key is not proving the cause first, but being able to decide quickly whether it is safe to remain there, whether to move upwind, and whether decontamination is required.
 
-9-14. 生物災害・生物兵器災害
+### 9-14. Biological Disaster and Biological Weapons Incident
 
-【運用目的】  
-生物災害では、症状の説明を長く書くよりも、集団性、隔離要否、個人防護具不足、受入調整の必要性を短くそろえる。Meshtastic は患者個票の送信ではなく、施設運用の補助に限定して使う。\[R29\]\[R30\]
+**[Operational Purpose]**  
+In biological incidents, rather than writing long symptom descriptions, briefly align cluster nature, need for isolation, shortage of PPE, and need for receiving-facility coordination. Meshtastic is limited to support for facility operations rather than transmission of individual patient data. [R29][R30]
 
-【優先事項】  
-集団発熱 / 咳・呼吸器症状 / 隔離導線 / 個人防護具 / 受入余力 / 接触歴の有無
+**Priority Matters**  
+Cluster fever / cough and respiratory symptoms / isolation route / PPE / receiving capacity / exposure history
 
-【送信停止規律】  
-個人病名の一般チャネル送信 / 原因病原体の断定 / 患者名簿の配布 / 未確認受入先の案内
+**Transmission Restrictions**  
+Sending individual diagnoses on general channels / identifying the pathogen without confirmation / distributing patient lists / guiding to unconfirmed receiving facilities
 
-【連携先】  
-保健所 / 自治体 / 病院 / 避難所 / 福祉施設
+**Liaison Destinations**  
+Public health centers / municipalities / hospitals / shelters / welfare facilities
 
-【推奨定型文】  
-\[\[ALR\]\] BIO ISO NOW / \[\[EMG\]\] PPE LOW / \[\[SIT\]\] HOSP SAT
+**Recommended Canned Messages**  
+`[[ALR]] BIO ISO NOW / [[EMG]] PPE LOW / [[SIT]] HOSP SAT`
 
-【構文例】  
-\[\[ALR\]\] KYO-B-20260329-1030 NEW RPT: BIO FEV CLU ISO. B2 1034J   
-意味：京都の生物案件で、集団発熱があり、生物災害を疑って隔離を開始したという意味である。
+**Syntax Example**  
+`[[ALR]] KYO-B-20260329-1030 NEW RPT: BIO FEV CLU ISO. B2 1034J`  
+Meaning: In the Kyoto biological case, there is a fever cluster and isolation has begun under suspicion of a biological incident.
 
-【現場の見方】  
-生物災害では、何の病気かを先に当てる必要はない。隔離が必要か、個人防護具は足りるか、受入先はあるか、の三点を優先する。
+**Field View**  
+In biological incidents, it is not necessary to identify the disease first. Prioritize whether isolation is needed, whether PPE is sufficient, and whether there is somewhere to receive patients.
 
-9-15. 山岳遭難
+### 9-15. Mountain Rescue / Mountain Distress
 
-【運用目的】  
-山岳遭難は、少人数・点的・移動性の高い案件として扱う。Meshtastic は現場隊、尾根中継局、登山口本部局の局地メッシュとして用い、広域公衆回線の代替ではなく、位置・傷病・進入可能性の共有に使う。
+**[Operational Purpose]**  
+Mountain distress is treated as a small-scale, point-like, highly mobile case type. Meshtastic is used as a local mesh among field teams, ridgeline relays, and trailhead base stations, not as a substitute for wide-area public networks, but to share position, medical condition, and accessibility.
 
-【事実】  
-山岳救助の実務では、VHF/LMR/アマチュア無線が field team、指揮所、ヘリ間の通信に使われている。また Meshtastic 公式は、Search and Rescue operations での利用を明記している。
+**[Fact]**  
+In mountain rescue practice, VHF/LMR/amateur radio are used for communications among field teams, command posts, and helicopters. Meshtastic official materials also explicitly mention use in search and rescue operations.
 
-【優先事項】  
-登山口 / ルート / 最終確認地点 / 標高帯 / 人数 / 傷病程度 / 行動可能性 / 気象悪化 / 日照残時間 / ヘリ可否
+**Priority Matters**  
+Trailhead / route / last confirmed point / altitude band / number of people / severity / ability to move / worsening weather / daylight remaining / helicopter feasibility
 
-【送信停止規律】  
-憶測のルート断定 / 不要な長文実況 / 個人情報の一般チャネル送信 / 未確認位置の確定表現
+**Transmission Restrictions**  
+Speculative route identification / unnecessary long live commentary / personal information on general channels / definite wording for unconfirmed positions
 
-【連携先】  
-消防 / 自治体 / 山岳救助組織 / 病院 / 警察
+**Liaison Destinations**  
+Fire services / municipalities / mountain rescue organizations / hospitals / police
 
-【推奨定型文】  
-\[\[SOS\]\] LOST 1PAX / \[\[EMG\]\] FALL 1RED / \[\[SIT\]\] LAST RIDG ALT1800 / \[\[ADM\]\] LZ PRB
+**Recommended Canned Messages**  
+`[[SOS]] LOST 1PAX / [[EMG]] FALL 1RED / [[SIT]] LAST RIDG ALT1800 / [[ADM]] LZ PRB`
 
-【構文例】  
-\[\[SOS\]\] HAK-K-20260420-1510 S01 NEW REQ: LOST 2PAX LAST RIDG-3 ALT1800. PRB 1514J   
-意味：北海道の山岳遭難案件で、2人が遭難した可能性が高く、最後に尾根3付近、標高1800m帯で確認されている。
+**Syntax Example**  
+`[[SOS]] HAK-K-20260420-1510 S01 NEW REQ: LOST 2PAX LAST RIDG-3 ALT1800. PRB 1514J`  
+Meaning: In the Hokkaido mountain-distress case, two people are likely lost; they were last confirmed near Ridge 3 in the 1,800 m altitude band.
 
-【現場の見方】  
-山岳遭難では、位置、人数、動けるか、気象、夜間化の五点を優先する。地図がなくても、登山口、尾根、沢、標高帯が入っていれば、救助側は初動方向を決めやすい。
+**Field View**  
+In mountain rescue, prioritize the five points of location, number of people, ability to move, weather, and approaching nightfall. Even without a map, trailhead, ridge, gully, and altitude band are enough for rescuers to decide the initial search direction.
 
-9-16. 海洋遭難
+### 9-16. Marine Distress
 
-【運用目的】  
-海洋遭難では、Meshtastic を一次救難チャネルとして扱わない。主系統は marine VHF、DSC、EPIRB、GMDSS とし、Meshtastic は港湾・沿岸・岸上対策本部・支援艇・陸上捜索班の補助通信に限定して用いる。
+**[Operational Purpose]**  
+Meshtastic is not treated as a primary distress channel in marine incidents. The primary system is marine VHF, DSC, EPIRB, and GMDSS; Meshtastic is limited to supplementary communication among ports, coastal areas, shore-based headquarters, support vessels, and land search teams.
 
-【事実】  
-USCG は DSC Distress と VHF Channel 16 を公式に案内し、NOAA は EPIRB を海洋用途の救難ビーコンとして位置づけている。アマチュア無線ネットが at-sea rescue の crucial link として寄与した事例も報告されている。
+**[Fact]**  
+The USCG officially guides DSC Distress and VHF Channel 16, NOAA positions EPIRB as a maritime distress beacon, and amateur-radio nets have been reported as a crucial link in at-sea rescues.
 
-【優先事項】  
-船種 / POB / 落水の有無 / 浸水・転覆・漂流・座礁 / 推進力喪失 / 救命胴衣・ライフラフト・DSC・EPIRB 状態 / 緯度経度または相対位置 / 風向風力・海象
+**Priority Matters**  
+Vessel type / POB / whether anyone is overboard / flooding, capsize, drift, grounding / loss of propulsion / life jackets, life raft, DSC, EPIRB status / latitude-longitude or relative position / wind and sea conditions
 
-【送信停止規律】  
-位置の憶測断定 / 外洋遭難を Meshtastic 単独で処理する前提 / 不要な雑談 / 公式 distress channel を無視した運用
+**Transmission Restrictions**  
+Speculative position statements / assuming offshore distress can be handled by Meshtastic alone / unnecessary chatter / operations that ignore official distress channels
 
-【連携先】  
-海上保安庁 / 自治体 / 消防 / 救急 / 港湾管理者
+**Liaison Destinations**  
+Japan Coast Guard / municipalities / fire services / EMS / port managers
 
-【推奨定型文】  
-\[\[SOS\]\] TAKW ADRF 3POB / \[\[EMG\]\] PFD ALL DSC DONE / \[\[ADM\]\] CAL PCG / \[\[SIT\]\] EPIR ON
+**Recommended Canned Messages**  
+`[[SOS]] TAKW ADRF 3POB / [[EMG]] PFD ALL DSC DONE / [[ADM]] CAL PCG / [[SIT]] EPIR ON`
 
-【構文例】  
-\[\[SOS\]\] KOB-O-20260708-0635 S01 NEW REQ: TAKW ADRF 3PAX 1CHILD. CFM 0638J  
-意味：神戸の海洋遭難案件で、3人乗船の小型艇が浸水・漂流しており、子ども1人を含む。
+**Syntax Example**  
+`[[SOS]] KOB-O-20260708-0635 S01 NEW REQ: TAKW ADRF 3PAX 1CHILD. CFM 0638J`  
+Meaning: In the Kobe marine-distress case, a small vessel with three persons aboard, including one child, is flooding and drifting.
 
-【現場の見方】  
-海洋遭難では、位置、人数、浸水、落水、救命措置、公式 distress 実施状況の六点を優先する。近海補助通信としての Meshtastic と、一次救難チャネルを混同しない。
+**Field View**  
+In marine distress, prioritize the six points of location, number of people, flooding, man overboard, lifesaving actions, and status of official distress calls. Do not confuse Meshtastic as nearshore supplemental communications with the primary distress channel.
 
-10\. 武力攻撃・紛争・暴動・ミサイル・核兵器攻撃時運用
+## 10. Operations During Armed Attack, Conflict, Riot, Missile Attack, and Nuclear Attack
 
-【事実】  
-日本政府は、弾道ミサイルが日本に飛来する可能性がある場合、Jアラート等で緊急情報を伝達し、近くの頑丈な建物や地下への避難、屋内では窓から離れ窓のない部屋への移動、近傍着弾時には爆風・破片や有害物質を避ける行動を求めている。\[R20\]\[R21\]\[R22\]
+**[Fact]**  
+The Government of Japan states that when a ballistic missile may be incoming to Japan, urgent information will be transmitted via J-Alert and other means, and people should evacuate to nearby sturdy buildings or underground; indoors, move away from windows and into a room without windows if possible; and if impact occurs nearby, take action to avoid blast, fragments, and hazardous materials. [R20][R21][R22]
 
-【事実】  
-都市部での爆発性兵器の使用は、民間人と、電力・水・医療・通信などの生存基盤に長期的損害を与えやすいとICRCは整理している。\[R23\]
+**[Fact]**  
+The ICRC states that the use of explosive weapons in populated areas tends to cause long-term damage to civilians and to systems essential to survival such as power, water, healthcare, and communications. [R23]
 
-【本プロトコルでの採用】  
-武力攻撃・紛争時のMeshtasticは、①警報受領、②退避・屋内退避の伝達、③爆発・火災・倒壊・停電・断水・医療需要の短報、④不発弾等危険物の発見報告、⑤自治体・消防・医療への橋渡し、に限定する。攻撃側・治安側・救援側の位置や移動を実況する用途には用いない。
+**[Adopted in This Protocol]**  
+During armed attack or conflict, Meshtastic is limited to: (1) receiving warnings, (2) transmitting retreat and shelter-in-place instructions, (3) short reports of explosions, fires, collapse, blackout, water outage, and medical demand, (4) reporting discovery of UXO and other dangerous objects, and (5) handoff to municipalities, fire services, and medical institutions. It is not used to narrate the positions or movements of attackers, security forces, or relief forces.
 
-10-1. 優先順位
+### 10-1. Priorities
 
-最優先は「身を守る避難行動」であり、通信は避難を妨げない短報だけに絞る。  
-位置共有は必要最小限とし、一般公開チャネルやインターネット公開を避ける。  
-爆発・火災・倒壊・医療需要・不発弾の順で案件化し、平時よりもさらに短く送る。
+The highest priority is protective evacuation behavior; communications are limited to short reports that do not interfere with evacuation.  
+Position sharing should be minimized, and public channels or internet publication should be avoided.  
+Create cases in the order of explosion, fire, collapse, medical demand, and UXO, and send even shorter messages than in peacetime.
 
-10-2. フェーズ
+### 10-2. Phases
 
-| Phase | 主眼 | 通信規律 |
+| Phase | Main Focus | Communications Discipline |
 | :---: | :---: | ----- |
-| Phase A | ALERT | Jアラート受領、退避開始、\[\[ALR\]\] と \[\[ADM\]\] のみ。 |
-| Phase B | IMPACT | 着弾・爆発・交戦直後。\[\[SOS\]\] / \[\[EMG\]\] 優先。実況・雑談厳禁。 |
-| Phase C | STABILIZE | 火災・倒壊・停電・救護・避難所化を整理。公共機関へ橋渡し。 |
-| Phase D | RISK RESIDUAL | 不発弾、封鎖、移動制限、断続攻撃、夜間停電を管理。 |
+| Phase A | ALERT | Receive J-Alert, begin withdrawal; only [[ALR]] and [[ADM]] |
+| Phase B | IMPACT | Immediately after impact / explosion / fighting. Prioritize [[SOS]] / [[EMG]]. No live narration or chatter |
+| Phase C | STABILIZE | Organize fire, collapse, blackout, aid, and sheltering. Handoff to public institutions |
+| Phase D | RISK RESIDUAL | Manage UXO, closures, movement restrictions, intermittent attacks, and nighttime blackout |
 
-10-3. 弾道ミサイル警報時
+### 10-3. During a Ballistic Missile Warning
 
-屋外では、近くの頑丈な建物または地下へ退避する。建物がない場合は物陰に身を隠すか地面に伏せて頭部を守る。  
-屋内では、窓から離れ、できれば窓のない部屋へ移る。  
-近傍着弾後、煙・異臭・有害物質の疑いがある場合は、口鼻を覆って現場を離れるか、屋内なら換気を止めて窓を閉め室内を密閉する。
+If outdoors, evacuate to a nearby sturdy building or underground. If no building is available, take cover behind something or lie on the ground and protect your head.  
+If indoors, move away from windows and, if possible, into a room without windows.  
+After a nearby impact, if there is smoke, unusual odor, or suspected hazardous materials, cover your mouth and nose and leave the area; if indoors, stop ventilation, close windows, and seal the room.
 
-10-4. 核兵器攻撃
+### 10-4. Nuclear Weapon Attack
 
-核兵器攻撃は、ミサイル等による爆発・熱線・爆風被害と、その後の放射性降下物による汚染という二つの要素が重なる事態として扱う。したがって、本プロトコルでは、通常の原子力災害（原子力施設事故等）とは分けて考える。  
-初動では、閃光・爆風・倒壊・火災から身を守る行動を最優先し、その後は放射性降下物を避けるため、地下または屋内への退避、窓閉鎖、換気停止、除染要否の確認、公式指示待ちを優先する。安易な屋外移動や未確認経路での広域避難は推奨しない。  
-短報では、爆発の有無、火災、倒壊、負傷者数、屋内退避開始、降下物疑い、除染要否を短く共有する。必要に応じて MSL、BLAST、SHEL、RAD、DECON を組み合わせる。外部機関へ橋渡しする際は、案件ID、報告番号、場所、時刻、傷病者数、防護行動の実施状況を平文化して引き継ぐ。
+A nuclear weapon attack is treated as a situation with two elements layered together: damage from blast, thermal radiation, and overpressure due to a missile or other explosion, and subsequent contamination by radioactive fallout. Therefore, this protocol treats it separately from an ordinary nuclear disaster such as a nuclear facility accident.  
+At the initial stage, prioritize protecting oneself from flash, blast, collapse, and fire. After that, to avoid radioactive fallout, prioritize moving underground or indoors, closing windows, stopping ventilation, checking whether decontamination is needed, and waiting for official instructions. Do not recommend casual outdoor movement or wide-area evacuation via unconfirmed routes.  
+In short reports, briefly share whether there was an explosion, fire, collapse, number of injured, start of sheltering indoors, suspected fallout, and decontamination need. Combine MSL, BLAST, SHEL, RAD, and DECON as necessary. When handing off to outside organizations, convert the case ID, report number, location, time, number of casualties, and status of protective actions into plain language.
 
-10-5. 都市戦・銃声・爆発・破壊時
+### 10-5. During Urban Combat, Gunfire, Explosions, and Destruction
 
-銃声、爆発音、二次火災、ガラス飛散、倒壊の有無を短く報告する。現場実況の長文化は禁止。  
-避難経路は「通れる／塞がれた／危険区域」だけを送る。現場部隊・警戒線・検問の詳細位置は一般チャネルへ流さない。  
-夜間・停電下では、光源使用、屋外移動、集団集中のリスクが上がる。必要な時刻・場所・人数のみ送る。
+Briefly report gunfire, explosion sounds, secondary fires, flying glass, and whether collapse has occurred. Long live narration of the scene is prohibited.  
+For routes, send only “passable / blocked / dangerous area.” Do not transmit the detailed positions of field units, security perimeters, or checkpoints on general channels.  
+At night and during blackout, the risks of using lights, moving outdoors, and mass concentration increase. Send only necessary times, places, and headcounts.
 
-10-6. 暴動・集団騒擾時
+### 10-6. During Riots and Civil Disturbance
 
-暴動時は、火災・略奪・投石・バリケード形成・群衆流入・警察対応による通行変化が短時間で入れ替わる。Meshtastic では、現場実況の長文化を避けつつ、避難経路の可否、火災の有無、負傷者の有無、危険区域の拡大方向を短く報告する。  
-一般チャネルでは、群衆の詳細人数推定、扇動者の断定、写真転載、SNS由来の未確認情報を流さない。必要なのは「どこが危険か」「どの経路が使えないか」「火災や負傷者があるか」「外部機関への通報が必要か」である。  
-本文コードとしては、RIT（暴動発生）、MOB（群衆集結）、LOOT（略奪）、ARSN（放火）、STON（投石）、BARR（バリケード・障害物）を用いる。外部機関へ橋渡しする際は、場所、危険行為、人数概数、延焼・負傷の有無、接近禁止区域を平文で引き継ぐ。
+During riots, fires, looting, stone-throwing, barricades, crowd inflow, and route changes due to police response can shift rapidly. On Meshtastic, avoid long scene narration while briefly reporting route usability, whether there is fire, whether there are injuries, and in which direction the dangerous zone is expanding.  
+On general channels, do not circulate detailed crowd headcount estimates, identify ringleaders, repost photos, or transmit unconfirmed social-media information. What matters is “where is dangerous,” “which routes are unusable,” “whether there is fire or injury,” and “whether external notification is needed.”  
+Use the following body codes: RIT (riot outbreak), MOB (crowd concentration), LOOT (looting), ARSN (arson), STON (stone-throwing), and BARR (barricade/obstacle). When handing off to outside organizations, convert location, dangerous acts, rough crowd size, presence of fire or injuries, and no-approach zones into plain language.
 
-10-7. 不発弾・不審爆発物
+### 10-7. UXO and Suspicious Explosive Objects
 
-触らない、近づかない、動かさない。Meshtasticでは「UXO FOUND」「STAY OUT」のように危険区域だけを短く共有する。  
-位置は公開チャネルでは概区画またはセクタのみ。詳細位置は自治体・警察・消防・自衛隊等への橋渡し側で扱う。
+Do not touch them, do not approach them, and do not move them. On Meshtastic, share only the danger zone briefly, such as “UXO FOUND” or “STAY OUT.”  
+On public channels, location should be limited to a rough sector or block; precise location is handled on the handoff side for municipalities, police, fire services, Self-Defense Forces, and others.
 
-10-8. 送信停止規律
+### 10-8. Transmission Restrictions
 
-自衛隊・警察・消防・救急・避難所の正確な配置や移動を実況しない。  
-動画・写真・SNS転載をMeshtastic本文に流さない。  
-未確認の敵味方情報、戦果、被害数、犯人像を断定しない。  
-不発弾様物件の回収・接触を指示しない。
+Do not narrate the exact deployment or movement of the Self-Defense Forces, police, fire services, EMS, or shelters.  
+Do not transmit videos, photos, or reposts from social media within Meshtastic message bodies.  
+Do not state as fact unconfirmed information about enemy/friendly forces, battle results, casualty counts, or suspects.  
+Do not instruct anyone to recover or touch suspected UXO.
 
-10-9. 推奨短報
+### 10-9. Recommended Short Codes
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | :---: | :---: | ----- | ----- |
-| MSL | ミサイル警報/着弾 | Jアラートまたは落下可能性 | \[\[ALR\]\] TKY-S-20260329-1015 NEW ALR: MSL ALERT UG NOW. A1 1015J | 東京の武力攻撃案件。ミサイル警報を受け、ただちに地下退避を開始せよ。 |
-| BLAST | 爆発/爆風 | 爆発、火災、倒壊の初報 | \[\[EMG\]\] OSA-S-20260329-1022 NEW RPT: BLAST FIRE COL 5PAX. B2 1024J | 大阪の武力攻撃案件。爆発に伴い火災と倒壊があり、少なくとも5人影響を受けた。 |
-| SHEL | 屋内/地下退避 | 退避中、屋内待機 | \[\[ADM\]\] KOB-S-20260329-1030 ACK EVQ: SHEL UG STAY. A1 1031J | 神戸の案件。地下で屋内退避を継続中。 |
-| UXO | 不発弾/不審爆発物 | 発見時の危険周知 | \[\[SIT\]\] KOB-S-20260329-1105 NEW RPT: UXO FOUND SEC-D STAY OUT. B2 1107J | D区画で不発弾様物件を発見したので、立入禁止と周知する。 |
-| CURF | 移動制限 | 夜間外出制限、封鎖 | \[\[ADM\]\] TKY-S-20260329-1900 NEW RPT: CURF HOLD CHKP N. A1 1902J | 北側の検問・封鎖により現位置待機が必要。 |
-| RIT | 暴動発生 | 群衆騒擾・安全確保優先 | \[\[ALR\]\] SND-S-20260329-1840 NEW RPT: RIT MOB SEC-C AVOID. B2 1842J | C区画で暴動と群衆集結が発生しているため接近回避を周知する。 |
-| MOB | 群衆集結 | 群衆集中・流入 | \[\[SIT\]\] SND-S-20260329-1843 S02 RPT: MOB GATE-W GROW. C3 1845J | 西門側で群衆集結が拡大している第2報。 |
-| LOOT | 略奪 | 店舗・倉庫等への侵入略奪 | \[\[EMG\]\] SND-S-20260329-1850 NEW CAL: LOOT SHOP-A POL. B2 1851J | 店舗Aで略奪が発生し、警察通報が必要。 |
-| ARSN | 放火 | 故意の出火・延焼危険 | \[\[EMG\]\] SND-S-20260329-1854 NEW RPT: ARSN FIRE BLDG-2. B2 1856J | 建物2で放火に伴う火災が発生している。 |
-| STON | 投石 | 投石・飛来物危険 | \[\[ALR\]\] SND-S-20260329-1858 NEW RPT: STON ROAD-N AVOID. C3 1900J | 北側道路で投石があり、通行回避が必要。 |
-| BARR | バリケード・障害物 | 道路封鎖・即席障害物 | \[\[SIT\]\] SND-S-20260329-1902 NEW RPT: BARR INT-A BLK. B2 1904J | 交差点Aにバリケードが形成され通行不能。 |
+| MSL | Missile alert / possible impact | J-Alert or possible incoming strike | `[[ALR]] TKY-S-20260329-1015 NEW ALR: MSL ALERT UG NOW. A1 1015J` | Tokyo armed-attack case. A missile warning has been received; begin underground evacuation immediately. |
+| BLAST | Explosion / blast wave | Initial report of explosion, fire, collapse | `[[EMG]] OSA-S-20260329-1022 NEW RPT: BLAST FIRE COL 5PAX. B2 1024J` | Osaka armed-attack case. An explosion caused fire and collapse and affected at least five people. |
+| SHEL | Shelter indoors / underground | Sheltering, staying indoors | `[[ADM]] KOB-S-20260329-1030 ACK EVQ: SHEL UG STAY. A1 1031J` | Kobe case. Underground sheltering is being continued. |
+| UXO | Unexploded ordnance / suspicious explosive object | Hazard notification when discovered | `[[SIT]] KOB-S-20260329-1105 NEW RPT: UXO FOUND SEC-D STAY OUT. B2 1107J` | A UXO-like object was found in Sector D and entry is prohibited. |
+| CURF | Movement restriction | Curfew, closure, checkpoint | `[[ADM]] TKY-S-20260329-1900 NEW RPT: CURF HOLD CHKP N. A1 1902J` | Hold position because of a northern checkpoint/closure. |
+| RIT | Riot outbreak | Civil disturbance; prioritize safety | `[[ALR]] SND-S-20260329-1840 NEW RPT: RIT MOB SEC-C AVOID. B2 1842J` | Avoid approach because riots and crowd concentration are occurring in Sector C. |
+| MOB | Crowd concentration | Crowd build-up / inflow | `[[SIT]] SND-S-20260329-1843 S02 RPT: MOB GATE-W GROW. C3 1845J` | Second report: crowd concentration near West Gate is growing. |
+| LOOT | Looting | Looting of shops, warehouses, etc. | `[[EMG]] SND-S-20260329-1850 NEW CAL: LOOT SHOP-A POL. B2 1851J` | Looting is occurring at Shop A and police notification is required. |
+| ARSN | Arson | Intentional fire / spread risk | `[[EMG]] SND-S-20260329-1854 NEW RPT: ARSN FIRE BLDG-2. B2 1856J` | A fire caused by arson is occurring in Building 2. |
+| STON | Stone-throwing | Hazard from thrown objects | `[[ALR]] SND-S-20260329-1858 NEW RPT: STON ROAD-N AVOID. C3 1900J` | Stone-throwing on the north road requires route avoidance. |
+| BARR | Barricade / obstacle | Road closure / improvised obstacle | `[[SIT]] SND-S-20260329-1902 NEW RPT: BARR INT-A BLK. B2 1904J` | A barricade has been built at Intersection A and it is impassable. |
 
-11\. 台帳・短報管理台帳ソフトウェア（作成中）
+## 11. Case Ledger / Short-Message Management Software (In Progress)
 
-12\. 定型文（Canned Message）実装案
+## 12. Proposed Canned Message Implementation
 
-【事実】  
-Meshtastic の 定型文モジュールは、事前定義メッセージを device 単体で送信でき、メッセージ群は pipe（|）区切りで、総バイト数は最大200バイトである。\[R19\]
+**[Fact]**  
+Meshtastic’s canned-message module can send pre-defined messages from a single device; message groups are pipe-separated (`|`), and the total byte count is limited to 200 bytes. [R19]
 
-【本プロトコルでの採用】  
-定型文 は「全文送信装置」ではなく、「初報・受領・定型要求」に限定する。Phase と役割ごとにプリセットを切り替える。
+**[Adopted in This Protocol]**  
+Canned messages are not a “full-text transmission device.” They are limited to initial reports, acknowledgments, and standardized requests. Switch presets by phase and role.
 
-| プリセット | 文字列（そのまま設定可能） | 概算バイト |
+| Preset | String (can be set as-is) | Approx. Bytes |
 | :---: | ----- | :---: |
-| Pack-A 初動 | \[\[SOS\]\] NEED MED|\[\[EMG\]\] FIRE MOV|\[\[ALR\]\] EVAC NOW|\[\[SIT\]\] ROD BLK|\[\[ADM\]\] RC ALL | 92 |
-| Pack-B 物資 | \[\[EMG\]\] WAT NEED|\[\[EMG\]\] FOO NEED|\[\[EMG\]\] PWR NEED|\[\[SIT\]\] ISO|\[\[ADM\]\] LOG QSL | 91 |
-| Pack-C 医療 | \[\[SOS\]\] 1RED|\[\[EMG\]\] HOSP SAT|\[\[EMG\]\] O2 NEED|\[\[SIT\]\] 3YLW|\[\[ADM\]\] MED QSL | 92 |
-| Pack-D RFL | \[\[ADM\]\] MISS NEW|\[\[ADM\]\] SAFE CONF|\[\[ADM\]\] RFL CH3|\[\[SIT\]\] EVQ FULL|\[\[ADM\]\] QSL | 92 |
-| Pack-E 武力攻撃 | \[\[ALR\]\] MSL ALERT|\[\[ADM\]\] SHEL UG NOW|\[\[EMG\]\] BLAST FIRE|\[\[SIT\]\] UXO FOUND|\[\[ADM\]\] CURF HOLD | 100 |
+| Pack-A Initial Response | `[[SOS]] NEED MED|[[EMG]] FIRE MOV|[[ALR]] EVAC NOW|[[SIT]] ROD BLK|[[ADM]] RC ALL` | 92 |
+| Pack-B Supplies | `[[EMG]] WAT NEED|[[EMG]] FOO NEED|[[EMG]] PWR NEED|[[SIT]] ISO|[[ADM]] LOG QSL` | 91 |
+| Pack-C Medical | `[[SOS]] 1RED|[[EMG]] HOSP SAT|[[EMG]] O2 NEED|[[SIT]] 3YLW|[[ADM]] MED QSL` | 92 |
+| Pack-D RFL | `[[ADM]] MISS NEW|[[ADM]] SAFE CONF|[[ADM]] RFL CH3|[[SIT]] EVQ FULL|[[ADM]] QSL` | 92 |
+| Pack-E Armed Attack | `[[ALR]] MSL ALERT|[[ADM]] SHEL UG NOW|[[EMG]] BLAST FIRE|[[SIT]] UXO FOUND|[[ADM]] CURF HOLD` | 100 |
 
-| 定型文実装ルール |
+| Rules for Canned Message Implementation |
 | ----- |
-| 1回で案件の全情報は送れない。定型文（Canned Message） は「初報の起点」として使い、受信側は 案件ID を付して本送信へ進む。 |
-| 未習熟者用の Pack は平文短文を含めてよい。ただし 200 バイト制限を越えないこと。 |
-| 鐘文字（bell）は夜間や避難所では騒音になるため、拠点局だけ有効化する。 |
+| All information for a case cannot be sent in one shot. Use canned messages only as the starting point for an initial report, after which the receiver adds a case ID and proceeds to full transmission. |
+| Packs for untrained users may include short plain-language phrases, but must not exceed the 200-byte limit. |
+| Bell characters can become noise at night or in shelters, so enable them only on base stations. |
 
-13\. 東日本大震災と無線運用の教訓
+## 13. Lessons from the Great East Japan Earthquake and Radio Operations
 
-【事実】  
- JARLは東日本大震災時に情報収集、非常通信支援用トランシーバーの調達・被災地投入、非常通信の実施・支援等を行った。またJARLは平時から非常通信に関する基本方針と実施要領、非常通信マニュアルを整備している。\[R24\]\[R25\]\[R26\]
+**[Fact]**  
+During the Great East Japan Earthquake, JARL collected information, procured and deployed transceivers for emergency communications support in affected areas, and carried out and supported emergency communications. JARL also maintains basic policies, implementation procedures, and an emergency communications manual in peacetime. [R24][R25][R26]
 
-【本プロトコルへの反映】   
-本プロトコルでは、会話で整理された「孤立地域からの救助要請」「避難所と本部をつなぐ中継」「自治体への機材・技術支援」「ライフライン情報の即時共有」「多帯域・多経路の併用」「電源自立」「座標化による位置特定」を、Meshtastic時代の実務項目として再配置する。
+**[Reflected in This Protocol]**  
+This protocol repositions into the Meshtastic era the practical items discussed in conversation: “rescue requests from isolated areas,” “relays linking shelters and headquarters,” “equipment and technical support to municipalities,” “immediate sharing of lifeline information,” “use of multiple bands and multiple paths,” “power self-sufficiency,” and “position identification through coordinates.”
 
-13-1. 採用する教訓
+### 13-1. Lessons Adopted
 
-救助要請と安否情報の伝達は、災害時の優先業務である。  
-避難所・対策本部・病院・物資集積所を短い案件番号でつなぐことが重要である。  
-ライフライン情報は住民行動に直結するため、給水・燃料・道路・営業状況を短報で回す価値が高い。  
-HF/VHF/UHFのような多層通信を、Meshtastic／携帯／衛星／防災行政無線の現代版多層化へ読み替える。  
-停電時に動く電源計画と、簡易地図・区画コード・オフライン資料は重要である。
+Transmission of rescue requests and safety information is a priority task in disasters.  
+It is important to link shelters, headquarters, hospitals, and material depots with short case numbers.  
+Lifeline information directly affects resident behavior, so short reports on water supply, fuel, roads, and business operations are highly valuable.  
+The layered communications model of HF/VHF/UHF should be reinterpreted today as Meshtastic / cellular / satellite / municipal disaster-radio multi-layering.  
+Power plans that work during blackouts, as well as simple maps, grid codes, and offline materials, are important.
 
-13-2. 本プロトコルへの反映
+### 13-2. Implementation in This Protocol
 
-| 教訓 | 本プロトコルでの実装 | 備考 |
+| Lesson | Implementation in This Protocol | Notes |
 | :---: | ----- | ----- |
-| SOSの早期外部伝達 | \[\[SOS\]\] と 案件ID を優先し、連携担当 が消防・自治体へ平文化 | 初動は符号優先、外部は平文 |
-| 避難所詰め通信 | EVQコードと避難所番号を固定 | 避難所ごとにNode Nameも固定 |
-| ライフライン即時共有 | PWR/WAT/ROD/OUT を定型文（Canned Message）へ登録 | 生活情報はPhase 3で解禁 |
-| 広域中継 | CLIENT\_BASE \+ 私設チャネル \+ 外部橋渡し役 | ROUTER/REPEATER乱用は避ける |
-| 位置特定の工夫 | 区画コード・100mグリッド・ランドマーク併記 | GPSが使えない時の代替 |
+| Early external relay of SOS | Prioritize [[SOS]] and case IDs; Liaison converts them into plain language for fire services and municipalities | Codes first in the initial phase; plain language externally |
+| Shelter-focused communications | Fix EVQ codes and shelter numbers | Fix node names by shelter as well |
+| Immediate sharing of lifeline information | Register PWR/WAT/ROD/OUT in canned messages | Daily-life information is released from Phase 3 |
+| Wide-area relay | CLIENT_BASE + private channels + external handoff role | Avoid excessive ROUTER/REPEATER use |
+| Position identification methods | Area codes, 100 m grids, landmarks | Backup when GPS is unavailable |
 
-14\. 参考文献・参照資料
+## 14. References
 
-\[R1\] Meshtastic, Configuration Tips. https://meshtastic.org/docs/configuration/tips/  
-\[R2\] Meshtastic, Device Configuration. https://meshtastic.org/docs/configuration/radio/device/  
-\[R3\] Meshtastic, Position Configuration. https://meshtastic.org/docs/configuration/radio/position/  
-\[R4\] Meshtastic, MQTT Module Configuration. https://meshtastic.org/docs/configuration/module/mqtt/  
-\[R5\] ARIB, 標準規格概要（STD-T108）. https://www.arib.or.jp/kikaku/kikaku\_tushin/desc/std-t108.html  
-\[R6\] TELEC, 技術基準適合証明及び工事設計認証に関するお問合せ. https://www.telec.or.jp/faq/  
-\[R7\] JATE, 特定無線設備の適合証明等制度について. https://www.jate.or.jp/jp/radio/about-r.html  
-\[R8\] 個人情報保護委員会, FAQ Q7-21 大規模災害等の緊急時の個人情報共有. https://www.ppc.go.jp/all\_faq\_index/faq1-q7-21/  
-\[R9\] 個人情報保護委員会, 個人情報保護法Q\&A（避難行動要支援者名簿・個別避難計画）. https://www.ppc.go.jp/personalinfo/faq/APPI\_QA/  
-\[R10\] 個人情報保護委員会, 個人情報保護法Q\&A（行政機関等編）新旧 2025/12/12. https://www.ppc.go.jp/files/pdf/251212\_koutekibumon\_qa\_shinkyu.pdf  
-\[R11\] 内閣府防災, 避難所の生活環境対策（令和6年12月改定資料群）. https://www.bousai.go.jp/taisaku/hinanjo/index.html  
-\[R12\] 厚生労働省, 日本DMAT活動要領の一部改正について（2024/03/29）. https://www.mhlw.go.jp/content/10800000/001272085.pdf  
-\[R13\] FEMA, IS-700.b An Introduction to the National Incident Management System. https://training.fema.gov/emiweb/is/is700b/student%20manual/smis0700b.pdf  
-\[R14\] FEMA, ICS Forms Descriptions / ICS 209\. https://training.fema.gov/emiweb/is/icsresource/assets/ics%20forms%20descriptions.pdf ; https://training.fema.gov/emiweb/is/icsresource/assets/ics%20forms/ics%20form%20209%2C%20incident%20status%20summary%20%28v3%29.pdf  
-\[R15\] 気象庁, 津波警報・注意報、津波情報、津波予報について. https://www.jma.go.jp/jma/kishou/know/jishin/joho/tsunamiinfo.html  
-\[R16\] 気象庁, 指定河川洪水予報. https://www.jma.go.jp/jma/kishou/know/bosai/flood.html  
-\[R17\] 気象庁, 土砂災害警戒情報 / 土砂キキクル. https://www.jma.go.jp/jma/kishou/know/bosai/doshakeikai.html  
-\[R18\] 気象庁, 噴火警戒レベルの説明. https://www.jma.go.jp/jma/kishou/know/kazan/level\_toha/level\_toha.html  
-\[R19\] Meshtastic, 定型文（Canned Message） Module Configuration. https://meshtastic.org/docs/configuration/module/canned-message/  
-\[R20\] 内閣官房 国民保護ポータルサイト, 弾道ミサイル飛来時の行動. https://www.kokuminhogo.go.jp/kokuminaction/  
-\[R21\] 内閣官房 国民保護ポータルサイト, Jアラート（全国瞬時警報システム）による情報伝達. https://www.kokuminhogo.go.jp/kokuminaction/jalert.html  
-\[R22\] 政府広報オンライン, 弾道ミサイルの飛来を告げるJアラートが！身を守るための行動とは？ https://www.gov-online.go.jp/article/202412/entry-6847.html  
-\[R23\] ICRC, Explosive weapons in populated areas. https://www.icrc.org/en/law-and-policy/explosive-weapons-populated-areas  
-\[R24\] JARL, 東日本大震災におけるJARLの活動. https://www.jarl.org/Eastern\_Japan\_earthquake.htm  
-\[R25\] JARL, アマチュア無線と非常通信. https://www.jarl.org/Japanese/2\_Joho/2-4\_Hijou/Hijou.htm  
-\[R26\] JARL, アマチュア局の非常通信マニュアル. https://www.jarl.org/Japanese/2\_Joho/2-4\_Hijou/emergency-communication-manual.pdf  
-\[R27\] 原子力規制委員会, 原子力災害対策指針に基づく防護措置の考え方. https://www.nra.go.jp/activity/bousai/measure/bogosoti.html  
-\[R28\] 内閣府, 原子力発電所からおおむね5〜30km圏内にお住まいのみなさまが行う屋内退避について. https://www8.cao.go.jp/genshiryoku\_bousai/shiryou/okunaitaihi.html  
-\[R29\] 内閣官房, 国民の保護に関する基本指針（NBC攻撃を含む）. https://www.kokuminhogo.go.jp/pdf/291219shishin.pdf  
-\[R30\] 厚生労働省, 国内でのテロに対する健康危機管理について. https://www.mhlw.go.jp/content/20210428-01.pdf  
-\[R31\] GitHub rkolbi/GuardianBridge README. https://github.com/rkolbi/GuardianBridge  
-\[R32\] 気象庁, 線状降水帯に関する各種情報. https://www.jma.go.jp/jma/kishou/know/bosai/kishojoho\_senjoukousuitai.html  
-\[R33\] 気象庁, 台風に伴う高潮. https://www.jma.go.jp/jma/kishou/know/typhoon/4-1.html  
-\[R34\] 気象庁, 高潮による災害. https://www.jma.go.jp/jma/kishou/know/ame\_chuui/ame\_chuui\_p6.html  
-\[R42\] NOAA SARSAT, Emergency 406 Beacons / EPIRB. https://www.sarsat.noaa.gov/emergency-406-beacons/  
-\[R41\] USCG Navigation Center, Radio Information for Boaters. https://www.navcen.uscg.gov/radio-information-for-boaters  
-\[R40\] USCG Navigation Center, DSC Distress. https://www.navcen.uscg.gov/dsc-distress  
-\[R39\] ARRL, Amateur Radio Nets Crucial Link in Maritime Rescues. https://www.arrl.org/news/view/amateur-radio-nets-crucial-link-in-maritime-rescues  
-\[R38\] ARRL, 1997 Field Day report, Mesilla Valley Search and Rescue requested communications support during search for overdue hiker. https://www.arrl.org/files/file/ContestResults/97/fd.pdf  
-\[R37\] RAF Mountain Rescue, Chapter 9 Mountain Rescue Communications, VHF portable radios are used between search parties, command and control and SAR helicopters. https://rafmountainrescue.com/wp-content/uploads/2012/08/Chapter-9-MOUNTAIN-RESCUE-COMMUNICATIONS.pdf  
-\[R36\] NMSAR, COMMUNICATIONS for SAR Field Teams, For Search and Rescue LMRS and HAM are usually used/needed. https://www.nmsarc.org/uploads/6/3/5/6/63569937/comms\_training\_nmsar-fieldteams20230519.pdf  
-\[R35\] Meshtastic Blog, Today, Meshtastic is used in Search and Rescue operations, off-grid communication, disaster recovery, and even grid-down scenarios. https://meshtastic.org/blog/page/2/
+[R1] Meshtastic, Configuration Tips. https://meshtastic.org/docs/configuration/tips/  
+[R2] Meshtastic, Device Configuration. https://meshtastic.org/docs/configuration/radio/device/  
+[R3] Meshtastic, Position Configuration. https://meshtastic.org/docs/configuration/radio/position/  
+[R4] Meshtastic, MQTT Module Configuration. https://meshtastic.org/docs/configuration/module/mqtt/  
+[R5] ARIB, Overview of Standard Specification (STD-T108). https://www.arib.or.jp/kikaku/kikaku_tushin/desc/std-t108.html  
+[R6] TELEC, Inquiries Regarding Technical Conformity Certification and Construction Design Certification. https://www.telec.or.jp/faq/  
+[R7] JATE, About the Conformity Certification System for Specified Radio Equipment. https://www.jate.or.jp/jp/radio/about-r.html  
+[R8] Personal Information Protection Commission, FAQ Q7-21 Sharing Personal Information in Emergencies Such as Large-Scale Disasters. https://www.ppc.go.jp/all_faq_index/faq1-q7-21/  
+[R9] Personal Information Protection Commission, APPI Q&A (Roster of Persons Requiring Evacuation Assistance / Individual Evacuation Plans). https://www.ppc.go.jp/personalinfo/faq/APPI_QA/  
+[R10] Personal Information Protection Commission, APPI Q&A (Administrative Bodies Section), old/new comparison, 2025/12/12. https://www.ppc.go.jp/files/pdf/251212_koutekibumon_qa_shinkyu.pdf  
+[R11] Cabinet Office Disaster Management, Shelter Living-Environment Measures (Guideline materials revised in December 2024). https://www.bousai.go.jp/taisaku/hinanjo/index.html  
+[R12] Ministry of Health, Labour and Welfare, Partial Revision of the Japan DMAT Operational Guidelines (2024/03/29). https://www.mhlw.go.jp/content/10800000/001272085.pdf  
+[R13] FEMA, IS-700.b An Introduction to the National Incident Management System. https://training.fema.gov/emiweb/is/is700b/student%20manual/smis0700b.pdf  
+[R14] FEMA, ICS Forms Descriptions / ICS 209. https://training.fema.gov/emiweb/is/icsresource/assets/ics%20forms%20descriptions.pdf ; https://training.fema.gov/emiweb/is/icsresource/assets/ics%20forms/ics%20form%20209%2C%20incident%20status%20summary%20%28v3%29.pdf  
+[R15] Japan Meteorological Agency, About Tsunami Warnings/Advisories, Tsunami Information, and Tsunami Forecasts. https://www.jma.go.jp/jma/kishou/know/jishin/joho/tsunamiinfo.html  
+[R16] Japan Meteorological Agency, Designated River Flood Forecasts. https://www.jma.go.jp/jma/kishou/know/bosai/flood.html  
+[R17] Japan Meteorological Agency, Landslide Warning Information / Landslide KikiKuru. https://www.jma.go.jp/jma/kishou/know/bosai/doshakeikai.html  
+[R18] Japan Meteorological Agency, Explanation of Volcanic Alert Levels. https://www.jma.go.jp/jma/kishou/know/kazan/level_toha/level_toha.html  
+[R19] Meshtastic, Canned Message Module Configuration. https://meshtastic.org/docs/configuration/module/canned-message/  
+[R20] Cabinet Secretariat Civil Protection Portal, What to Do When a Ballistic Missile Is Incoming. https://www.kokuminhogo.go.jp/kokuminaction/  
+[R21] Cabinet Secretariat Civil Protection Portal, Information Transmission by J-Alert (Nationwide Instant Alert System). https://www.kokuminhogo.go.jp/kokuminaction/jalert.html  
+[R22] Government Public Relations Online, J-Alert Warns of Incoming Ballistic Missiles—What Actions Protect You? https://www.gov-online.go.jp/article/202412/entry-6847.html  
+[R23] ICRC, Explosive Weapons in Populated Areas. https://www.icrc.org/en/law-and-policy/explosive-weapons-populated-areas  
+[R24] JARL, JARL Activities During the Great East Japan Earthquake. https://www.jarl.org/Eastern_Japan_earthquake.htm  
+[R25] JARL, Amateur Radio and Emergency Communications. https://www.jarl.org/Japanese/2_Joho/2-4_Hijou/Hijou.htm  
+[R26] JARL, Emergency Communications Manual for Amateur Stations. https://www.jarl.org/Japanese/2_Joho/2-4_Hijou/emergency-communication-manual.pdf  
+[R27] Nuclear Regulation Authority, Concepts of Protective Measures Based on the Nuclear Emergency Preparedness Guidelines. https://www.nra.go.jp/activity/bousai/measure/bogosoti.html  
+[R28] Cabinet Office, Sheltering Indoors for Residents Living Roughly 5–30 km from Nuclear Power Plants. https://www8.cao.go.jp/genshiryoku_bousai/shiryou/okunaitaihi.html  
+[R29] Cabinet Secretariat, Basic Guidelines on Civil Protection (including NBC attacks). https://www.kokuminhogo.go.jp/pdf/291219shishin.pdf  
+[R30] Ministry of Health, Labour and Welfare, Health Crisis Management for Domestic Terrorism. https://www.mhlw.go.jp/content/20210428-01.pdf  
+[R31] GitHub rkolbi/GuardianBridge README. https://github.com/rkolbi/GuardianBridge  
+[R32] Japan Meteorological Agency, Information Related to Linear Rainbands. https://www.jma.go.jp/jma/kishou/know/bosai/kishojoho_senjoukousuitai.html  
+[R33] Japan Meteorological Agency, Storm Surge Associated with Typhoons. https://www.jma.go.jp/jma/kishou/know/typhoon/4-1.html  
+[R34] Japan Meteorological Agency, Disaster Caused by Storm Surge. https://www.jma.go.jp/jma/kishou/know/ame_chuui/ame_chuui_p6.html  
+[R42] NOAA SARSAT, Emergency 406 Beacons / EPIRB. https://www.sarsat.noaa.gov/emergency-406-beacons/  
+[R41] USCG Navigation Center, Radio Information for Boaters. https://www.navcen.uscg.gov/radio-information-for-boaters  
+[R40] USCG Navigation Center, DSC Distress. https://www.navcen.uscg.gov/dsc-distress  
+[R39] ARRL, Amateur Radio Nets Crucial Link in Maritime Rescues. https://www.arrl.org/news/view/amateur-radio-nets-crucial-link-in-maritime-rescues  
+[R38] ARRL, 1997 Field Day report: Mesilla Valley Search and Rescue requested communications support during search for overdue hiker. https://www.arrl.org/files/file/ContestResults/97/fd.pdf  
+[R37] RAF Mountain Rescue, Chapter 9 Mountain Rescue Communications: VHF portable radios are used between search parties, command and control, and SAR helicopters. https://rafmountainrescue.com/wp-content/uploads/2012/08/Chapter-9-MOUNTAIN-RESCUE-COMMUNICATIONS.pdf  
+[R36] NMSAR, COMMUNICATIONS for SAR Field Teams: For search and rescue, LMRS and HAM are usually used/needed. https://www.nmsarc.org/uploads/6/3/5/6/63569937/comms_training_nmsar-fieldteams20230519.pdf  
+[R35] Meshtastic Blog, Today, Meshtastic is used in Search and Rescue operations, off-grid communication, disaster recovery, and even grid-down scenarios. https://meshtastic.org/blog/page/2/
 
-15\. コードブック（カテゴリー別）
+## 15. Codebook (by Category)
 
-本プロトコルで用いる全コードをカテゴリーごとに集約する。コード、意味、用法、例文、例文の意味を一か所にまとめ、現場配布用カード、壁貼り台帳、教育用資料の原本として使う。
+This section consolidates all codes used by this protocol by category. Codes, meanings, usage, example messages, and the meaning of those examples are gathered in one place for use as the master copy for field-distribution cards, wall ledgers, and training materials.
 
-15-1. 優先度・管理  
-注記：SEQ はコードブック上の単独コードではなく、標準構文の中で用いる構文要素である。S01, S02, S03…のように増やし、同一案件の第何報かを示す。末尾の報告時刻と組み合わせることで、更新順と更新時点を明確にする。
+### 15-1. Priority and Management
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+**Note:** SEQ is not a standalone code in the codebook; it is a syntax element used within the standard syntax. Increase it as S01, S02, S03, etc. to indicate which report number it is within the same case. Combined with the report time at the end, it clarifies update order and update time.
+
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | ----- | ----- | ----- | ----- |
-| \[\[SOS\]\] | 命の危機・最優先 | 救命、閉じ込め、溺水、急変時 | \[\[SOS\]\] MAI-Q-20260329-1430 NEW REQ: COL TRP 2PAX 1RED. | 舞鶴の地震案件で、倒壊建物内に2人おり、そのうち1人が赤判定で直ちに救助が必要。 |
-| \[\[EMG\]\] | 緊急 | 火災、重傷、進行中災害、爆発 | \[\[EMG\]\] OSA-I-20260329-1940 NEW RPT: FIRE MOV E. | 大阪の火災案件で、火勢が東へ移動している。 |
-| \[\[ALR\]\] | 警戒・事前警報 | 危険接近、津波、化学/原子力/ミサイルの注意喚起 | \[\[ALR\]\] FKS-U-20260329-0910 NEW RPT: RAD ALR SEAL. | 原子力災害の疑いがあり、屋内退避を始めるべき。 |
-| \[\[SIT\]\] | 状況報告 | 現況、被害概況、観測 | \[\[SIT\]\] KOB-L-20260329-1500 NEW RPT: ROD BLK BY LND. | 土砂で道路が閉塞している状況報告。 |
-| \[\[ADM\]\] | 管理 | 点呼、統制、チャネル管理、訓練 | \[\[ADM\]\] NET ROLL CALL 0900\. | 9時に点呼を行う管理通知。 |
-| NEW | 新規 | 案件の発生時 | NEW REQ | 新規要請。 |
-| WIP | 対応中 | 派遣・手配・調査が動いている | WIP ETA20 | 対応中で20分後到着見込み。 |
-| HLD | 保留 | 資源不足、危険、天候で中断 | HLD WX | 天候要因で保留。 |
-| CLO | 完了 | 案件終了 | CLO NIL | 案件完了で追加対応不要。 |
-| COR | 訂正 | 誤報・誤記訂正 | COR LOC B2 | 位置をB2へ訂正する。 |
-| FAK | 虚偽情報・デマ | 明らかな虚偽、悪意のある噂の警戒 | FAK-INFO | 虚偽情報として扱うべき案件。 |
-| NEG | 否定・打ち消し | 調査結果、当該事象なしの通知 | NEG NO FIRE | 火災は存在しなかったという打ち消し。 |
-| SCM | 詐欺・不審勧誘 | 救援詐欺、不審募集、不正徴収の警戒 | SCM FAKE DONATION | 偽の募金・詐欺的勧誘への警戒。 |
-| ACK | 受領確認 | 受信・受付済み | ACK \#MAI-M001 | 舞鶴の案件を受領した。 |
-| QSL | 了解・通信成立 | 短い了解応答 | QSL ETA30 | 了解、30分後到着見込み。 |
-| NIL | 追加情報なし・異常なし | 状況なし報告 | NIL ALL OK | 異常なしで全員無事。 |
-| CAL | 通報・招請 | 外部機関への通報、出動要請、橋渡し要請 | REQ CAL PFIRE | 消防へ通報・招請を要する。 |
-| PJSDF | 自衛隊 | 孤立集落、広域搬送、重機・舟艇・ヘリ支援の要請先 | REQ CAL PJSDF | 自衛隊への通報・支援要請。 |
-| PPOLICE | 警察 | 治安、交通規制、不審物、捜索の要請先 | REQ CAL PPOLICE | 警察への通報・出動要請。 |
-| PFIRE | 消防 | 消火、救助、危険物、閉じ込め対応の要請先 | REQ CAL PFIRE | 消防への通報・出動要請。 |
-| PEMS | 救急 | 搬送、重症対応、救急隊要請先 | REQ CAL PEMS | 救急への通報・出動要請。 |
-| PRESC | 救助隊 | 救助、危険物、閉じ込め対応の要請先 | REQ CAL PRESC | 救助隊への通報・出動要請。 |
-| PCG | 海上保安庁 | 海難、漂流、沿岸救助、港湾事案の要請先 | REQ CAL PCG | 海上保安庁への通報・支援要請。 |
-| PADMIN | 行政機関 | 自治体、県、国等の行政機関への公式連絡先 | REQ CAL PADMIN | 行政機関への通報・連絡要請。 |
+| [[SOS]] | Life-threatening / highest priority | Life-saving, entrapment, drowning, sudden deterioration | `[[SOS]] MAI-Q-20260329-1430 NEW REQ: COL TRP 2PAX 1RED.` | In the Maizuru earthquake case, two people are inside a collapsed building and one is red-triage and needs immediate rescue. |
+| [[EMG]] | Emergency | Fire, severe injury, ongoing disaster, explosion | `[[EMG]] OSA-I-20260329-1940 NEW RPT: FIRE MOV E.` | In the Osaka fire case, the fire is moving east. |
+| [[ALR]] | Alert / advance warning | Approaching danger, tsunami, chemical/nuclear/missile alert | `[[ALR]] FKS-U-20260329-0910 NEW RPT: RAD ALR SEAL.` | A nuclear/radiological emergency is suspected and shelter-in-place should begin. |
+| [[SIT]] | Situation report | Current status, damage overview, observation | `[[SIT]] KOB-L-20260329-1500 NEW RPT: ROD BLK BY LND.` | Situation report that a road is blocked by landslide. |
+| [[ADM]] | Administration / control | Roll call, control, channel management, training | `[[ADM]] NET ROLL CALL 0900.` | Administrative notice that a roll call will be held at 09:00. |
+| NEW | New | At case occurrence | `NEW REQ` | New request. |
+| WIP | In progress | Dispatch, arrangements, or investigation are moving | `WIP ETA20` | In progress; expected arrival in 20 minutes. |
+| HLD | On hold | Suspended due to lack of resources, danger, weather | `HLD WX` | On hold because of weather. |
+| CLO | Closed | Case complete | `CLO NIL` | Case completed; no further action required. |
+| COR | Correction | Correction of false or mistyped report | `COR LOC B2` | Correct the location to B2. |
+| FAK | False information / rumor | Alert for clearly false or malicious rumor | `FAK-INFO` | A case that should be handled as false information. |
+| NEG | Negation / cancellation | Notice that the event did not exist on investigation | `NEG NO FIRE` | Negation stating that there was no fire. |
+| SCM | Fraud / suspicious solicitation | Alert for aid fraud, suspicious recruiting, improper collection | `SCM FAKE DONATION` | Alert for fake donations or fraudulent solicitation. |
+| ACK | Receipt confirmation | Received / accepted | `ACK #MAI-M001` | The Maizuru case has been received. |
+| QSL | Acknowledged / comms established | Short acknowledgment response | `QSL ETA30` | Understood; expected arrival in 30 minutes. |
+| NIL | No additional information / no abnormality | Status report with no change | `NIL ALL OK` | No abnormality; everyone safe. |
+| CAL | Notify / request dispatch | Notification to outside agency, dispatch request, handoff request | `REQ CAL PFIRE` | Fire-service notification / dispatch request is needed. |
+| PJSDF | Self-Defense Forces | Request destination for isolated communities, wide-area transport, heavy machinery/boats/helicopters | `REQ CAL PJSDF` | Notification / support request to the Self-Defense Forces. |
+| PPOLICE | Police | Request destination for public order, traffic control, suspicious items, searches | `REQ CAL PPOLICE` | Notification / dispatch request to police. |
+| PFIRE | Fire service | Request destination for firefighting, rescue, hazardous materials, entrapment response | `REQ CAL PFIRE` | Notification / dispatch request to the fire service. |
+| PEMS | Emergency medical services | Request destination for transport and severe-case response | `REQ CAL PEMS` | Notification / dispatch request to EMS. |
+| PRESC | Rescue team | Request destination for rescue, hazardous materials, entrapment response | `REQ CAL PRESC` | Notification / dispatch request to a rescue team. |
+| PCG | Japan Coast Guard | Request destination for marine distress, drifting, coastal rescue, port incidents | `REQ CAL PCG` | Notification / support request to the Japan Coast Guard. |
+| PADMIN | Administrative agency | Official contact for municipalities, prefectures, national agencies, etc. | `REQ CAL PADMIN` | Notification / contact request to an administrative agency. |
 
-15-2. 確度評価
+### 15-2. Confidence Assessment
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | ----- | ----- | ----- | ----- |
-| A1 | 情報源信頼性高・内容確実 | 本人目撃＋複数裏付け | A1 | 本人目撃かつ複数確認で、即応してよい確度。 |
-| A2/B2 | 強いが単独または公的整合 | 本人目撃単独、公的情報整合 | B2 | 単独目撃または公的整合があり、強い確度。 |
-| B3/C3 | 中程度 | 伝聞複数・概ね整合 | C3 | 複数伝聞で整合するが、追加確認が望ましい。 |
-| D4/E4 | 低い・未確認 | 噂、断片情報、未確認 | D4 | 未確認のため警戒はするが断定しない。 |
-| E5 | 虚偽疑い | 矛盾大、悪意、誤情報 | E5 | 虚偽または誤情報の可能性が高い。 |
-| CFM | 初期フィルター：確実 | 直接目撃・公的発表 | CFM | 現場で確実と判断してよい初期評価。 |
-| PRB | 初期フィルター：おそらく | 複数証言一致・高い蓋然性 | PRB | 確度は高いが追加確認が望ましい初期評価。 |
-| UNC | 初期フィルター：未確認 | 単発伝聞・SNS・裏づけなし | UNC | 未確認であり、即断材料にしない初期評価。 |
+| A1 | Highly reliable source / content certain | Direct witness + multiple corroborations | `A1` | Direct witness plus multiple confirmations; confidence sufficient for immediate action. |
+| A2/B2 | Strong but single-source or consistent with official information | Single direct witness or official consistency | `B2` | Strong confidence based on a single witness or official consistency. |
+| B3/C3 | Moderate | Multiple hearsay reports, broadly consistent | `C3` | Multiple hearsay reports are consistent, but further confirmation is desirable. |
+| D4/E4 | Low / unconfirmed | Rumor, fragmentary information, unconfirmed | `D4` | Unconfirmed; remain alert but do not treat as fact. |
+| E5 | Suspected falsehood | Major contradictions, malice, misinformation | `E5` | High possibility of false or misleading information. |
+| CFM | Initial filter: confirmed | Direct observation / official announcement | `CFM` | Initial assessment that may be treated as confirmed in the field. |
+| PRB | Initial filter: probable | Multiple matching testimonies / high plausibility | `PRB` | High-confidence initial assessment, though further confirmation is desirable. |
+| UNC | Initial filter: unconfirmed | Single hearsay / social media / no corroboration | `UNC` | Unconfirmed and not to be used as the basis for immediate decisions. |
 
-15-3. 災害カテゴリ
+### 15-3. Disaster Categories
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | ----- | ----- | ----- | ----- |
-| Q | 地震 | 地震、余震、倒壊 | MAI-Q-20260329-1430 | 舞鶴の地震案件。 |
-| T | 津波 | 津波、津波避難、沿岸即時退避 | KES-T-20260329-1450 | 気仙沼の津波案件。 |
-| P | 豪雨・線状降水帯 | 顕著な大雨、短時間急変、地下空間危険 | FUK-P-20260329-1810 | 福岡の豪雨案件。 |
-| Y | 台風・暴風・高潮 | 台風、暴風、高潮、沿岸低地避難 | KOB-Y-20260329-0600 | 神戸の台風案件。 |
-| F | 洪水・河川氾濫 | 浸水、洪水、越水、河川氾濫 | KOB-F-20260329-2305 | 神戸の洪水案件。 |
-| L | 土砂 | 土砂崩れ、地すべり | H01-L-20260329-0715 | 避難所1近傍の土砂災害案件。 |
-| I | 火災・爆発 | 火災、延焼、爆発 | OSA-I-20260329-1940 | 大阪の火災/爆発案件。 |
-| V | 火山 | 噴火、降灰、視程低下 | KAG-V-20260329-0810 | 鹿児島の火山案件。 |
-| W | 雪寒 | 豪雪、寒波、凍結、孤立 | NII-W-20260329-0630 | 新潟の雪寒案件。 |
-| H | 暑熱 | 猛暑、停電複合、冷房停止 | TKY-H-20260329-1230 | 東京の暑熱案件。 |
-| M | 医療 | 傷病、集団発熱、医療要請 | KOB-M-20260329-0940 | 神戸の医療案件。 |
-| N | 原子力・放射線 | 原子力災害、放射線防護、屋内退避 | FKS-N-20260329-0910 | 福島の原子力案件。 |
-| C | 化学 | 化学災害、化学剤疑い、除染 | OSA-C-20260329-1012 | 大阪の化学案件。 |
-| B | 生物 | 生物災害、隔離、集団発熱 | KYO-B-20260329-1030 | 京都の生物案件。 |
-| K | 山岳遭難 | 山岳事故、行方不明、獣害 | HAK-K-20260420-1510 | 北海道の山岳遭難案件。 |
-| O | 海洋遭難 | 転覆、浸水、漂流 | KOB-O-20260708-0635 | 神戸の海洋遭難案件。 |
-| U | インフラ | 停電、断水、通信、道路機能停止 | TKY-U-20260329-1010 | 東京のインフラ案件。 |
-| G | 物資 | 食料、水、衛生、母子物資 | H03-G-20260329-1225 | 避難所3の物資案件。 |
-| S | 治安・武力攻撃・紛争・暴動 | 治安悪化、武力攻撃、紛争、暴動、群衆騒擾 | SND-S-20260329-1840 | 仙台の治安・紛争・暴動案件。 |
-| R | RFL/安否 | 行方不明、安否照会、再照合 | RFL-MAI-20260329-001 | 舞鶴エリアのRFL/安否照会案件。 |
+| Q | Earthquake | Earthquake, aftershock, collapse | `MAI-Q-20260329-1430` | Earthquake case in Maizuru. |
+| T | Tsunami | Tsunami, tsunami evacuation, immediate coastal withdrawal | `KES-T-20260329-1450` | Tsunami case in Kesennuma. |
+| P | Heavy rain / linear rainband | Extreme rain, rapid short-term escalation, underground-space danger | `FUK-P-20260329-1810` | Heavy-rain case in Fukuoka. |
+| Y | Typhoon / windstorm / storm surge | Typhoon, strong wind, storm surge, coastal-lowland evacuation | `KOB-Y-20260329-0600` | Typhoon case in Kobe. |
+| F | Flood / river overflow | Inundation, flood, overtopping, river overflow | `KOB-F-20260329-2305` | Flood case in Kobe. |
+| L | Landslide | Landslide, slope failure | `H01-L-20260329-0715` | Landslide case near Shelter 1. |
+| I | Fire / explosion | Fire, spread, explosion | `OSA-I-20260329-1940` | Fire/explosion case in Osaka. |
+| V | Volcano | Eruption, ashfall, reduced visibility | `KAG-V-20260329-0810` | Volcano case in Kagoshima. |
+| W | Snow / cold | Heavy snow, cold wave, freezing, isolation | `NII-W-20260329-0630` | Snow/cold case in Niigata. |
+| H | Heat | Extreme heat, combined blackout, cooling failure | `TKY-H-20260329-1230` | Heat case in Tokyo. |
+| M | Medical | Illness/injury, fever cluster, medical request | `KOB-M-20260329-0940` | Medical case in Kobe. |
+| N | Nuclear / radiation | Nuclear disaster, radiological protection, shelter-in-place | `FKS-N-20260329-0910` | Nuclear case in Fukushima. |
+| C | Chemical | Chemical incident, suspected chemical agent, decontamination | `OSA-C-20260329-1012` | Chemical case in Osaka. |
+| B | Biological | Biological incident, isolation, fever cluster | `KYO-B-20260329-1030` | Biological case in Kyoto. |
+| K | Mountain distress | Mountain accident, missing hiker, animal hazard | `HAK-K-20260420-1510` | Mountain-distress case in Hokkaido. |
+| O | Marine distress | Capsize, flooding, drifting | `KOB-O-20260708-0635` | Marine-distress case in Kobe. |
+| U | Infrastructure | Blackout, water outage, communications, road-function failure | `TKY-U-20260329-1010` | Infrastructure case in Tokyo. |
+| G | Supplies | Food, water, hygiene, maternal-child supplies | `H03-G-20260329-1225` | Supply case for Shelter 3. |
+| S | Security / armed attack / conflict / riot | Deteriorating security, armed attack, conflict, riot, civil disturbance | `SND-S-20260329-1840` | Security/conflict/riot case in Sendai. |
+| R | RFL / safety confirmation | Missing persons, safety inquiries, re-cross-checking | `RFL-MAI-20260329-001` | RFL / safety-confirmation case in the Maizuru area. |
 
-15-4. 事象・被害・防護
+### 15-4. Events, Damage, and Protective Actions
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | :---- | :---- | :---- | :---- |
-| COL | 倒壊 | 建物倒壊、構造損壊 | COL TRP 2PAX | 倒壊で2人が閉じ込められている。 |
-| TRP | 閉じ込め | 救助要請とセット | TRP 1RED | 1人が閉じ込められ赤判定。 |
-| ISO | 孤立 | 道路寸断等で孤立 | ISO VLG | 集落が孤立している。 |
-| BLK | 閉塞 | 道路や経路の閉塞 | ROD BLK | 道路が閉塞している。 |
-| SINK | 浸水 | 床上/床下浸水、冠水 | SINK 2F | 2階まで浸水している。 |
-| DRK | 停電 | 電力途絶 | PWR DRK | 停電している。 |
-| DRY | 断水 | 水供給停止 | WTR DRY | 断水している。 |
-| OUT | 通信断 | 携帯・IP・無線の途絶 | NET OUT | 通信網が途絶している。 |
-| BOOM | 爆音・大きな爆発音 | 着弾・爆発の第一報 | BOOM HEARD NW | 北西方向で大きな爆発音を聴取した。 |
-| RAD | 放射性物質・原子力災害疑い | 線量上昇や放出疑い | RAD ALR SEAL | 原子力災害を疑い屋内退避する。 |
-| CHEM | 化学災害・化学剤疑い | 異臭、散布、刺激症状 | CHEM ODR MASK | 化学災害を疑い呼吸防護を始める。 |
-| BIO | 生物災害・生物剤疑い | 集団発熱、異常感染 | BIO FEV CLU ISO | 集団発熱に対し隔離を開始する。 |
-| SEAL | 屋内退避・密閉 | 窓閉鎖、換気停止 | SEAL NOW | ただちに密閉せよ。 |
-| DECON | 除染 | 汚染除去、衣服除去、洗浄 | DECON PT1 | 患者1名の除染が必要。 |
-| MASK | 呼吸防護 | マスク、口鼻被覆 | MASK ON | 口鼻の防護を開始する。 |
-| ODR | 異臭 | 化学臭、ガス臭 | ODR STRONG | 強い異臭がある。 |
-| SHEL | 屋内避難先 | 地下、堅牢建物 | MOVE SHEL B1 | 地下1階に移動する。 |
-| MSL | ミサイル警報・着弾警戒 | Jアラート、飛来可能性、着弾危険 | MSL ALERT | ミサイル警報が出ている。 |
-| BLAST | 爆発・爆風 | 爆発、爆風、二次火災の初報 | BLAST FIRE | 爆発に伴い火災も発生した。 |
-| UXO | 不発弾・不審爆発物 | 接近禁止、区域設定、通報 | UXO FOUND | 不発弾様物件を発見した。 |
-| CURF | 移動制限・外出制限 | 検問、封鎖、外出停止 | CURF HOLD | 移動制限のため現位置待機。 |
-| SURGE | 高潮 | 高潮浸水、沿岸低地危険 | SURGE EVQ | 高潮避難が必要。 |
-| RIT | 暴動発生 | 群衆騒擾の初報 | RIT MOB | 暴動が発生し群衆が集結している。 |
-| MOB | 群衆集結 | 群衆の集中・流入 | MOB GATE-W | 西門側へ群衆が集中している。 |
-| LOOT | 略奪 | 店舗・倉庫等への侵入略奪 | LOOT SHOP-A | 店舗Aで略奪が起きている。 |
-| ARSN | 放火 | 故意の出火 | ARSN FIRE | 放火に伴う火災がある。 |
-| STON | 投石 | 投石・飛来物危険 | STON ROAD-N | 北側道路で投石危険がある。 |
-| BARR | バリケード・障害物 | 道路封鎖・障害物形成 | BARR INT-A | 交差点Aにバリケードが築かれた。 |
+| COL | Collapse | Building collapse, structural damage | `COL TRP 2PAX` | Two people are trapped in a collapse. |
+| TRP | Trapped / entrapment | Used together with rescue request | `TRP 1RED` | One person is trapped and red-triage. |
+| ISO | Isolated | Isolated due to road disruption, etc. | `ISO VLG` | A village is isolated. |
+| BLK | Blocked | Roads or routes blocked | `ROD BLK` | The road is blocked. |
+| SINK | Inundation | Above-floor / below-floor flooding, road flooding | `SINK 2F` | Flooding has reached the second floor. |
+| DRK | Blackout | Power interruption | `PWR DRK` | There is a blackout. |
+| DRY | Water outage | Water supply interruption | `WTR DRY` | Water is out. |
+| OUT | Communications outage | Cellular, IP, or radio outage | `NET OUT` | The communications network is down. |
+| BOOM | Blast sound / large explosion sound | Initial report of impact or explosion | `BOOM HEARD NW` | A large explosion sound was heard to the northwest. |
+| RAD | Radioactive material / suspected nuclear incident | Rising dose or suspected release | `RAD ALR SEAL` | Suspect a nuclear/radiological emergency; shelter and seal. |
+| CHEM | Chemical incident / suspected chemical agent | Unusual odor, dispersal, irritant symptoms | `CHEM ODR MASK` | Suspect a chemical incident; begin respiratory protection. |
+| BIO | Biological incident / suspected biological agent | Fever cluster, unusual infection | `BIO FEV CLU ISO` | Begin isolation in response to a fever cluster. |
+| SEAL | Shelter and seal indoors | Close windows, stop ventilation | `SEAL NOW` | Seal immediately. |
+| DECON | Decontamination | Contamination removal, clothing removal, washing | `DECON PT1` | Patient 1 requires decontamination. |
+| MASK | Respiratory protection | Mask, covering mouth/nose | `MASK ON` | Begin mouth/nose protection. |
+| ODR | Unusual odor | Chemical smell, gas smell | `ODR STRONG` | There is a strong unusual odor. |
+| SHEL | Indoor shelter location | Underground, sturdy building | `MOVE SHEL B1` | Move to Basement Level 1. |
+| MSL | Missile warning / possible impact | J-Alert, possible incoming strike, impact danger | `MSL ALERT` | A missile warning is in effect. |
+| BLAST | Explosion / blast wave | Initial report of explosion, blast, secondary fire | `BLAST FIRE` | A fire has also occurred following an explosion. |
+| UXO | Unexploded ordnance / suspicious explosive object | No-approach, zoning, reporting | `UXO FOUND` | A UXO-like object has been found. |
+| CURF | Movement restriction / curfew | Checkpoint, closure, stay-off-roads | `CURF HOLD` | Hold position due to movement restrictions. |
+| SURGE | Storm surge | Storm-surge inundation, coastal-lowland danger | `SURGE EVQ` | Storm-surge evacuation is required. |
+| RIT | Riot outbreak | Initial report of civil disturbance | `RIT MOB` | A riot has started and crowds are gathering. |
+| MOB | Crowd concentration | Crowd concentration / inflow | `MOB GATE-W` | A crowd is concentrating near the West Gate. |
+| LOOT | Looting | Looting of shop, warehouse, etc. | `LOOT SHOP-A` | Looting is occurring at Shop A. |
+| ARSN | Arson | Deliberate fire-setting | `ARSN FIRE` | There is a fire due to arson. |
+| STON | Stone-throwing | Hazard from thrown objects | `STON ROAD-N` | There is stone-throwing danger on the north road. |
+| BARR | Barricade / obstacle | Road closure / obstacle creation | `BARR INT-A` | A barricade has been built at Intersection A. |
 
-15-5. 医療・トリアージ
+### 15-5. Medical and Triage
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | ----- | ----- | ----- | ----- |
-| T-RED | 最優先 | 即時救命処置・搬送 | 1RED | 赤判定患者が1名いる。 |
-| T-YLW | 重症 | 遅延許容だが処置必要 | 2YLW | 黄判定患者2名。 |
-| T-GRN | 軽症 | 自歩可能、応急処置 | 5GRN | 緑判定患者5名。 |
-| T-BLK | 死亡/絶望的 | 蘇生適応外を含む | 1BLK | 黒判定患者1名。 |
-| OXY | 酸素投与要 | 酸素投与が必要な患者の共有 | OXY 2PAX | 酸素投与が必要な患者が2名。 |
-| DIAL | 人工透析要 | 透析継続が必要な患者の共有・受入照会 | DIAL 1PAX \<12H | 12時間以内に人工透析継続が必要な患者が1名。 |
-| MED | 医療 | 医療資源全般 | REQ: MED 3SET | 医療セット3組が必要。 |
-| PPE | 個人防護具 | 手袋、ガウン、防護服等 | REQ: PPE 30 | 個人防護具30セットが必要。 |
-| N95 | 高性能防護マスク | 飛沫/エアロゾル対策 | REQ: N95 100 | N95相当マスク100枚が必要。 |
+| T-RED | Immediate / highest priority | Immediate lifesaving treatment / transport | `1RED` | There is one red-triage patient. |
+| T-YLW | Serious | Delay permissible but treatment required | `2YLW` | Two yellow-triage patients. |
+| T-GRN | Minor | Ambulatory, first aid | `5GRN` | Five green-triage patients. |
+| T-BLK | Dead / expectant | Includes non-resuscitatable cases | `1BLK` | One black-triage patient. |
+| OXY | Oxygen required | Share patients requiring oxygen | `OXY 2PAX` | Two patients require oxygen. |
+| DIAL | Dialysis required | Share patients needing continued dialysis / receiving inquiry | `DIAL 1PAX <12H` | One patient needs continued dialysis within 12 hours. |
+| MED | Medical | General medical resources | `REQ: MED 3SET` | Three medical kits are needed. |
+| PPE | Personal protective equipment | Gloves, gowns, protective clothing, etc. | `REQ: PPE 30` | Thirty PPE sets are needed. |
+| N95 | High-performance protective mask | Droplet / aerosol protection | `REQ: N95 100` | One hundred N95-equivalent masks are needed. |
 
-15-6. 物資・後方支援
+### 15-6. Supplies and Logistics
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | ----- | ----- | ----- | ----- |
-| WAT | 飲料水 | 飲用・調理用水 | REQ: WAT 200L | 飲料水200Lが必要。 |
-| FOO | 食料 | 主食・副食・保存食 | REQ: FOO 100R | 100食が必要。 |
-| BAT | 電池・蓄電 | 単電池、モバイル電源 | REQ: BAT AA80 | 単3電池80本が必要。 |
-| GAS | 燃料 | ガソリン、LPG等 | REQ: GAS 40L | 燃料40Lが必要。 |
-| KID | 小児向け物資 | 小児向け総合支援物資 | REQ: KID 20SET | 小児向け物資20セットが必要。 |
-| PED | 小児医療物資 | 小児用薬剤、補液等 | REQ: PED 10SET | 小児医療物資10セットが必要。 |
-| NEO | 新生児向け物資 | 新生児向け総合支援物資 | REQ: NEO 5SET | 新生児向け物資5セットが必要。 |
-| MILK | 乳児用ミルク | 液体/粉ミルク | REQ: MILK 40 | 乳児用ミルク40単位が必要。 |
-| FORM | 粉ミルク・乳児栄養 | 粉ミルク等の詳細指定 | REQ: FORM 20CAN | 粉ミルク20缶が必要。 |
-| BTL | 哺乳瓶 | 哺乳瓶・乳首・消毒用品 | REQ: BTL 30 | 哺乳瓶30本が必要の。 |
-| DIAP | おむつ | 乳児・小児用おむつ | REQ: DIAP S/M/L | 各サイズのおむつが必要。 |
-| WIPE | 清拭・おしりふき | 衛生管理用 | REQ: WIPE 50PK | おしりふき50パックが必要。 |
-| FEM | 女性支援物資 | 女性向け生活支援物資 | REQ: FEM 30SET | 女性支援物資30セットが必要。 |
-| SAN | 生理用品 | 月経衛生用品 | REQ: SAN DAY/NGT | 昼用・夜用の生理用品が必要。 |
-| PREG | 妊産婦物資 | 妊婦・産後ケア物資 | REQ: PREG 8SET | 妊産婦向け物資8セットが必要。 |
-| MAT | 母子支援物資 | 母子同時支援セット | REQ: MAT 6SET | 母子支援セット6組が必要。 |
-| BRA | 下着・授乳用下着 | 女性下着・授乳下着 | REQ: BRA M/L | 女性用下着や授乳用下着が必要。 |
-| PAD | 産褥・失禁パッド | 女性衛生・産後・介護兼用 | REQ: PAD 10PK | 産褥または失禁パッド10パックが必要。 |
-| SEND | 送付中 | 搬送開始済み | SEND ETA20 | 送付中で20分後到着見込み。 |
-| ARRV | 到着 | 到着済み | ARRV EVQ-01 | 避難所1へ到着した。 |
-| NEED | 要る | 不足・要請で使用 | WAT NEED | 水が必要。 |
+| WAT | Drinking water | Water for drinking / cooking | `REQ: WAT 200L` | 200 liters of drinking water are needed. |
+| FOO | Food | Staple food, side dishes, preserved food | `REQ: FOO 100R` | 100 meals are needed. |
+| BAT | Batteries / stored power | Dry batteries, mobile power | `REQ: BAT AA80` | 80 AA batteries are needed. |
+| GAS | Fuel | Gasoline, LPG, etc. | `REQ: GAS 40L` | 40 liters of fuel are needed. |
+| KID | Pediatric support supplies | Comprehensive child-support supplies | `REQ: KID 20SET` | 20 child-support sets are needed. |
+| PED | Pediatric medical supplies | Pediatric drugs, fluids, etc. | `REQ: PED 10SET` | 10 sets of pediatric medical supplies are needed. |
+| NEO | Neonatal supplies | Comprehensive neonatal support supplies | `REQ: NEO 5SET` | 5 neonatal-support sets are needed. |
+| MILK | Infant milk | Liquid milk / powdered milk | `REQ: MILK 40` | 40 units of infant milk are needed. |
+| FORM | Formula / infant nutrition | Detailed specification for formula, etc. | `REQ: FORM 20CAN` | 20 cans of formula are needed. |
+| BTL | Baby bottle | Bottles, nipples, sterilization supplies | `REQ: BTL 30` | 30 baby bottles are needed. |
+| DIAP | Diapers | Infant / child diapers | `REQ: DIAP S/M/L` | Diapers in each size are needed. |
+| WIPE | Wipes / baby wipes | For hygiene management | `REQ: WIPE 50PK` | 50 packs of wipes are needed. |
+| FEM | Women’s support supplies | Daily-life support supplies for women | `REQ: FEM 30SET` | 30 sets of women’s support supplies are needed. |
+| SAN | Sanitary products | Menstrual hygiene products | `REQ: SAN DAY/NGT` | Daytime and nighttime sanitary products are needed. |
+| PREG | Supplies for pregnant/postpartum women | Pregnancy / postpartum care supplies | `REQ: PREG 8SET` | 8 sets of supplies for pregnant/postpartum women are needed. |
+| MAT | Mother-and-child support supplies | Combined mother-child support set | `REQ: MAT 6SET` | 6 mother-and-child support sets are needed. |
+| BRA | Underwear / nursing underwear | Women’s underwear / nursing bras | `REQ: BRA M/L` | Women’s underwear and nursing underwear are needed. |
+| PAD | Postpartum / incontinence pads | Women’s hygiene / postpartum / caregiving use | `REQ: PAD 10PK` | 10 packs of postpartum or incontinence pads are needed. |
+| SEND | En route | Transport has begun | `SEND ETA20` | In transit; expected arrival in 20 minutes. |
+| ARRV | Arrived | Already arrived | `ARRV EVQ-01` | Arrived at Shelter 1. |
+| NEED | Needed | Used for shortage / request | `WAT NEED` | Water is needed. |
 
-15-7. 行方不明・安否
+### 15-7. Missing Persons and Safety Confirmation
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | ----- | ----- | ----- | ----- |
-| MISS | 行方不明 | 一般運用では属性のみ | MISS M70 LAST SEC-B | 70代男性がB区画で最後に確認された。 |
-| SAFE | 無事確認 | 本人確認・避難所確認 | SAFE EVQ-01 | 避難所1で無事確認済み。 |
-| FND | 発見 | 発見済み・所在確認 | FND HSP-02 | 病院2で発見した。 |
-| RCO | 再照合 | 再確認・名簿照合 | RCO LIST-03 | 名簿3の再照合を行う。 |
-| EYE | 目撃 | 直接目撃情報 | EYE 1410J | 14時10分の直接目撃。 |
-| HRD | 伝聞 | 伝聞情報 | HRD ONLY | 伝聞のみの情報。 |
+| MISS | Missing person | On general operations, attribute only | `MISS M70 LAST SEC-B` | A male in his 70s was last confirmed in Sector B. |
+| SAFE | Safety confirmed | Identity confirmed / shelter confirmation | `SAFE EVQ-01` | Safety confirmed at Shelter 1. |
+| FND | Found | Found / whereabouts confirmed | `FND HSP-02` | Found at Hospital 2. |
+| RCO | Re-cross-check | Reconfirmation / roster cross-check | `RCO LIST-03` | Re-cross-check Roster 3. |
+| EYE | Witnessed | Direct eyewitness information | `EYE 1410J` | Direct eyewitness observation at 14:10. |
+| HRD | Heard / hearsay | Hearsay information | `HRD ONLY` | Information is hearsay only. |
 
-15-8. 山岳遭難
+### 15-8. Mountain Distress
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | ----- | ----- | ----- | ----- |
-| K | 山岳遭難 | 案件カテゴリ | HAK-K-20260420-1510 | 北海道の山岳遭難案件。 |
-| LOST | 道迷い・行方不明 | 遭難態様 | LOST 2PAX | 2人が道迷いまたは行方不明。 |
-| FALL | 滑落 | 傷病起点 | 1PAX FALL | 1人が滑落した。 |
-| CLIF | 崖地帯 | 地形危険 | CLIF WEST | 西側が崖地帯。 |
-| RIDG | 尾根 | 地形位置 | LAST RIDG-3 | 尾根3付近が最終確認地点。 |
-| GULLY | 沢・ガリー | 地形位置 | GULLY NORTH | 北側の沢地形。 |
-| WHTO | ホワイトアウト | 気象危険 | MOVE NIL WHTO | 行動不能でホワイトアウト。 |
-| AVAL | 雪崩 | 雪害危険 | AVAL RISK | 雪崩危険あり。 |
-| HYPOTH | 低体温 | 医療状態 | 1RED HYPOTH | 低体温の重症者1人。 |
-| ALT | 高度障害 | 医療状態 | ALT PRB | 高度障害疑い。 |
-| TRAIL | 登山道 | 地点補足 | TRAIL EAST | 東側登山道。 |
-| LZ | ヘリ着陸可能地 | 救助支援 | LZ PRB | ヘリ着陸可能地候補あり。 |
-| TH | 登山口 | 基点 | TH SOUTH | 南登山口。 |
+| K | Mountain distress | Case category | `HAK-K-20260420-1510` | Mountain-distress case in Hokkaido. |
+| LOST | Lost / missing on route | Type of distress | `LOST 2PAX` | Two people are lost or missing. |
+| FALL | Fall | Cause of injury | `1PAX FALL` | One person has fallen. |
+| CLIF | Cliff area | Terrain hazard | `CLIF WEST` | There is cliff terrain to the west. |
+| RIDG | Ridge | Terrain location | `LAST RIDG-3` | Ridge 3 is the last confirmed point. |
+| GULLY | Gully / ravine | Terrain location | `GULLY NORTH` | Gully terrain to the north. |
+| WHTO | Whiteout | Weather hazard | `MOVE NIL WHTO` | Unable to move because of whiteout. |
+| AVAL | Avalanche | Snow hazard | `AVAL RISK` | Avalanche risk exists. |
+| HYPOTH | Hypothermia | Medical status | `1RED HYPOTH` | One severe patient with hypothermia. |
+| ALT | Altitude sickness | Medical status | `ALT PRB` | Suspected altitude sickness. |
+| TRAIL | Mountain trail | Supplemental location | `TRAIL EAST` | East-side trail. |
+| LZ | Helicopter landing zone | Rescue support | `LZ PRB` | Candidate helicopter landing zone likely available. |
+| TH | Trailhead | Base point | `TH SOUTH` | South trailhead. |
 
-15-9. 海洋遭難
+### 15-9. Marine Distress
 
-| コード | 意味 | 用法 | 例文 | 例文の意味 |
+| Code | Meaning | Usage | Example | Meaning of Example |
 | :---: | ----- | ----- | ----- | ----- |
-| O | 海洋遭難 | 案件カテゴリ | KOB-O-20260708-0635 | 神戸の海洋遭難案件。 |
-| POB | 乗船人数 | 人数 | 3POB | 乗船者3人。 |
-| MOB | 落水 | 遭難態様 | MOB 1 | 1人落水。 |
-| TAKW | 浸水 | 船体状態 | TAKW | 浸水あり。 |
-| ADRF | 漂流 | 位置状態 | ADRF | 漂流中。 |
-| CAPS | 転覆 | 船体状態 | CAPS PRB | 転覆疑い。 |
-| GND | 座礁 | 船位状態 | GND | 座礁。 |
-| ENGF | 機関故障 | 推進喪失 | ENGF | エンジン故障。 |
-| SAILF | 帆走不能 | 推進喪失 | SAILF | 帆走不能。 |
-| RAFT | ライフラフト | 救命措置 | RAFT DEPLOY | ライフラフト展開済み。 |
-| PFD | 救命胴衣着用 | 救命措置 | PFD ALL | 全員ライフジャケット着用。 |
-| DSC | DSC distress 実施 | 救難通報 | DSC DONE | DSC送信済み。 |
-| EPIR | EPIRB 作動 | 救難通報 | EPIR ON | EPIRB作動中。 |
-| FLAR | フレア視認・発射 | 視認補助 | FLAR RED | 赤フレア確認。 |
-| HULL | 船体損傷 | 船体状態 | HULL DMG | 船体損傷あり。 |
-| BILG | ビルジ進行 | 浸水補足 | BILG FAST | 浸水進行が早い。 |
+| O | Marine distress | Case category | `KOB-O-20260708-0635` | Marine-distress case in Kobe. |
+| POB | Persons on board | Headcount | `3POB` | Three persons on board. |
+| MOB | Man overboard | Distress type | `MOB 1` | One person overboard. |
+| TAKW | Taking water / flooding | Hull status | `TAKW` | Taking on water. |
+| ADRF | Adrift | Position status | `ADRF` | Adrift. |
+| CAPS | Capsize | Hull status | `CAPS PRB` | Suspected capsize. |
+| GND | Grounded | Vessel position status | `GND` | Grounded. |
+| ENGF | Engine failure | Loss of propulsion | `ENGF` | Engine failure. |
+| SAILF | Sailing failure / unable to sail | Loss of propulsion | `SAILF` | Unable to sail. |
+| RAFT | Life raft | Lifesaving measure | `RAFT DEPLOY` | Life raft deployed. |
+| PFD | Life jacket worn | Lifesaving measure | `PFD ALL` | Everyone is wearing life jackets. |
+| DSC | DSC distress sent | Distress call | `DSC DONE` | DSC has been transmitted. |
+| EPIR | EPIRB active | Distress call | `EPIR ON` | EPIRB active. |
+| FLAR | Flare observed / launched | Visual aid | `FLAR RED` | Red flare confirmed. |
+| HULL | Hull damage | Vessel status | `HULL DMG` | Hull damage present. |
+| BILG | Bilge worsening | Flooding supplement | `BILG FAST` | Flooding is progressing rapidly. |
 
-16\. 付帯資料：訓練ドリル例
+## 16. Supplementary Material: Example Training Drills
 
-平時訓練、自治体・消防・医療・避難所連携訓練、NBC/原子力対応訓練を想定したドリル例。各ドリルは「ドリル名」「状況設定」「実施課題」「成功条件」の4項目で整理し、短時間訓練でも評価できるようにした。
+Example drills are intended for peacetime training, coordination training with municipalities, fire services, medical institutions, and shelters, and NBC / nuclear-response training. Each drill is organized by four items—“drill name,” “scenario,” “tasks,” and “success conditions”—so that even short drills can be evaluated.
 
-| ドリル名 | 状況設定 | 実施課題 | 成功条件 |
+| Drill Name | Scenario | Tasks | Success Conditions |
 | ----- | ----- | ----- | ----- |
-| 地震直後30分初動統制 | 発災後30分、Phase 1。余震継続。倒壊、火災、停電、通信輻輳が同時発生し、複数ノードが緊急報を送ろうとしている。 | \[\[SOS\]\] と \[\[EMG\]\] のみを用い、雑談、長文、未確認情報、物資相談を停止する。案件ID採番、位置、人数、危険度、トリアージを最短で送信する。 | 5分間、許可外送信ゼロ。全緊急案件に案件ID、位置、人数、危険度が付与され、ACK または WIP が欠落しない。 |
-| 道路寸断＋避難所逼迫の橋渡し | 豪雨後、主要道路2本が不通、避難所は定員超過、水・トイレ・衛生資材が不足している。現地は符号運用だが、自治体側は平文受領である。 | LOG と 連携担当 が、道路状況、代替路、避難所収容余力、物資不足、緊急度を整理し、符号報告を自治体向け平文へ展開して橋渡しする。 | 10分以内に、必要項目の欠落がない200字以内の平文通報を作成し、自治体側がそのまま行動判断に使える。 |
-| 行方不明照合と個人情報保護 | 避難所名簿、病院搬送名簿、家族照会が不一致で、家族から氏名入り問い合わせが相次いでいる。一般チャネルに書き込みたくなる状況である。 | 一般チャネルでは案件番号、属性、最終確認地点のみ共有し、氏名、住所、連絡先は RFL と個別照会へ切り分ける。照合経過も記録する。 | 一般チャネルへの個人情報送信ゼロ。照合対象、照合結果、保留案件、次回確認先が一意に追跡できる。 |
-| 拠点局故障と予備局切替 | CLIENT\_BASE が停止し、拠点局電源も不安定で、ゲートウェイ局の応答が消失している。予備局は待機中であり、即時引継ぎが必要である。 | 予備電源投入、予備局への役割切替、群、定時配信、監査記録、案件台帳の継承、現地ノードへの切替周知を行う。 | 15分以内に統制再開。案件台帳の欠落なし。二重統制なし。現地ノードで新拠点局が認識される。 |
-| DMAT受援と医療搬送統制 | 病院機能が低下し、避難所と救護所から傷病者が多数発生している。DMAT 到着予定はあるが、受入先、搬送順、酸素や薬剤需要の整理が未完了である。 | 赤黄緑黒で傷病者を集約し、搬送優先順位、受入照会、搬送経路、医薬品・酸素需要を整理する。必要に応じて再トリアージも実施する。 | 重症者が優先順位順に整理され、受入照会結果と搬送先が明示される。再トリアージ結果と更新時刻が追跡できる。 |
-| 倒壊救助初動 | 地震直後、2棟倒壊、閉じ込め3名、通信輻輳 | \[\[SOS\]\]発報、案件ID採番、赤判定報告、経路確保 | 5分以内に案件ID・人数・トリアージ・位置が揃う |
-| 津波即時避難 | 津波警報発表、海沿い2避難所に高齢者あり | \[\[ALR\]\]発報、垂直避難/高台移動、点呼（ロールコール） | 10分以内に避難完了率と未避難人数が共有される |
-| 洪水・越水 | 河川増水、越水開始、道路冠水 | 道路閉塞と避難所収容力を報告 | 通行可否・代替路・収容人数が整理される |
-| 土砂災害 | 斜面崩壊で集落孤立 | 孤立、負傷、補給ルートを短報化 | 孤立人数と必要物資が一意に把握される |
-| 都市火災 | 延焼拡大、風向変化あり | 延焼方向、消火資器材不足、退避方向を共有 | 延焼方向と危険区域が誤解なく伝わる |
-| 豪雪孤立 | 積雪で道路寸断、透析患者あり | 医療優先度と除雪要請を分離 | 医療案件と道路案件が混在せず処理される |
-| 猛暑停電 | 広域停電、冷房停止、熱中症多発 | 発電・冷却・水・搬送案件を分ける | 熱中症高危険者の優先順位が可視化される |
-| 行方不明照合 | 避難所名簿と病院搬送名簿が不一致 | MISS/FND/RCOを使って照合 | 個人情報を一般チャネルへ流さず照合完了 |
-| ミサイル警報 | Jアラート発報、屋外活動中の班あり | 送信停止規律、屋内/地下退避、爆音報告 | 不必要な長文送信が止まり、防護行動が同期される |
-| 不発弾・不審物 | 建物脇に不審物、付近に人流あり | 隔離、接近禁止、通報、画像要求禁止 | 接近者ゼロ、区域設定、二次災害防止 |
-| 原子力屋内退避 | 施設事故想定、屋内退避指示発令 | RAD/SEAL/HVAC OFF を短報化 | 密閉、換気停止、屋内退避が同期される |
-| 化学災害初動 | 駅で異臭、多数の目刺激・咳 | CHEM/ODR/MASK/DECON を使用 | 風向と除染要否が3分以内に共有される |
-| 生物災害初動 | 避難所で集団発熱と咳が発生 | BIO/ISO/PPE/N95 を使用 | 隔離動線と個人防護具不足が明示される |
-| 小児物資支援 | 避難所に乳幼児20名 | KID/NEO/MILK/DIAP/WIPEを使って要請 | 小児・新生児物資の数量が具体化される |
-| 女性支援物資 | 女性避難者が多く衛生用品不足 | FEM/SAN/PREG/MAT/BRA/PADを使用 | 女性・妊産婦物資が一般物資に埋没しない |
-| 自治体引継ぎ訓練 | 私設網の情報を対策本部へ橋渡し | 符号→平文への展開、確度付与、訂正送信 | 行政向け平文が200字以内で正確に作成される |
-| 豪雨・線状降水帯 | 夜間、線状降水帯情報発表、地下街と低地住宅地に滞在者あり | 高所確保、地下空間回避、崖下・沢沿いからの離脱を短報化 | 10分以内に危険区域・退避方向・未退避者の有無が共有される |
-| 台風・高潮 | 台風接近、暴風警報相当、沿岸低地で高潮浸水想定あり | SURGE/避難完了時刻/橋梁通行可否/停電見込みを整理 | 暴風前に避難完了期限と危険区域が誤解なく伝わる |
-| 多重案件番号応答 | 同時にSOS 3件、物資要請2件が発生 | 簡易案件番号を配番し、ACK/WIP/ARRV を番号付きで返す | どの応答がどの案件に対応したか全員が追跡できる |
-| ゲートウェイ局運用 | 拠点局で監査、群送信、個別安否確認を同時実施 | 恒久群/臨時群の切替、監査記録、個別照会、外部橋渡しを実施 | 設定変更と現場運用が混同せず、監査記録が欠落しない |
+| Initial control in first 30 minutes after earthquake | 30 minutes after impact, Phase 1. Aftershocks continue. Collapse, fire, blackout, and communication congestion occur at the same time, and multiple nodes are trying to send emergency reports. | Use only [[SOS]] and [[EMG]], and stop chatter, long messages, unconfirmed information, and supply discussions. Assign case IDs and send location, number of people, danger level, and triage as quickly as possible. | For 5 minutes, zero unauthorized transmissions. Every emergency case has a case ID, location, number of people, and danger level, and no ACK or WIP is missing. |
+| Handoff for road disruption + shelter overload | After heavy rain, two main roads are impassable, shelters are over capacity, and water, toilets, and hygiene supplies are lacking. The field uses coded operations, but the municipality receives only plain language. | LOG and Liaison organize road conditions, alternate routes, remaining shelter capacity, supply shortages, and urgency, and expand coded reports into plain-language text for municipal handoff. | Within 10 minutes, create a plain-language notification of 200 characters or fewer with no missing required items, usable by the municipality for immediate decision-making. |
+| Missing-person cross-check and personal-information protection | Shelter rosters, hospital transport rosters, and family inquiries do not match, and name-based family inquiries are arriving one after another. It is a situation in which one may be tempted to write details on the general channel. | On the general channel, share only the case number, attributes, and last confirmed point. Split names, addresses, and contact details into RFL and individual inquiries. Record the cross-check process as well. | Zero transmission of personal information on the general channel. Cross-check targets, results, pending cases, and next points of inquiry can be uniquely tracked. |
+| Base-station failure and switch to reserve | CLIENT_BASE has stopped, power at the base station is unstable, and the gateway station is no longer responding. A reserve station is standing by and immediate handover is required. | Start backup power, switch roles to the reserve station, inherit group settings, scheduled distribution, audit records, and the case ledger, and notify field nodes of the switch. | Control resumes within 15 minutes. No missing case-ledger entries. No dual control. Field nodes recognize the new base station. |
+| DMAT reception and medical transport control | Hospital function is degraded, and many casualties are arising from shelters and aid stations. DMAT is expected to arrive, but receiving destinations, transport order, and oxygen/drug demand have not yet been organized. | Aggregate patients by red/yellow/green/black, organize transport priorities, receiving-facility inquiries, transport routes, and demand for drugs and oxygen. Re-triage if necessary. | Severe patients are organized in priority order, and receiving-facility inquiry results and destinations are explicit. Re-triage results and update times can be tracked. |
+| Initial collapse rescue | Immediately after an earthquake, two buildings collapsed, three persons trapped, communications congested | Send [[SOS]], assign case IDs, report red-triage status, secure access route | Within 5 minutes, case ID, number of people, triage, and location are aligned |
+| Immediate tsunami evacuation | Tsunami warning issued; elderly people present at two coastal shelters | Send [[ALR]], move to vertical evacuation/high ground, conduct roll call | Within 10 minutes, evacuation completion rate and number of people not yet evacuated are shared |
+| Flood / overtopping | River level rising, overtopping begins, roads inundated | Report road blockage and shelter capacity | Route usability, alternate routes, and shelter occupancy are organized |
+| Landslide | A slope failure isolates a community | Turn isolation, injuries, and supply routes into short reports | Number of isolated persons and needed supplies are uniquely understood |
+| Urban fire | Fire spread is expanding; wind direction changing | Share direction of spread, shortage of firefighting equipment, and retreat direction | Direction of spread and danger zones are conveyed without misunderstanding |
+| Heavy-snow isolation | Roads cut by snow; dialysis patients present | Separate medical priority from snow-removal request | Medical cases and road cases are handled without mixing |
+| Extreme heat blackout | Wide-area blackout, cooling failure, many heatstroke cases | Separate cases for power generation, cooling, water, and transport | Priority of high-risk heat cases is visible |
+| Missing-person cross-check | Shelter roster and hospital transport roster do not match | Use MISS/FND/RCO to cross-check | Cross-check completed without sending personal information on general channels |
+| Missile warning | J-Alert issued; some teams are outdoors | Apply transmission restrictions, shelter indoors/underground, report blast sounds | Unnecessary long transmissions stop and protective actions are synchronized |
+| UXO / suspicious object | Suspicious object beside a building, people moving nearby | Isolate area, prohibit approach, notify authorities, do not request images | Zero approachers, zone set, secondary disaster prevented |
+| Nuclear shelter-in-place | Facility accident assumed; shelter-in-place order issued | Use RAD / SEAL / HVAC OFF in short reports | Sealing, stopping ventilation, and indoor sheltering are synchronized |
+| Initial chemical incident response | Unusual odor at station, many with eye irritation and coughing | Use CHEM / ODR / MASK / DECON | Wind direction and decontamination need are shared within 3 minutes |
+| Initial biological incident response | Cluster fever and cough at shelter | Use BIO / ISO / PPE / N95 | Isolation routes and PPE shortages are explicitly stated |
+| Pediatric supply support | 20 infants and young children at shelter | Request with KID / NEO / MILK / DIAP / WIPE | Quantities of child and neonatal supplies are made concrete |
+| Women’s support supplies | Many female evacuees; sanitary products short | Use FEM / SAN / PREG / MAT / BRA / PAD | Supplies for women and pregnant/postpartum evacuees do not get buried among general supplies |
+| Municipality handoff drill | Information from private mesh is handed to disaster headquarters | Convert code → plain language, attach confidence, send corrections | Municipality-oriented plain language of 200 characters or fewer is created accurately |
+| Heavy rain / linear rainband | Nighttime; linear rainband information issued; people remain in underground malls and lowland residential areas | Turn securing high ground, avoiding underground space, and leaving cliff/ravine areas into short reports | Within 10 minutes, danger zones, retreat directions, and whether anyone remains unevacuated are shared |
+| Typhoon / storm surge | Typhoon approaching, violent-wind warning equivalent, storm-surge inundation expected in coastal lowlands | Organize SURGE / evacuation completion deadline / bridge passability / expected blackout | Before severe winds begin, evacuation deadline and danger zones are communicated without misunderstanding |
+| Multiple case-number responses | Three SOS cases and two supply requests occur simultaneously | Assign simple case numbers and return ACK / WIP / ARRV with the number attached | Everyone can track which response corresponds to which case |
+| Gateway-station operation | Base station performs audit, group transmission, and individual safety inquiries simultaneously | Switch permanent / temporary groups, perform audit recording, individual inquiries, and external handoff | Configuration changes and field operations are not confused, and audit records are complete |
 
-17\. 付帯資料：発信前チェックカード
+## 17. Supplementary Material: Pre-Transmission Check Card
 
-現場で送信前に確認するための簡易カード。短報でも最低限の欠落を防ぐ。
+A simple on-site card to confirm before sending. Even short reports should avoid the minimum critical omissions.
 
-| 確認点 | 確認内容 | 送信不可の例 |
+| Check Point | What to Confirm | Example of Transmission Not Allowed |
 | :---: | ----- | ----- |
-| 位置 | GPS、拠点地プレフィックス、施設名、区域名、最終確認地点のいずれかが入っているか。 | 場所不明のまま「助けて」だけを送る。 |
-| 人数・緊急度 | 人数、赤黄緑黒、孤立人数、危険度のいずれかが入っているか。 | 「多数」「危険」だけで具体性がない。 |
-| 必要支援 | 救助、搬送、通報、物資、受入照会、道路啓開など要求が明示されているか。 | 要求内容がなく、受信側が判断できない。 |
-| 確度・時刻 | 確認時刻と確度評価が入っているか。 | 古い情報を時刻なしで再送する。 |
-| 個人情報 | 氏名、住所、連絡先、診療情報を一般チャネルへ載せていないか。 | MISS案件で氏名や生年月日を一般送信する。 |
-| 送信先 | 一般、群、個別、橋渡し先のどれに送るか適切か。 | 本来は個別照会事項を全体チャネルへ流す。 |
+| Location | Does it include at least one of GPS, base-location prefix, facility name, area name, or last confirmed point? | Sending only “Help!” with no location. |
+| Number of people / urgency | Does it include number of people, red/yellow/green/black triage, number isolated, or danger level? | Saying only “many” or “dangerous” with no specificity. |
+| Required support | Is the needed support clearly stated, such as rescue, transport, notification, supplies, receiving-facility inquiry, or road opening? | The receiving side cannot judge what is needed. |
+| Confidence / time | Are confirmation time and confidence evaluation included? | Resending old information with no timestamp. |
+| Personal information | Are name, address, contact details, or clinical information being sent on a general channel? | Sending name or date of birth for a MISS case on the general channel. |
+| Destination | Is it appropriate for general channel, group, individual, or handoff destination? | Sending what should be an individual inquiry to the whole channel. |
 
-18\. 付帯資料：運用評価指標
+## 18. Supplementary Material: Operational Evaluation Indicators
 
-訓練と実運用の双方で、通信量だけでなく判断品質を評価するための最低限の指標。
+Minimum indicators for evaluating not only traffic volume but also the quality of judgment in both training and real operations.
 
-| 評価項目 | 評価観点 | 合格基準 | 失格条件 |
+| Evaluation Item | Evaluation Focus | Pass Standard | Fail Condition |
 | :---: | ----- | ----- | ----- |
-| 緊急案件初動 | 案件ID、位置、人数、危険度が初報に入っているか。 | 3分以内に4要素のうち3要素以上が共有される。 | 初報が雑談化し、案件化できない。 |
-| 橋渡し品質 | 符号から平文へ正確に展開できるか。 | 200字以内で必要項目欠落なし。 | 受け手が再照会しないと行動できない。 |
-| 個人情報保護 | 一般チャネルに不要な識別情報を出していないか。 | 個人情報露出ゼロ。 | 氏名、住所、連絡先、詳細病歴を一般送信する。 |
-| 拠点局切替 | 予備局切替時に案件台帳と監査が維持されるか。 | 15分以内に統制再開、二重統制なし。 | 切替後に案件欠落または同時統制が発生する。 |
-| 医療搬送統制 | 赤黄緑黒、受入照会、搬送先が整理されるか。 | 重症者優先順位と搬送先が明示される。 | 重症者が一般物資案件に埋没する。 |
-| 定時配信統制 | 定時送信が輻輳を生まないか。 | 予定時刻、予定文面、予定先で配信される。 | 任意時刻に長文定時送信を乱発する。 |
-| 監査記録 | 訂正、完了化、橋渡し更新が記録されるか。 | 高影響操作の記録漏れゼロ。 | 誰が何を変えたか追跡できない。 |
+| Initial response to emergency cases | Does the initial report include case ID, location, number of people, and danger level? | Within 3 minutes, at least 3 of the 4 elements are shared. | The initial report becomes chatter and the case cannot be formalized. |
+| Handoff quality | Can codes be accurately expanded into plain language? | No required item missing within 200 characters. | The receiver cannot act without making a follow-up inquiry. |
+| Personal information protection | Is unnecessary identifying information absent from the general channel? | Zero exposure of personal information. | Names, addresses, contact details, or detailed medical history are sent generally. |
+| Base-station switching | Are case ledger and audit maintained during switch to reserve? | Control resumes within 15 minutes, with no dual control. | After switching, cases go missing or simultaneous control occurs. |
+| Medical transport control | Are red/yellow/green/black, receiving-facility inquiries, and destinations organized? | Severe-case priority order and destinations are explicit. | Severe cases are buried among general supply cases. |
+| Scheduled distribution control | Do scheduled transmissions avoid creating congestion? | Sent at the planned time, with the planned wording and planned destination. | Long scheduled transmissions are sent indiscriminately at arbitrary times. |
+| Audit records | Are corrections, closures, and handoff updates recorded? | Zero missing records for high-impact operations. | It becomes impossible to trace who changed what. |
 
-19\. 付帯資料：概念図
+## 19. Supplementary Material: Conceptual Diagrams
 
-19-1. 情報の橋渡しフロー
+### 19-1. Information Handoff Flow
 
-内部の短報が、統制・連携を経て外部機関向けの平文へ変換され、応答が案件番号で閉域網へ戻る流れを示す。
+Shows the flow in which internal short reports are converted through control and liaison into plain language for outside organizations, and responses return to the closed network with a case number.
 
-![mep\_05][image5]  
-図1　情報の橋渡しフロー  
-内部符号→統制・連携→外部平文化→応答復帰の流れ
+![mep_05][image5]  
+**Figure 1. Information Handoff Flow**  
+Internal code → control/liaison → external plain-language conversion → return of response
 
-19-2. 案件ライフサイクル
+### 19-2. Case Lifecycle
 
-案件は NEW から開始し、ACK・WIP・ARRV・CLO の基本経路をたどる。保留、訂正、否定、虚偽情報対処は、案件IDを維持しながら履歴として残す。
+A case starts as NEW and follows the basic path of ACK, WIP, ARRV, and CLO. Holds, corrections, negations, and false-information handling remain in the history while preserving the case ID.
 
-![mep\_06][image6]  
-図2　案件ライフサイクル  
-案件の基本経路と、保留・訂正・否定・虚偽情報処理の分岐
+![mep_06][image6]  
+**Figure 2. Case Lifecycle**  
+The basic route of a case and the branches for hold, correction, negation, and false-information handling
 
-19-3. 推奨トポロジーと役割分担
+### 19-3. Recommended Topology and Role Allocation
 
-現場局・高所中継・拠点局・外部機関の役割分担と、物理配置の考え方を示す。中継は必要最小限とし、拠点局が外部連携と監査を担う。
+Shows the role allocation and physical placement concepts for field nodes, elevated relays, base stations, and external organizations. Relays are kept to the minimum necessary, and base stations handle external liaison and audit.
 
-![mep\_07][image7]  
-図3　推奨トポロジーと役割分担  
-現場局・拠点局・ゲートウェイ局・外部機関の関係と、物理配置の考え方  
+![mep_07][image7]  
+**Figure 3. Recommended Topology and Role Allocation**  
+Relationships among field stations, base stations, gateway stations, and outside organizations, and the concept of physical placement
 
 
 [image1]: <data:image/png;base64,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>
