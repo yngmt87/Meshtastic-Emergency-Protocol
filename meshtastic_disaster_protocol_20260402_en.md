@@ -79,7 +79,7 @@ The U.S. ICS/NIMS framework emphasizes common terminology, plain language, and s
 **[Adopted in This Protocol]**  
 Accordingly, this protocol is built on four pillars: “prefer codes internally,” “plain-language conversion is mandatory for external handoff,” “do not replace public warning systems,” and “enforce case management.” Meshtastic is limited to supplementary communications under blackout, congestion, or local isolation. Handoff to municipalities, fire services, medical institutions, and shelters is handled by liaison personnel.
 
-**[Summary of This Document]**
+**[Summary of This Document]**  
 Internal = transmit in short codes.
 External = hand off in plain language.
 Personal information = minimum necessary, purpose-limited, and always recorded.
