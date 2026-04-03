@@ -45,21 +45,21 @@ When handing information off to outside organizations, it must always be convert
 ### 0-1. See the Big Picture First
 
 The first thing to remember is simple. Field stations send short factual reports. Communications control sets priorities. Liaison personnel convert information into plain language for external organizations. Record staff maintain case IDs and correction history. The first step in reducing confusion is not to mix up who is responsible for what.  
-![mep_01][image1]  
+<img src="/img/mep_english_01.png"> 
 **Figure A. Overall View of This Protocol**  
 A diagram for understanding who sends what, and to where.
 
 ### 0-2. What to Prioritize Immediately After Disaster Onset
 
 A common failure in disasters is trying to transmit too much information. Immediately after impact, do not send everything; prioritize only the information directly tied to saving lives. Understand by phase what can be transmitted at each stage.  
-![mep_02][image2]  
+<img src="/img/mep_english_02.png">  
 **Figure B. Priorities by Phase**  
 A diagram showing what should be transmitted from immediate impact through prolonged operations.
 
 ### 0-3. How to Read the Standard Syntax
 
 The short reports in this protocol may look difficult, but in practice they consist of the sequence: “priority,” “case ID,” “SEQ,” “status,” “action,” “body,” “confidence,” and “report time.” The key point is that the time inside the case ID is for identifying the incident, while the time at the end is the time of that specific report. They do not mean the same thing.  
-![mep_03][image3]
+<img src="/img/mep_english_03.png"> 
 
 **Figure C. How to Read the Standard Syntax (with SEQ)**  
 A diagram for reading the time in the case ID separately from the report order and report time of each update.
@@ -67,7 +67,7 @@ A diagram for reading the time in the case ID separately from the report order a
 ### 0-4. Think About Confidence First in Three Levels
 
 If users try to judge confidence too finely from the beginning, beginners easily become uncertain. Therefore, this protocol first organizes confidence into three levels—CFM / PRB / UNC—and only later, if necessary, maps them to A1–E5. The crucial point is not to mix unconfirmed information with confirmed information.  
-![mep_04][image4]  
+<img src="/img/mep_english_04.png">  
 **Figure D. How to Determine Confidence**  
 Start by judging with CFM / PRB / UNC.
 
@@ -922,7 +922,8 @@ Do not instruct anyone to recover or touch suspected UXO.
 | STON | Stone-throwing | Hazard from thrown objects | `[[ALR]] SND-S-20260329-1858 NEW RPT: STON ROAD-N AVOID. C3 1900J` | Stone-throwing on the north road requires route avoidance. |
 | BARR | Barricade / obstacle | Road closure / improvised obstacle | `[[SIT]] SND-S-20260329-1902 NEW RPT: BARR INT-A BLK. B2 1904J` | A barricade has been built at Intersection A and it is impassable. |
 
-## 11. Case Ledger / Short-Message Management Software (In Progress)
+## 11. Case Ledger / Short-Message Management Software
+(In Progress)
 
 ## 12. Proposed Canned Message Implementation
 
@@ -1272,13 +1273,13 @@ Minimum indicators for evaluating not only traffic volume but also the quality o
 | Scheduled distribution control | Do scheduled transmissions avoid creating congestion? | Sent at the planned time, with the planned wording and planned destination. | Long scheduled transmissions are sent indiscriminately at arbitrary times. |
 | Audit records | Are corrections, closures, and handoff updates recorded? | Zero missing records for high-impact operations. | It becomes impossible to trace who changed what. |
 
-## 19. Supplementary Material: Conceptual Diagrams
+## 19. Supplementary Material:Conceptual Diagrams
 
 ### 19-1. Information Handoff Flow
 
 Shows the flow in which internal short reports are converted through control and liaison into plain language for outside organizations, and responses return to the closed network with a case number.
 
-![mep_05][image5]  
+<img src="/img/mep_english_05.png"> 
 **Figure 1. Information Handoff Flow**  
 Internal code → control/liaison → external plain-language conversion → return of response
 
@@ -1286,7 +1287,7 @@ Internal code → control/liaison → external plain-language conversion → ret
 
 A case starts as NEW and follows the basic path of ACK, WIP, ARRV, and CLO. Holds, corrections, negations, and false-information handling remain in the history while preserving the case ID.
 
-![mep_06][image6]  
+<img src="/img/mep_english_06.png"> 
 **Figure 2. Case Lifecycle**  
 The basic route of a case and the branches for hold, correction, negation, and false-information handling
 
@@ -1294,6 +1295,6 @@ The basic route of a case and the branches for hold, correction, negation, and f
 
 Shows the role allocation and physical placement concepts for field nodes, elevated relays, base stations, and external organizations. Relays are kept to the minimum necessary, and base stations handle external liaison and audit.
 
-![mep_07][image7]  
+<img src="/img/mep_english_07.png">  
 **Figure 3. Recommended Topology and Role Allocation**  
 Relationships among field stations, base stations, gateway stations, and outside organizations, and the concept of physical placement
